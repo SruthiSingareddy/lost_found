@@ -1,0 +1,414 @@
+
+{% extends 'lostfound/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'lostfound/claim.css' %}?v=2">
+{% endblock %}
+
+{% block content %}
+
+<div class="claim-page-wrapper">
+    <div class="claim-container">
+
+        <header class="claim-page-header">
+            <nav class="claim-breadcrumb">
+                <a href="{% url 'home' %}">Home</a>
+                <span>/</span>
+                <a href="{% url 'items' %}">Found Items</a>
+                <span>/</span>
+                <span>Claim Item</span>
+            </nav>
+
+            <h1 class="claim-page-title">Claim Your Lost Item</h1>
+            <p class="claim-page-subtitle">
+                Provide your details to verify and recover your belonging.
+            </p>
+        </header>
+
+        {% if messages %}
+        <div class="django-messages-container">
+            {% for message in messages %}
+            <div class="alert-box {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="POST"
+              action="{% url 'submit_claim' %}"
+              enctype="multipart/form-data"
+              id="claimSubmissionForm">
+
+            {% csrf_token %}
+
+            <div class="claim-layout-grid">
+
+                <!-- CLAIM FORM -->
+                <div class="claim-card">
+
+                    <h3 class="claim-card-title">Claim Information</h3>
+
+                    <!-- STUDENT DETAILS -->
+                    <div class="claim-section">
+                        <h3>Student Details</h3>
+
+                        {% if logged_in_student %}
+
+                        <div class="student-profile-verified">
+                            <div class="student-verified-badge">
+                                ✓ Verified Student
+                            </div>
+
+                            <div class="student-info-grid">
+                                <div class="student-field-item">
+                                    <span class="student-field-label">Name</span>
+                                    <span class="student-field-value">
+                                        {{ logged_in_student.student_name }}
+                                    </span>
+                                </div>
+
+                                <div class="student-field-item">
+                                    <span class="student-field-label">Roll Number</span>
+                                    <span class="student-field-value">
+                                        {{ logged_in_student.roll_number }}
+                                    </span>
+                                </div>
+
+                                <div class="student-field-item">
+                                    <span class="student-field-label">Department</span>
+                                    <span class="student-field-value">
+                                        {{ logged_in_student.department }}
+                                    </span>
+                                </div>
+
+                                <div class="student-field-item">
+                                    <span class="student-field-label">Email</span>
+                                    <span class="student-field-value">
+                                        {{ logged_in_student.email }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="student"
+                                   value="{{ logged_in_student.id }}">
+                        </div>
+
+                        {% else %}
+
+                        <div class="form-group">
+                            <label for="studentSelect">Student Profile *</label>
+
+                            <select name="student" id="studentSelect"
+                                    class="form-control" required>
+                                <option value="">Choose your profile</option>
+
+                                {% for s in students %}
+                                <option value="{{ s.id }}">
+                                    {{ s.student_name }} ({{ s.roll_number }})
+                                </option>
+                                {% endfor %}
+                            </select>
+
+                            <span class="form-helper">
+                                Already registered?
+                                <a href="{% url 'student_login' %}">Login here</a>
+                            </span>
+                        </div>
+
+                        {% endif %}
+                    </div>
+
+                    <!-- FOUND ITEM -->
+                    <div class="claim-section">
+                        <h3>Select Found Item</h3>
+
+                        <div class="form-group">
+                            <label for="itemSelect">Item Name *</label>
+
+                            <select name="item" id="itemSelect"
+                                    class="form-control" required>
+                                <option value="">Select your item</option>
+
+                                {% for itm in items %}
+                                <option value="{{ itm.id }}"
+                                    data-name="{{ itm.item_name }}"
+                                    data-category="{{ itm.category }}"
+                                    data-location="{{ itm.location }}"
+                                    data-date="{{ itm.date|date:'Y-m-d' }}"
+                                    data-image="{% if itm.image %}{{ itm.image.url }}{% endif %}"
+                                    {% if selected_item_id == itm.id|stringformat:'s' %}selected{% endif %}>
+                                    {{ itm.item_name }} - {{ itm.location }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- DESCRIPTION -->
+                    <div class="claim-section">
+                        <h3>Describe Your Item</h3>
+
+                        <div class="form-group">
+                            <label for="claimDescription">
+                                Item Description *
+                            </label>
+
+                            <textarea name="claim_description"
+                                      id="claimDescription"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Describe the colour, brand, marks or unique features..."
+                                      required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- CONTACT DETAILS -->
+                    <div class="claim-section">
+                        <h3>Contact Details</h3>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label for="lostDate">Lost Date</label>
+                                <input type="date" name="lost_date"
+                                       id="lostDate" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contactNumber">Contact Number *</label>
+                                <input type="tel" name="contact_number"
+                                       id="contactNumber"
+                                       class="form-control"
+                                       value="{{ logged_in_student.mobile_number|default:'' }}"
+                                       placeholder="Enter phone number"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lostLocation">Lost Location</label>
+                            <input type="text" name="lost_location"
+                                   id="lostLocation"
+                                   class="form-control"
+                                   placeholder="Enter where you lost the item">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="additionalDetails">Additional Details</label>
+                            <textarea name="additional_details"
+                                      id="additionalDetails"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Any other details to identify your item..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- IMAGE UPLOAD -->
+                    <div class="claim-section">
+                        <h3>Upload Item Photo</h3>
+
+                        <div class="upload-dropzone" id="uploadDropzone">
+                            <div class="upload-icon-container">📷</div>
+
+                            <div class="upload-prompt-title">
+                                Choose or drop your image here
+                            </div>
+
+                            <div class="upload-prompt-desc">
+                                JPG, JPEG, PNG or WEBP · Maximum 5 MB
+                            </div>
+
+                            <input type="file"
+                                   name="lost_item_image"
+                                   id="lostImageInput"
+                                   class="hidden-file-input"
+                                   accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                        </div>
+
+                        <div class="upload-preview-card" id="uploadPreviewCard">
+                            <img id="lostImageThumbnail"
+                                 class="preview-thumbnail" src=""
+                                 alt="Your uploaded item">
+
+                            <div class="preview-meta">
+                                <div class="preview-filename" id="previewFilename"></div>
+                                <div class="preview-filesize" id="previewFilesize"></div>
+                            </div>
+
+                            <button type="button"
+                                    class="btn-remove-preview"
+                                    id="btnRemoveLostImage">
+                                Remove
+                            </button>
+                        </div>
+
+                        <div class="upload-error-msg" id="uploadErrorMsg"></div>
+                    </div>
+
+                    <!-- SUBMIT -->
+                    <div class="claim-section">
+
+                        <div class="status-preview-box">
+                            <div class="status-preview-left">
+                                <span class="status-preview-title">
+                                    Claim Status
+                                </span>
+                                <span class="status-preview-note">
+                                    Your claim will be reviewed by the administrator.
+                                </span>
+                            </div>
+
+                            <span class="status-pill-pending">
+                                Pending Review
+                            </span>
+                        </div>
+
+                        <div class="claim-submit-group">
+                            <button type="submit"
+                                    class="btn-submit-claim"
+                                    id="submitClaimBtn">
+                                ✓ <span id="submitBtnText">Submit Claim</span>
+                            </button>
+
+                            <a href="{% url 'items' %}" class="btn-back-home">
+                                Back to Items
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDEBAR -->
+                <div class="claim-sidebar">
+
+                    <div class="claim-card">
+                        <h3 class="claim-card-title">Selected Item</h3>
+
+                        <div class="found-item-preview-card">
+
+                            <div class="found-image-display-box" id="foundImageBox">
+
+                                <img id="foundItemImg" src=""
+                                     alt="Selected found item">
+
+                                <div class="found-placeholder" id="foundPlaceholder">
+                                    <div class="placeholder-icon-circle">📷</div>
+                                    <h5 id="placeholderHeading">No Item Selected</h5>
+                                    <p id="placeholderText">
+                                        Select an item to view its image.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="found-details-list">
+
+                                <div class="found-detail-row">
+                                    <span class="found-detail-label">Item Name</span>
+                                    <span class="found-detail-val" id="previewItemName">
+                                        None Selected
+                                    </span>
+                                </div>
+
+                                <div class="found-detail-row">
+                                    <span class="found-detail-label">Category</span>
+                                    <span class="found-detail-val" id="previewItemCategory">-</span>
+                                </div>
+
+                                <div class="found-detail-row">
+                                    <span class="found-detail-label">Found Location</span>
+                                    <span class="found-detail-val" id="previewItemLocation">-</span>
+                                </div>
+
+                                <div class="found-detail-row">
+                                    <span class="found-detail-label">Reported Date</span>
+                                    <span class="found-detail-val" id="previewItemDate">-</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="claim-notice-banner">
+                            <strong>Important:</strong>
+                            Please select the correct item and provide accurate details.
+                        </div>
+                    </div>
+
+                    <!-- IMAGE MATCHING -->
+                    <div class="matching-loading" id="matchingLoading">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Checking Image Similarity...</div>
+                        <div class="loading-subtext">
+                            Comparing your photo with the found item photo.
+                        </div>
+                    </div>
+
+                    <div class="matching-card" id="matchingCard">
+
+                        <div class="matching-card-header">
+                            <span class="matching-card-title">
+                                Image Matching Result
+                            </span>
+                            <span class="match-badge" id="matchBadge">Matching</span>
+                        </div>
+
+                        <div class="comparison-grid">
+                            <div class="compare-col">
+                                <span class="compare-tag">Your Lost Item</span>
+                                <div class="compare-img-box">
+                                    <img id="compareLostImg" src="" alt="Your lost item">
+                                </div>
+                            </div>
+
+                            <div class="compare-col">
+                                <span class="compare-tag">Found Item</span>
+                                <div class="compare-img-box">
+                                    <img id="compareFoundImg" src="" alt="Found item">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="similarity-meter-container">
+                            <div class="meter-header">
+                                <span class="meter-label">Visual Similarity</span>
+                                <span class="meter-percentage" id="meterScore">0%</span>
+                            </div>
+
+                            <div class="meter-bar-track">
+                                <div class="meter-bar-fill" id="meterFill"></div>
+                            </div>
+
+                            <div class="breakdown-row" id="breakdownRow">
+                                <div class="breakdown-chip">
+                                    <span class="chip-name">Color</span>
+                                    <span class="chip-val" id="chipColor">0%</span>
+                                </div>
+                                <div class="breakdown-chip">
+                                    <span class="chip-name">Structure</span>
+                                    <span class="chip-val" id="chipStructure">0%</span>
+                                </div>
+                                <div class="breakdown-chip">
+                                    <span class="chip-name">Shape</span>
+                                    <span class="chip-val" id="chipShape">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="matching-explanation" id="matchingExplanation">
+                            Your image comparison result will appear here.
+                        </div>
+
+                        <div class="claim-notice-banner">
+                            Image matching is only a suggestion. The administrator
+                            will verify ownership.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

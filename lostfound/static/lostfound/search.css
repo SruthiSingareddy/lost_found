@@ -1,0 +1,377 @@
+
+/* =====================================
+   CAMPUS LOST & FOUND
+   FOREST GREEN + GOLD + CREAM THEME
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html[data-theme="dark"] {
+    --bg: #103522;
+    --card: #1C5139;
+    --text: #FFF9EF;
+    --muted: #D5DFD4;
+    --border: #47745A;
+    --input: #17452F;
+    --table-head: #17452F;
+}
+
+html[data-theme="light"] {
+    --bg: #F7F1E5;
+    --card: #FFFCF6;
+    --text: #263D30;
+    --muted: #68766B;
+    --border: #D9C8A8;
+    --input: #FFFFFF;
+    --table-head: #17452F;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* NAVBAR */
+
+.navbar {
+    background: #17452F;
+    color: #FFF9EF;
+    padding: 16px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid #C18422;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.brand-icon {
+    font-size: 22px;
+}
+
+.nav-home {
+    color: #E0AD4D;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* MAIN CONTAINER */
+
+.page-container {
+    width: 92%;
+    max-width: 1450px;
+    margin: 35px auto;
+}
+
+.page-heading {
+    margin-bottom: 25px;
+}
+
+.page-heading h1 {
+    font-size: 30px;
+    margin: 18px 0 8px;
+    color: var(--text);
+}
+
+.page-heading p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.back-button {
+    display: inline-block;
+    color: #E0AD4D;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* FILTER CARD */
+
+.filter-card,
+.results-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.filter-card h2,
+.results-heading h2 {
+    font-size: 19px;
+    margin-bottom: 22px;
+    color: var(--text);
+}
+
+.search-form {
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 42px;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--input);
+    color: var(--text);
+    outline: none;
+    font-size: 13px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #C18422;
+    box-shadow: 0 0 0 2px rgba(193, 132, 34, 0.15);
+}
+
+.search-group {
+    margin-bottom: 20px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+/* BUTTONS */
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.search-button,
+.clear-button {
+    border: none;
+    border-radius: 6px;
+    padding: 11px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.search-button {
+    background: #17452F;
+    color: #FFF9EF;
+    border: 1px solid #C18422;
+}
+
+.search-button:hover {
+    background: #24613F;
+}
+
+.clear-button {
+    background: #C18422;
+    color: #FFFFFF;
+}
+
+.clear-button:hover {
+    background: #A66D18;
+}
+
+/* RESULTS */
+
+.results-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.results-heading h2 {
+    margin-bottom: 18px;
+}
+
+.results-heading span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* TABLE */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.search-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1050px;
+}
+
+.search-table th {
+    background: var(--table-head);
+    color: #FFF9EF;
+    padding: 14px 12px;
+    font-size: 12px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.search-table td {
+    padding: 13px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-size: 13px;
+    max-width: 220px;
+    overflow-wrap: anywhere;
+}
+
+.search-table tbody tr:hover {
+    background: rgba(193, 132, 34, 0.08);
+}
+
+.item-image {
+    width: 52px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+}
+
+.no-image {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+/* BADGES */
+
+.type-badge,
+.status-badge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.lost-badge {
+    background: #FCE4E1;
+    color: #B42318;
+}
+
+.found-badge {
+    background: #DDF3E4;
+    color: #176B39;
+}
+
+.status-badge {
+    background: #F5E8C9;
+    color: #815512;
+}
+
+/* CLAIM BUTTON */
+
+.claim-button {
+    display: inline-block;
+    padding: 7px 12px;
+    background: #C18422;
+    color: #FFFFFF;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.claim-button:hover {
+    background: #A66D18;
+}
+
+.no-action {
+    color: var(--muted);
+}
+
+/* EMPTY RESULT */
+
+.empty-message {
+    text-align: center;
+    padding: 30px !important;
+    color: var(--muted) !important;
+}
+
+/* FOOTER */
+
+.page-footer {
+    text-align: center;
+    padding: 20px;
+}
+
+.page-footer a {
+    color: #E0AD4D;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .page-container {
+        width: 95%;
+        margin: 22px auto;
+    }
+
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-card,
+    .results-card {
+        padding: 17px;
+    }
+
+    .page-heading h1 {
+        font-size: 24px;
+    }
+
+    .nav-brand {
+        font-size: 16px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .search-button,
+    .clear-button {
+        width: 100%;
+    }
+
+    .results-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

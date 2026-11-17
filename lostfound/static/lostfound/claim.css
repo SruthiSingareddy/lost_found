@@ -1,0 +1,1322 @@
+/* ==========================================================================
+   CAMPUS LOST & FOUND - SUBMIT CLAIM STYLESHEET
+   Professional Portal Design with Real Computer Vision Matching
+   ========================================================================== */
+
+/* =========================================
+   1. COLOR VARIABLES & THEMES
+========================================= */
+:root {
+    --claim-bg: #06132b;
+    --claim-card: #0d2244;
+    --claim-card-hover: #122b54;
+    --claim-card-inner: #081a36;
+    --claim-border: #183b68;
+    --claim-border-accent: rgba(0, 217, 245, 0.4);
+
+    --cyan-primary: #00d9f5;
+    --cyan-glow: rgba(0, 217, 245, 0.25);
+    --blue-primary: #008cff;
+    --blue-hover: #0077e6;
+    --blue-glow: rgba(0, 140, 255, 0.35);
+
+    --text-primary: #f5f8ff;
+    --text-secondary: #c2d2ea;
+    --text-muted: #869cb8;
+
+    --input-bg: #07162e;
+    --input-border: #1c4578;
+    --input-focus: #00d9f5;
+
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+
+    --shadow-main: 0 20px 60px rgba(0, 0, 0, 0.40);
+    --shadow-subtle: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="light"] {
+    --claim-bg: #eef4fc;
+    --claim-card: #ffffff;
+    --claim-card-hover: #f7faff;
+    --claim-card-inner: #f1f6fc;
+    --claim-border: #cbdff7;
+    --claim-border-accent: rgba(0, 110, 230, 0.4);
+
+    --cyan-primary: #008fbf;
+    --cyan-glow: rgba(0, 143, 191, 0.20);
+    --blue-primary: #006ee6;
+    --blue-hover: #005bbd;
+    --blue-glow: rgba(0, 110, 230, 0.25);
+
+    --text-primary: #0f1f38;
+    --text-secondary: #3b5273;
+    --text-muted: #6b82a0;
+
+    --input-bg: #ffffff;
+    --input-border: #cbdff7;
+    --input-focus: #006ee6;
+
+    --shadow-main: 0 16px 45px rgba(20, 50, 90, 0.12);
+    --shadow-subtle: 0 6px 18px rgba(20, 50, 90, 0.08);
+}
+
+/* =========================================
+   2. PAGE WRAPPER & HEADER
+========================================= */
+.claim-page-wrapper {
+    width: 100%;
+    min-height: calc(100vh - 140px);
+    background: var(--claim-bg);
+    padding: 40px clamp(16px, 4vw, 48px) 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.claim-container {
+    width: 100%;
+    max-width: 1280px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* Breadcrumb & Heading */
+.claim-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--claim-border);
+}
+
+.claim-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.claim-breadcrumb a {
+    color: var(--cyan-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.claim-page-title {
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.claim-page-title svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--cyan-primary);
+    flex-shrink: 0;
+}
+
+.claim-page-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+}
+
+.claim-portal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(0, 217, 245, 0.12);
+    border: 1px solid var(--claim-border-accent);
+    color: var(--cyan-primary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}
+
+/* =========================================
+   3. MAIN TWO-COLUMN CLAIM LAYOUT
+========================================= */
+.claim-layout-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+    align-items: start;
+}
+
+/* Base Card Styling */
+.claim-card {
+    background: var(--claim-card);
+    border: 1px solid var(--claim-border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--shadow-main);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.claim-card-title {
+    font-size: 18px;
+    font-weight: 750;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.claim-card-title svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--cyan-primary);
+    flex-shrink: 0;
+}
+
+.claim-card-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   4. STUDENT INFORMATION SECTION
+========================================= */
+.student-profile-verified {
+    background: var(--claim-card-inner);
+    border: 1px solid var(--claim-border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.student-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: rgba(16, 185, 129, 0.14);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    font-size: 11px;
+    font-weight: 750;
+    margin-bottom: 12px;
+}
+
+.student-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 18px;
+}
+
+.student-field-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.student-field-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.student-field-value {
+    font-size: 14.5px;
+    font-weight: 650;
+    color: var(--text-primary);
+    margin-top: 2px;
+}
+
+/* Fallback: Student Selector for Unauthenticated Users */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 650;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-group label .required {
+    color: var(--cyan-primary);
+    font-weight: 700;
+}
+
+.form-control {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--input-border);
+    border-radius: 10px;
+    font-size: 14.5px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px var(--cyan-glow);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+textarea.form-control {
+    height: auto;
+    padding: 12px 14px;
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.6;
+}
+
+/* Two-column subgrid for inputs */
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Form Helper Notice */
+.form-helper {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* =========================================
+   5. FOUND ITEM PREVIEW CARD (RIGHT)
+========================================= */
+.found-item-preview-card {
+    background: var(--claim-card-inner);
+    border: 1px solid var(--claim-border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.found-image-display-box {
+    width: 100%;
+    height: 220px;
+    border-radius: 12px;
+    background: rgba(5, 15, 35, 0.45);
+    border: 1px dashed var(--claim-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.found-image-display-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    transition: transform 0.3s ease;
+}
+
+.found-image-display-box img:hover {
+    transform: scale(1.03);
+}
+
+/* Professional Placeholder */
+.found-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    color: var(--text-muted);
+    padding: 20px;
+}
+
+.placeholder-icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 140, 255, 0.10);
+    border: 1px solid var(--claim-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cyan-primary);
+}
+
+.placeholder-icon-circle svg {
+    width: 24px;
+    height: 24px;
+}
+
+.found-placeholder h5 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.found-placeholder p {
+    font-size: 12.5px;
+    max-width: 240px;
+}
+
+/* Found Item Details Pills */
+.found-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.found-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13.5px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: rgba(13, 34, 68, 0.45);
+}
+
+html[data-theme="light"] .found-detail-row {
+    background: #ffffff;
+}
+
+.found-detail-label {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.found-detail-val {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+/* =========================================
+   6. LOST ITEM IMAGE UPLOAD (DRAG & DROP)
+========================================= */
+.upload-dropzone {
+    border: 2px dashed var(--input-border);
+    border-radius: 14px;
+    padding: 26px 18px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--claim-card-inner);
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.upload-dropzone:hover,
+.upload-dropzone.drag-active {
+    border-color: var(--cyan-primary);
+    background: rgba(0, 217, 245, 0.05);
+    box-shadow: 0 0 16px var(--cyan-glow);
+}
+
+.upload-icon-container {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(0, 140, 255, 0.12);
+    border: 1px solid var(--claim-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cyan-primary);
+    transition: transform 0.2s ease;
+}
+
+.upload-dropzone:hover .upload-icon-container {
+    transform: translateY(-2px);
+    border-color: var(--cyan-primary);
+}
+
+.upload-icon-container svg {
+    width: 24px;
+    height: 24px;
+}
+
+.upload-prompt-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.upload-prompt-title span {
+    color: var(--cyan-primary);
+    text-decoration: underline;
+}
+
+.upload-prompt-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+/* Upload Preview Box */
+.upload-preview-card {
+    display: none;
+    margin-top: 14px;
+    background: var(--claim-card-inner);
+    border: 1px solid var(--claim-border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    align-items: center;
+    gap: 14px;
+}
+
+.preview-thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid var(--claim-border);
+    flex-shrink: 0;
+}
+
+.preview-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.preview-filename {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.preview-filesize {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.btn-remove-preview {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--danger);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-remove-preview:hover {
+    background: var(--danger);
+    color: #ffffff;
+}
+
+/* Upload Error Message */
+.upload-error-msg {
+    display: none;
+    margin-top: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.14);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #fca5a5;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+/* =========================================
+   7. IMAGE MATCHING RESULT CARD
+========================================= */
+.matching-card {
+    background: var(--claim-card-inner);
+    border: 1.5px solid var(--claim-border);
+    border-radius: 18px;
+    padding: 22px;
+    margin-top: 24px;
+    transition: all 0.3s ease;
+    display: none; /* Shown dynamically when lost image & found item are both ready */
+}
+
+.matching-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.matching-card-title {
+    font-size: 16px;
+    font-weight: 750;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.matching-card-title svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--cyan-primary);
+}
+
+/* Matching Status Badges */
+.match-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.match-high {
+    background: rgba(16, 185, 129, 0.18);
+    color: #10b981;
+    border: 1px solid #10b981;
+}
+
+.match-moderate {
+    background: rgba(245, 158, 11, 0.18);
+    color: #f59e0b;
+    border: 1px solid #f59e0b;
+}
+
+.match-low {
+    background: rgba(239, 68, 68, 0.18);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+
+.match-na {
+    background: rgba(134, 156, 184, 0.18);
+    color: var(--text-muted);
+    border: 1px solid var(--text-muted);
+}
+
+/* Side-by-side comparison images */
+.comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.compare-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.compare-tag {
+    font-size: 11px;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+}
+
+.compare-img-box {
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    border: 1px solid var(--claim-border);
+    overflow: hidden;
+    background: #000000;
+}
+
+.compare-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Similarity Meter Bar */
+.similarity-meter-container {
+    background: rgba(5, 15, 35, 0.45);
+    border: 1px solid var(--claim-border);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.meter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.meter-label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.meter-percentage {
+    font-size: 22px;
+    font-weight: 850;
+    color: var(--cyan-primary);
+}
+
+.meter-bar-track {
+    width: 100%;
+    height: 10px;
+    background: var(--claim-border);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.meter-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--blue-primary), var(--cyan-primary));
+    border-radius: 6px;
+    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 10px var(--cyan-glow);
+}
+
+/* Feature Breakdown Chips */
+.breakdown-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.breakdown-chip {
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: rgba(13, 34, 68, 0.65);
+    border: 1px solid var(--claim-border);
+    text-align: center;
+}
+
+html[data-theme="light"] .breakdown-chip {
+    background: #ffffff;
+}
+
+.breakdown-chip .chip-name {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    display: block;
+}
+
+.breakdown-chip .chip-val {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--cyan-primary);
+}
+
+/* Matching Explanation */
+.matching-explanation {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(0, 140, 255, 0.08);
+    border-left: 3px solid var(--cyan-primary);
+    margin-bottom: 14px;
+}
+
+/* Loading State for Matching Engine */
+.matching-loading {
+    display: none;
+    padding: 24px;
+    text-align: center;
+    border-radius: 14px;
+    background: var(--claim-card-inner);
+    border: 1px solid var(--claim-border);
+    margin-top: 20px;
+}
+
+.loading-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(0, 217, 245, 0.2);
+    border-top-color: var(--cyan-primary);
+    border-radius: 50%;
+    animation: spinSpinner 0.8s linear infinite;
+    margin: 0 auto 12px;
+}
+
+@keyframes spinSpinner {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.loading-subtext {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Important Matching Notice */
+.claim-notice-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(245, 158, 11, 0.10);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    color: #fbbf24;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: 14px;
+}
+
+.claim-notice-banner svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* =========================================
+   8. CLAIM STATUS & SUBMISSION BUTTONS
+========================================= */
+.status-preview-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: var(--claim-card-inner);
+    border: 1px solid var(--claim-border);
+    margin-bottom: 24px;
+}
+
+.status-preview-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.status-preview-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.status-preview-note {
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+
+.status-pill-pending {
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Submit Actions */
+.claim-submit-group {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.btn-submit-claim {
+    flex: 1;
+    height: 52px;
+    padding: 0 28px;
+    background: var(--blue-primary);
+    color: #ffffff;
+    border: 1px solid var(--blue-primary);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 750;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 18px var(--blue-glow);
+}
+
+.btn-submit-claim:hover:not(:disabled) {
+    background: var(--blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px var(--blue-glow);
+}
+
+.btn-submit-claim:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.btn-submit-claim svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-back-home {
+    height: 52px;
+    padding: 0 20px;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--claim-border);
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 650;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-back-home:hover {
+    color: var(--cyan-primary);
+    border-color: var(--cyan-primary);
+    background: rgba(0, 217, 245, 0.08);
+}
+
+/* Success & Error Django Messages */
+.django-messages-container {
+    margin-bottom: 20px;
+}
+
+.alert-box {
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alert-success {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399;
+}
+
+.alert-error {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #f87171;
+}
+
+/* =========================================
+   9. RESPONSIVE BREAKPOINTS
+========================================= */
+@media (max-width: 1024px) {
+    .claim-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    .claim-page-wrapper {
+        padding: 24px 14px 50px;
+    }
+
+    .claim-card {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+
+    .form-row-2 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .student-info-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .compare-img-box {
+        height: 140px;
+    }
+
+    .claim-submit-group {
+        flex-direction: column;
+    }
+
+    .btn-submit-claim,
+    .btn-back-home {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   CLAIM PAGE - CLEAN PROFESSIONAL DESIGN
+   Add at the bottom of claim.css
+========================================= */
+
+/* Page background */
+.claim-page-wrapper {
+    background:
+        radial-gradient(ellipse at top right,
+        rgba(0, 140, 255, 0.12), transparent 45%),
+        var(--claim-bg);
+    padding: 35px 20px 60px;
+}
+
+.claim-container {
+    max-width: 1200px;
+    gap: 24px;
+}
+
+/* Header */
+.claim-page-header {
+    display: block;
+    padding-bottom: 22px;
+}
+
+.claim-page-title {
+    margin-top: 16px;
+    font-size: clamp(27px, 3vw, 35px);
+    letter-spacing: -0.7px;
+}
+
+.claim-page-subtitle {
+    max-width: 650px;
+    line-height: 1.7;
+}
+
+/* Main layout */
+.claim-layout-grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+    gap: 24px;
+}
+
+/* Main form card */
+.claim-card {
+    border-radius: 18px;
+    padding: 26px;
+    box-shadow: var(--shadow-main);
+}
+
+.claim-card-title {
+    font-size: 21px;
+    margin-bottom: 18px;
+}
+
+/* Remove unnecessary descriptions */
+.claim-section > .claim-card-desc {
+    display: none;
+}
+
+/* Simple section headings - no step numbers */
+.claim-section {
+    padding: 21px 0;
+    border-bottom: 1px solid var(--claim-border);
+}
+
+.claim-section h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.claim-section h3::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 17px;
+    margin-right: 10px;
+    vertical-align: -3px;
+    border-radius: 5px;
+    background: var(--cyan-primary);
+}
+
+/* Form fields */
+.form-group {
+    gap: 7px;
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    font-size: 13px;
+}
+
+.form-control {
+    height: 47px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+textarea.form-control {
+    min-height: 100px;
+}
+
+/* Student profile */
+.student-profile-verified {
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.student-info-grid {
+    gap: 17px;
+}
+
+.student-field-value {
+    margin-top: 5px;
+}
+
+/* Found item preview */
+.claim-sidebar .claim-card {
+    padding: 23px;
+}
+
+.found-item-preview-card {
+    padding: 15px;
+    border-radius: 13px;
+}
+
+.found-image-display-box {
+    height: 220px;
+    background: var(--claim-card);
+}
+
+.found-image-display-box img {
+    object-fit: contain;
+}
+
+.found-detail-row {
+    padding: 10px;
+    gap: 10px;
+}
+
+/* Upload section */
+.upload-dropzone {
+    padding: 30px 18px;
+    border-radius: 12px;
+}
+
+.upload-prompt-title {
+    font-size: 14px;
+}
+
+/* Status box */
+.status-preview-box {
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* Buttons */
+.claim-submit-group {
+    margin-top: 20px;
+    gap: 12px;
+}
+
+.btn-submit-claim {
+    height: 49px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.btn-back-home {
+    height: 49px;
+    border-radius: 9px;
+    font-size: 13px;
+}
+
+/* Matching result */
+.matching-card {
+    border-radius: 15px;
+}
+
+/* Mobile responsive */
+@media (max-width: 850px) {
+    .claim-layout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .claim-page-wrapper {
+        padding: 22px 12px 40px;
+    }
+
+    .claim-card {
+        padding: 19px 15px;
+    }
+
+    .claim-page-title {
+        font-size: 26px;
+    }
+
+    .form-row-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .student-info-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .claim-submit-group {
+        flex-direction: column;
+    }
+
+    .btn-submit-claim,
+    .btn-back-home {
+        width: 100%;
+    }
+}
+/* Back Navigation */
+.claim-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    padding: 10px 18px;
+    margin-bottom: 15px;
+    border: 1px solid var(--claim-border);
+    border-radius: 8px;
+    color: var(--claim-text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.claim-back-link:hover {
+    background: var(--claim-card-hover);
+    color: var(--claim-accent);
+    transform: translateX(-3px);
+}
+/* =====================================
+   CLAIM PAGE - GREEN & GOLD THEME
+===================================== */
+
+:root {
+    --claim-bg: #103522;
+    --claim-card: #1C5139;
+    --claim-card-hover: #286447;
+    --claim-card-inner: #17452F;
+
+    --claim-border: #3D7655;
+    --claim-accent: #D6B45C;
+    --claim-primary: #24613F;
+
+    --claim-text: #F5F5E8;
+    --claim-text-muted: #C5D6C8;
+
+    --claim-input-bg: #103522;
+    --claim-input-border: #477858;
+}
+
+/* Page background */
+.claim-page-wrapper {
+    background: var(--claim-bg) !important;
+}
+
+/* Main cards */
+.claim-card,
+.claim-preview-card,
+.claim-help-card,
+.matching-card {
+    background: var(--claim-card) !important;
+    border-color: var(--claim-border) !important;
+}
+
+/* Headings and highlights */
+.claim-page-header h1,
+.claim-section h3,
+.claim-card h3 {
+    color: var(--claim-accent) !important;
+}
+
+/* Input fields */
+.claim-page-wrapper input,
+.claim-page-wrapper select,
+.claim-page-wrapper textarea {
+    background: var(--claim-input-bg) !important;
+    border-color: var(--claim-input-border) !important;
+    color: var(--claim-text) !important;
+}
+
+/* Buttons */
+.claim-page-wrapper button,
+.claim-submit-btn {
+    background: var(--claim-accent) !important;
+    color: #173A28 !important;
+    border-color: var(--claim-accent) !important;
+}
+
+.claim-page-wrapper button:hover,
+.claim-submit-btn:hover {
+    background: #E6C978 !important;
+}
+
+/* Back navigation */
+.claim-back-link {
+    color: var(--claim-accent) !important;
+    border-color: var(--claim-border) !important;
+}
+
+.claim-back-link:hover {
+    background: var(--claim-card-hover) !important;
+}
+
+/* Remove blue/cyan accents */
+.claim-section h3::before {
+    background: var(--claim-accent) !important;
+}
+
+.claim-page-wrapper a {
+    color: var(--claim-accent);
+}
+
+/* Responsive layout remains unchanged */

@@ -1,0 +1,402 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Lost and Found Items</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{% static 'lostfound/item.css' %}">
+
+    <!-- Theme -->
+    <script src="{% static 'lostfound/theme.js' %}" defer></script>
+
+</head>
+
+<body>
+
+<div class="items-container">
+
+    <!-- HEADER -->
+
+    <header class="items-header">
+
+        <div class="items-heading">
+
+            <span class="items-badge">
+                CAMPUS PORTAL
+            </span>
+
+            <h1>Lost & Found Items</h1>
+
+            <p>
+                Find your lost belongings or help someone
+                recover their missing items.
+            </p>
+
+        </div>
+
+        <a href="{% url 'home' %}"
+           class="items-home">
+
+            ← Back to Home
+
+        </a>
+
+    </header>
+
+
+    <!-- SEARCH AND FILTER -->
+
+    <section class="items-filter-section">
+
+        <form method="GET"
+              action="{% url 'items' %}"
+              class="items-filter-form">
+
+            <!-- SEARCH -->
+
+            <div class="items-search-group">
+
+                <label for="item-search">
+                    Search Items
+                </label>
+
+                <input
+                    type="search"
+                    id="item-search"
+                    name="q"
+                    placeholder="Search name, category or location..."
+                    value="{{ search_query }}">
+
+            </div>
+
+
+            <!-- FILTER -->
+
+            <div class="items-type-group">
+
+                <label for="item-type">
+                    Item Type
+                </label>
+
+                <select
+                    id="item-type"
+                    name="type">
+
+                    <option value="all"
+                        {% if filter_type == "all" %}
+                            selected
+                        {% endif %}>
+
+                        All Items
+
+                    </option>
+
+                    <option value="Lost"
+                        {% if filter_type == "Lost" %}
+                            selected
+                        {% endif %}>
+
+                        Lost Items
+
+                    </option>
+
+                    <option value="Found"
+                        {% if filter_type == "Found" %}
+                            selected
+                        {% endif %}>
+
+                        Found Items
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SEARCH BUTTON -->
+
+            <button type="submit"
+                    class="items-search-button">
+
+                Search Items
+
+            </button>
+
+
+            <!-- RESET -->
+
+            <a href="{% url 'items' %}"
+               class="items-reset-button">
+
+                Reset
+
+            </a>
+
+        </form>
+
+    </section>
+
+
+    <!-- ITEM COUNT -->
+
+    <div class="items-results-header">
+
+        <h2>Available Items</h2>
+
+        <span class="items-count">
+
+            {{ items|length }} Items
+
+        </span>
+
+    </div>
+
+
+    <!-- ITEM CARDS -->
+
+    <section class="items-grid">
+
+        {% for item in items %}
+
+        <article class="item-card">
+
+
+            <!-- IMAGE -->
+
+            <div class="item-image-container">
+
+
+                {% if item.image and item.image.name %}
+
+                    <!-- DISPLAY UPLOADED IMAGE -->
+
+                    <img
+                        src="{{ item.image.url }}"
+                        alt="{{ item.item_name }}"
+                        class="item-image"
+                        loading="lazy">
+
+                {% else %}
+
+                    <!-- NO IMAGE -->
+
+                    <div class="item-no-image">
+
+                        <span>📦</span>
+
+                        <p>No Image Available</p>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- LOST OR FOUND BADGE -->
+
+                <span class="item-type-badge
+                    {% if item.item_type == 'Lost' %}
+                        lost-badge
+                    {% else %}
+                        found-badge
+                    {% endif %}">
+
+                    {{ item.item_type }}
+
+                </span>
+
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="item-card-content">
+
+
+                <!-- ITEM NAME -->
+
+                <h3>
+
+                    {{ item.item_name }}
+
+                </h3>
+
+
+                <!-- CATEGORY -->
+
+                <p class="item-category">
+
+                    {{ item.category }}
+
+                </p>
+
+
+                <!-- DESCRIPTION -->
+
+                <p class="item-description">
+
+                    {{ item.description }}
+
+                </p>
+
+
+                <!-- INFORMATION -->
+
+                <div class="item-information">
+
+
+                    <!-- LOCATION -->
+
+                    <div class="item-info-row">
+
+                        <span>📍 Location</span>
+
+                        <strong>
+
+                            {{ item.location }}
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- DATE -->
+
+                    <div class="item-info-row">
+
+                        <span>📅 Date</span>
+
+                        <strong>
+
+                            {{ item.date|date:"d M Y" }}
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- STUDENT -->
+
+                    <div class="item-info-row">
+
+                        <span>👤 Reported By</span>
+
+                        <strong>
+
+                            {{ item.student.student_name }}
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="item-card-footer" style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+
+                    <span class="item-status
+                        {% if item.status == 'Active' %}
+                            active-status
+                        {% else %}
+                            other-status
+                        {% endif %}">
+
+                        {{ item.status }}
+
+                    </span>
+
+                    {% if item.item_type == 'Found' and item.status == 'Active' %}
+                    <a href="{% url 'submit_claim' %}?item_id={{ item.id }}" style="padding: 6px 14px; border-radius: 8px; background: #008cff; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(0, 140, 255, 0.35);">
+                        <span>Claim</span> &rarr;
+                    </a>
+                    {% endif %}
+
+                </div>
+
+
+            </div>
+
+
+        </article>
+
+
+        {% empty %}
+
+
+        <!-- NO ITEMS -->
+
+        <div class="items-empty">
+
+            <div class="empty-icon">
+
+                📦
+
+            </div>
+
+            <h2>No Items Found</h2>
+
+            <p>
+
+                No items match your search.
+
+                Try changing the search text
+                or selecting another item type.
+
+            </p>
+
+            <a href="{% url 'items' %}"
+               class="items-reset-button">
+
+                View All Items
+
+            </a>
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="items-footer">
+
+        <p>
+
+            Campus Lost & Found Management System
+
+        </p>
+
+        <a href="{% url 'home' %}">
+
+            Back to Home
+
+        </a>
+
+    </footer>
+
+
+</div>
+
+
+</body>
+
+</html>

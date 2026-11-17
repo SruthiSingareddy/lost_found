@@ -1,0 +1,609 @@
+{% extends 'lostfound/base.html' %}
+{% load static %}
+
+{% block title %}Manage Student Claims | Admin Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+/* =========================================
+   MANAGE CLAIMS ADMIN PORTAL STYLING
+========================================= */
+.admin-claims-wrapper {
+    width: 100%;
+    min-height: calc(100vh - 140px);
+    background: var(--body-bg);
+    padding: 35px clamp(16px, 4vw, 48px) 70px;
+}
+
+.admin-claims-container {
+    max-width: 1360px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Header */
+.claims-management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--navy-border);
+}
+
+.claims-management-title {
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 800;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.claims-management-title svg {
+    width: 30px;
+    height: 30px;
+    stroke: var(--cyan-primary);
+}
+
+.claims-management-subtitle {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* Filter Tabs */
+.claims-filter-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-tab-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 20px;
+    background: var(--navy-card);
+    border: 1px solid var(--navy-border);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 650;
+    transition: all 0.2s ease;
+}
+
+.filter-tab-pill:hover {
+    border-color: var(--cyan-primary);
+    color: var(--cyan-primary);
+}
+
+.filter-tab-pill.active {
+    background: var(--blue-primary);
+    color: #ffffff;
+    border-color: var(--blue-primary);
+    box-shadow: 0 2px 10px var(--blue-glow);
+}
+
+.tab-count {
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 11.5px;
+    font-weight: 800;
+}
+
+/* Claims List / Grid */
+.claims-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.claim-admin-card {
+    background: var(--navy-card);
+    border: 1px solid var(--navy-border);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    transition: border-color 0.25s ease;
+}
+
+.claim-admin-card:hover {
+    border-color: rgba(0, 217, 245, 0.4);
+}
+
+/* Card Header */
+.claim-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--navy-border-subtle);
+}
+
+.claim-id-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 750;
+    color: var(--cyan-primary);
+}
+
+.claim-status-pill {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid #f59e0b;
+}
+
+.status-approved {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid #10b981;
+}
+
+.status-rejected {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+
+/* Card Body Layout */
+.claim-card-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.1fr;
+    gap: 22px;
+    align-items: start;
+}
+
+/* Col 1: Student Details */
+.claim-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-block-heading {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 750;
+    color: var(--text-muted);
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+}
+
+.info-row {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+}
+
+.info-row strong {
+    color: var(--text-primary);
+}
+
+/* Col 2: Images Comparison */
+.claim-images-compare-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.compare-thumbs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.compare-thumb-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.thumb-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.thumb-img-wrapper {
+    width: 100%;
+    height: 110px;
+    border-radius: 10px;
+    border: 1px solid var(--navy-border);
+    overflow: hidden;
+    background: #000000;
+    position: relative;
+    cursor: pointer;
+}
+
+.thumb-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+}
+
+.thumb-img-wrapper:hover img {
+    transform: scale(1.05);
+}
+
+.no-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 11px;
+    text-align: center;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* Similarity Badge in card */
+.card-similarity-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(0, 140, 255, 0.12);
+    border: 1px solid rgba(0, 217, 245, 0.3);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--cyan-primary);
+}
+
+/* Col 3: Details & Verification Actions */
+.claim-verification-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--navy-deep);
+    border: 1px solid var(--navy-border);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.claim-desc-text {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border-left: 3px solid var(--cyan-primary);
+}
+
+.admin-note-input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--navy-card);
+    border: 1px solid var(--navy-border);
+    color: var(--text-primary);
+    font-size: 13px;
+    outline: none;
+    resize: vertical;
+}
+
+.admin-note-input:focus {
+    border-color: var(--cyan-primary);
+}
+
+.action-buttons-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.btn-approve {
+    flex: 1;
+    padding: 9px 16px;
+    border-radius: 8px;
+    background: #10b981;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: opacity 0.2s ease;
+}
+
+.btn-approve:hover {
+    opacity: 0.9;
+}
+
+.btn-reject {
+    flex: 1;
+    padding: 9px 16px;
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-reject:hover {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+/* Empty State */
+.no-claims-box {
+    padding: 50px 20px;
+    text-align: center;
+    background: var(--navy-card);
+    border: 1px dashed var(--navy-border);
+    border-radius: 18px;
+    color: var(--text-muted);
+}
+
+.no-claims-box h4 {
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+/* Light theme overrides */
+html[data-theme="light"] .claim-admin-card {
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(20, 50, 90, 0.08);
+}
+html[data-theme="light"] .claim-verification-block {
+    background: #f7faff;
+}
+
+@media (max-width: 1024px) {
+    .claim-card-main {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-claims-wrapper">
+    <div class="admin-claims-container">
+
+        <!-- HEADER -->
+        <div class="claims-management-header">
+            <div>
+                <h1 class="claims-management-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                    Manage Student Claims
+                </h1>
+                <p class="claims-management-subtitle">
+                    Review submitted student claims, verify photo similarity matches, and approve or reject item handovers.
+                </p>
+            </div>
+
+            <!-- FILTER TABS -->
+            <div class="claims-filter-tabs">
+                <a href="{% url 'manage_claims' %}?status=all" class="filter-tab-pill {% if status_filter == 'all' %}active{% endif %}">
+                    <span>All Claims</span>
+                    <span class="tab-count">{{ total_count }}</span>
+                </a>
+                <a href="{% url 'manage_claims' %}?status=Pending" class="filter-tab-pill {% if status_filter == 'Pending' %}active{% endif %}">
+                    <span>Pending</span>
+                    <span class="tab-count">{{ pending_count }}</span>
+                </a>
+                <a href="{% url 'manage_claims' %}?status=Approved" class="filter-tab-pill {% if status_filter == 'Approved' %}active{% endif %}">
+                    <span>Approved</span>
+                    <span class="tab-count">{{ approved_count }}</span>
+                </a>
+                <a href="{% url 'manage_claims' %}?status=Rejected" class="filter-tab-pill {% if status_filter == 'Rejected' %}active{% endif %}">
+                    <span>Rejected</span>
+                    <span class="tab-count">{{ rejected_count }}</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- DJANGO MESSAGES -->
+        {% if messages %}
+        <div style="margin-bottom: 16px;">
+            {% for message in messages %}
+            <div style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; margin-bottom: 8px;
+                {% if message.tags == 'error' %}background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4);
+                {% else %}background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- CLAIMS LIST -->
+        <div class="claims-grid">
+            {% for claim in claims %}
+            <div class="claim-admin-card">
+                <!-- CARD TOP -->
+                <div class="claim-card-top">
+                    <div class="claim-id-tag">
+                        <span>Claim #{{ claim.id }}</span>
+                        <span>•</span>
+                        <span>Submitted {{ claim.created_at|date:"M d, Y H:i" }}</span>
+                    </div>
+
+                    <span class="claim-status-pill {% if claim.claim_status == 'Approved' %}status-approved{% elif claim.claim_status == 'Rejected' %}status-rejected{% else %}status-pending{% endif %}">
+                        {{ claim.claim_status }}
+                    </span>
+                </div>
+
+                <!-- CARD MAIN (3 COLUMNS) -->
+                <div class="claim-card-main">
+                    <!-- COLUMN 1: STUDENT & FOUND ITEM -->
+                    <div class="claim-info-block">
+                        <div class="info-block-heading">Claimant Information</div>
+                        <div class="info-row"><strong>Name:</strong> {{ claim.student.student_name }}</div>
+                        <div class="info-row"><strong>Roll No:</strong> {{ claim.student.roll_number }}</div>
+                        <div class="info-row"><strong>Email:</strong> {{ claim.student.email }}</div>
+                        <div class="info-row"><strong>Mobile:</strong> {{ claim.contact_number|default:claim.student.mobile_number }}</div>
+                        <div class="info-row"><strong>Dept:</strong> {{ claim.student.department }}</div>
+
+                        <div class="info-block-heading" style="margin-top: 14px;">Found Item Details</div>
+                        <div class="info-row"><strong>Item:</strong> {{ claim.item.item_name }}</div>
+                        <div class="info-row"><strong>Category:</strong> {{ claim.item.category }}</div>
+                        <div class="info-row"><strong>Found Location:</strong> {{ claim.item.location }}</div>
+                        <div class="info-row"><strong>Reported Date:</strong> {{ claim.item.date|date:"M d, Y" }}</div>
+                        <div class="info-row"><strong>Item Status:</strong> {{ claim.item.status }}</div>
+                    </div>
+
+                    <!-- COLUMN 2: PHOTOGRAPHS & SIMILARITY -->
+                    <div class="claim-images-compare-box">
+                        <div class="info-block-heading">Photographic Comparison</div>
+                        <div class="compare-thumbs">
+                            <!-- Student's Lost Photo -->
+                            <div class="compare-thumb-item">
+                                <span class="thumb-label">Lost Photo</span>
+                                <div class="thumb-img-wrapper" onclick="window.open('{% if claim.lost_item_image %}{{ claim.lost_item_image.url }}{% endif %}', '_blank')">
+                                    {% if claim.lost_item_image %}
+                                    <img src="{{ claim.lost_item_image.url }}" alt="Lost item photo">
+                                    {% else %}
+                                    <div class="no-thumb-placeholder">No Photo Uploaded</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- Found Item Reference Photo -->
+                             <div class="compare-thumb-item">
+                                <span class="thumb-label">Found Photo</span>
+                                <div class="thumb-img-wrapper"
+                                onclick="window.open('{% if claim.item.image %}{{ claim.item.image.url }}{% endif %}', '_blank')">
+                                 {% if claim.item.image %}
+                                 <img src="{{ claim.item.image.url }}"
+                                 alt="Found item photo">
+                                 {% else %}
+                                 <div class="no-thumb-placeholder">
+                                    No Reference Image
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </div>
+
+                        <!-- Similarity Result -->
+                        {% if claim.similarity_score is not None %}
+                        <div class="card-similarity-badge">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>Similarity: {{ claim.similarity_score }}%</span>
+                            {% if claim.similarity_result %}
+                            <span>({{ claim.similarity_result }})</span>
+                            {% endif %}
+                        </div>
+                        {% elif claim.similarity_result %}
+                        <div class="card-similarity-badge">
+                            <span>{{ claim.similarity_result }}</span>
+                        </div>
+                        {% else %}
+                        <div class="card-similarity-badge" style="color: var(--text-muted); border-color: var(--navy-border);">
+                            <span>No Automated Match Data</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- COLUMN 3: DESCRIPTION & VERIFICATION ACTIONS -->
+                    <div class="claim-verification-block">
+                        <div class="info-block-heading">Claim Description</div>
+                        <div class="claim-desc-text">
+                            {{ claim.claim_description }}
+                        </div>
+
+                        {% if claim.lost_date or claim.lost_location %}
+                        <div style="font-size: 12.5px; color: var(--text-muted);">
+                            {% if claim.lost_date %}<strong>Lost Date:</strong> {{ claim.lost_date }}{% endif %}
+                            {% if claim.lost_location %}<br><strong>Lost Location:</strong> {{ claim.lost_location }}{% endif %}
+                        </div>
+                        {% endif %}
+
+                        {% if claim.additional_details %}
+                        <div style="font-size: 12px; color: var(--text-secondary); background: rgba(0, 0, 0, 0.15); padding: 8px 10px; border-radius: 6px;">
+                            <strong>Additional Details:</strong> {{ claim.additional_details }}
+                        </div>
+                        {% endif %}
+
+                        <!-- Existing Note if Present -->
+                        {% if claim.admin_note %}
+                        <div style="font-size: 12px; color: #38bdf8; background: rgba(0, 140, 255, 0.1); padding: 8px 10px; border-radius: 6px;">
+                            <strong>Verification Note:</strong> {{ claim.admin_note }}
+                        </div>
+                        {% endif %}
+
+                        <!-- Actions for Administrator -->
+                        {% if claim.claim_status == 'Pending' %}
+                        <form method="POST" action="{% url 'approve_claim' claim.id %}" id="approveForm{{ claim.id }}">
+                            {% csrf_token %}
+                            <textarea
+                                name="admin_note"
+                                class="admin-note-input"
+                                rows="2"
+                                placeholder="Add administrative verification note (optional)..."></textarea>
+
+                            <div class="action-buttons-row">
+                                <button type="submit" class="btn-approve">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Approve Claim
+                                </button>
+                                <button
+                                    type="submit"
+                                    class="btn-reject"
+                                    formaction="{% url 'reject_claim' claim.id %}">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    Reject Claim
+                                </button>
+                            </div>
+                        </form>
+                        {% else %}
+                        <div style="font-size: 12.5px; color: var(--text-muted); text-align: center; padding-top: 6px;">
+                            Decision finalized as <strong>{{ claim.claim_status }}</strong>.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-claims-box">
+                <h4>No Claims Found</h4>
+                <p>No student claims match the current filter selection.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

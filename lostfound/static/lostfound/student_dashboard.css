@@ -1,0 +1,246 @@
+:root{
+    --green:#17452F;
+    --green-dark:#103522;
+    --gold:#C18422;
+    --cream:#FFF9EF;
+    --card:#FFFCF6;
+    --text:#263D30;
+    --muted:#68766B;
+    --border:#D9C8A8;
+}
+
+body{
+    background:
+        linear-gradient(rgba(255,249,239,.93),
+        rgba(255,249,239,.93)),
+        url("../image/college.webp");
+    background-size:cover;
+    background-attachment:fixed;
+}
+
+.student-dashboard-container{
+    max-width:1400px;
+    margin:auto;
+    padding:30px;
+}
+
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.dashboard-header h1{
+    color:var(--green);
+    font-size:2rem;
+    margin:0;
+}
+
+.student-info-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:30px;
+    display:flex;
+    gap:30px;
+    margin-bottom:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.student-avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:var(--green);
+    color:white;
+    font-size:2rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.student-details-grid{
+    flex:1;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.detail-item{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.detail-item i{
+    color:var(--gold);
+    width:18px;
+    font-size:18px;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:var(--card);
+    border-radius:18px;
+    border:1px solid var(--border);
+    padding:25px;
+    text-align:center;
+}
+
+.stat-icon{
+    font-size:28px;
+    color:var(--gold);
+}
+
+.stat-card h2{
+    color:var(--green);
+    font-size:2rem;
+}
+
+.items-wrapper{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    margin-bottom:25px;
+}
+
+.items-panel{
+    background:var(--card);
+    border-radius:18px;
+    border:1px solid var(--border);
+    padding:20px;
+}
+
+.item-row{
+    display:grid;
+    grid-template-columns:70px 1fr auto auto;
+    gap:15px;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.item-thumb{
+    width:65px;
+    height:65px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.status-badge{
+    background:#e8f5e9;
+    color:#2e7d32;
+    padding:6px 12px;
+    border-radius:30px;
+    font-size:.8rem;
+}
+
+.actions-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.action-card{
+    background:var(--card);
+    border-radius:18px;
+    border:1px solid var(--border);
+    padding:25px;
+    text-align:center;
+}
+
+.action-card i{
+    font-size:28px;
+    color:var(--gold);
+}
+
+.action-btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:12px 25px;
+    background:var(--green);
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+.dashboard-footer-actions{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:20px;
+}
+
+.footer-btn,
+.logout-btn{
+    background:var(--green);
+    color:#fff;
+    border:none;
+    padding:12px 25px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.logout-btn{
+    background:var(--gold);
+}
+
+.empty-state{
+    text-align:center;
+    padding:40px;
+    color:var(--muted);
+}
+
+@media(max-width:992px){
+
+    .student-details-grid{
+        grid-template-columns:1fr;
+    }
+
+    .items-wrapper{
+        grid-template-columns:1fr;
+    }
+
+    .actions-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .student-info-card{
+        flex-direction:column;
+        text-align:center;
+    }
+}
+
+@media(max-width:768px){
+
+    .dashboard-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .item-row{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-footer-actions{
+        flex-direction:column;
+    }
+
+    .footer-btn,
+    .logout-btn{
+        width:100%;
+    }
+}

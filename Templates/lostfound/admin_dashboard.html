@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en" data-theme="dark">
+
+<head>
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+    <script src="{% static 'lostfound/theme.js' %}" defer></script>
+
+</head>
+
+<body>
+
+    <h1>Admin Dashboard</h1>
+
+    <hr>
+
+    <h2>Students</h2>
+
+    <p>Total Students: {{ total_students }}</p>
+
+    <hr>
+
+    <h2>Lost Items</h2>
+
+    <p>Total Lost Items: {{ total_lost_items }}</p>
+
+    <hr>
+
+    <h2>Found Items</h2>
+
+    <p>Total Found Items: {{ total_found_items }}</p>
+
+    <hr>
+
+    <h2>Claims</h2>
+
+    <p>Total Claims: {{ total_claims }}</p>
+
+    <p>Pending Claims: {{ pending_claims }}</p>
+
+    <p>Approved Claims: {{ approved_claims }}</p>
+
+    <p>Rejected Claims: {{ rejected_claims }}</p>
+
+    <hr>
+
+    <a href="/">Back to Home</a>
+
+</body>
+
+</html>

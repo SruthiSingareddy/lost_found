@@ -1,0 +1,83 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Item Photo</title>
+
+    <link rel="stylesheet"
+          href="{% static 'lostfound/edit_item_image.css' %}">
+</head>
+
+<body>
+
+<div class="edit-container">
+
+    <div class="edit-card">
+
+        <h1>📸 Update Item Photo</h1>
+
+        <p class="subtitle">
+            Add or change the photo of your previously reported item.
+        </p>
+
+        <h3>{{ item.item_name }}</h3>
+
+        <div class="current-image">
+
+            <h4>Current Item Photo</h4>
+
+            {% if item.image %}
+
+                <img src="{{ item.image.url }}"
+                     alt="{{ item.item_name }}"
+                     class="item-preview">
+
+            {% else %}
+
+                <div class="no-image">
+                    📦
+                    <p>No photo uploaded yet</p>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        <form method="POST"
+              enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <label for="image">
+                Choose New Photo
+            </label>
+
+            <input type="file"
+                   name="image"
+                   id="image"
+                   accept="image/jpeg,image/png,image/webp"
+                   required>
+
+            <button type="submit">
+                Update Photo
+            </button>
+
+        </form>
+
+        <a href="{% url 'student_dashboard' %}"
+           class="back-link">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

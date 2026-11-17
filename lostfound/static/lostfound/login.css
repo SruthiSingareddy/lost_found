@@ -1,0 +1,663 @@
+
+/* =========================================================
+   CAMPUS LOST & FOUND  –  STUDENT LOGIN PAGE CSS
+   Forest Green #17452F  |  Gold #C18422  |  Cream #FFF9EF
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. PAGE SECTION  –  full-viewport with blurred bg image
+   --------------------------------------------------------- */
+
+.login-page-section {
+    position: relative;
+    min-height: calc(100vh - 70px);   /* subtract header height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 16px 60px;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow-x: hidden;
+}
+
+/* Soft cream-green blurred overlay */
+.login-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(16, 53, 34, 0.76) 0%,
+        rgba(23, 69, 47, 0.62) 50%,
+        rgba(255, 249, 239, 0.18) 100%
+    );
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 0;
+}
+
+
+/* ---------------------------------------------------------
+   2. CARD WRAPPER
+   --------------------------------------------------------- */
+
+.login-card-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+}
+
+
+/* ---------------------------------------------------------
+   3. LOGIN CARD
+   --------------------------------------------------------- */
+
+.login-card {
+    background: #FFF9EF;
+    border: 2px solid #17452F;
+    border-radius: 20px;
+    box-shadow:
+        0 10px 36px rgba(0, 0, 0, 0.28),
+        0 2px 8px  rgba(23, 69, 47, 0.16);
+    padding: 36px 40px 40px;
+    color: #263D30;
+}
+
+
+/* ---------------------------------------------------------
+   4. CARD TOP-BAR  –  Back button  &  Home link
+   --------------------------------------------------------- */
+
+.login-card-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+/* Back button */
+.login-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px 7px 12px;
+    background: #17452F;
+    color: #FFF9EF;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.22s ease, transform 0.18s ease;
+}
+
+.login-back-btn svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+.login-back-btn:hover {
+    background: #103522;
+    transform: translateX(-2px);
+}
+
+.login-back-btn:active {
+    transform: translateX(0);
+}
+
+/* Home link */
+.login-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #17452F;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 7px;
+    border: 1.5px solid #17452F;
+    transition: background 0.22s ease, color 0.22s ease;
+}
+
+.login-home-link svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+.login-home-link:hover {
+    background: #17452F;
+    color: #FFF9EF;
+}
+
+
+/* ---------------------------------------------------------
+   5. CARD HEADER  –  Icon + Title + Subtitle
+   --------------------------------------------------------- */
+
+.login-card-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: #17452F;
+    border-radius: 50%;
+    margin-bottom: 14px;
+}
+
+.login-header-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke: #C18422;
+}
+
+.login-card-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #17452F;
+    letter-spacing: -0.3px;
+    margin-bottom: 7px;
+}
+
+.login-card-subtitle {
+    font-size: 14px;
+    color: #536653;
+    line-height: 1.5;
+}
+
+
+/* ---------------------------------------------------------
+   6. FLASH / ALERT MESSAGES
+   --------------------------------------------------------- */
+
+.login-messages {
+    margin-bottom: 20px;
+}
+
+.login-alert-msg {
+    background: rgba(185, 28, 28, 0.08);
+    border-left: 4px solid #b91c1c;
+    color: #b91c1c;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* Green success variant */
+.login-alert-msg.success {
+    background: rgba(23, 69, 47, 0.08);
+    border-left-color: #17452F;
+    color: #17452F;
+}
+
+
+/* ---------------------------------------------------------
+   7. FORM LAYOUT
+   --------------------------------------------------------- */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #17452F;
+    letter-spacing: 0.01em;
+}
+
+
+/* ---------------------------------------------------------
+   8. INPUT WRAP  –  icon + field
+   --------------------------------------------------------- */
+
+.input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.field-icon {
+    position: absolute;
+    left: 12px;
+    width: 17px;
+    height: 17px;
+    stroke: #17452F;
+    pointer-events: none;
+    flex-shrink: 0;
+    opacity: 0.70;
+    transition: opacity 0.2s ease, stroke 0.2s ease;
+}
+
+.input-wrap input {
+    width: 100%;
+    height: 48px;
+    padding: 10px 14px 10px 40px;
+    border: 1.5px solid rgba(23, 69, 47, 0.35);
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: #263D30;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.input-wrap input::placeholder {
+    color: #9CAD9C;
+    font-size: 13px;
+}
+
+.input-wrap input:focus {
+    border-color: #C18422;
+    box-shadow: 0 0 0 3px rgba(193, 132, 34, 0.18);
+}
+
+.input-wrap:focus-within .field-icon {
+    opacity: 1;
+    stroke: #C18422;
+}
+
+
+/* ---------------------------------------------------------
+   9. EXTRAS ROW  –  Remember Me + Forgot Password
+   --------------------------------------------------------- */
+
+.login-extras-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -4px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Custom checkbox label */
+.remember-me-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #17452F;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Hide native checkbox */
+.remember-me-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* Custom square checkmark box */
+.remember-checkmark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #17452F;
+    border-radius: 4px;
+    background: #FFFFFF;
+    flex-shrink: 0;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    position: relative;
+}
+
+.remember-checkmark::after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 9px;
+    border: 2px solid #FFF9EF;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg) translate(-1px, -1px);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.remember-me-label input[type="checkbox"]:checked ~ .remember-checkmark {
+    background: #17452F;
+    border-color: #17452F;
+}
+
+.remember-me-label input[type="checkbox"]:checked ~ .remember-checkmark::after {
+    opacity: 1;
+}
+
+/* Forgot password */
+.forgot-password-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #C18422;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+
+.forgot-password-link:hover {
+    color: #9a6618;
+    text-decoration: underline;
+}
+
+
+/* ---------------------------------------------------------
+   10. LOGIN SUBMIT BUTTON
+   --------------------------------------------------------- */
+
+.login-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: 100%;
+    height: 52px;
+    margin-top: 4px;
+
+    background: #17452F;
+    color: #C18422;
+    border: none;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.18s ease,
+        box-shadow 0.25s ease;
+}
+
+.login-submit-btn .btn-arrow {
+    width: 20px;
+    height: 20px;
+    stroke: #C18422;
+    transition: transform 0.22s ease, stroke 0.22s ease;
+    flex-shrink: 0;
+}
+
+.login-submit-btn:hover {
+    background: #103522;
+    color: #E0AD4D;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(23, 69, 47, 0.30);
+}
+
+.login-submit-btn:hover .btn-arrow {
+    stroke: #E0AD4D;
+    transform: translateX(5px);
+}
+
+.login-submit-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+
+/* ---------------------------------------------------------
+   11. REGISTER LINK
+   --------------------------------------------------------- */
+
+.login-register-link {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 14px;
+    color: #536653;
+}
+
+.login-register-link a {
+    color: #17452F;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1.5px solid #C18422;
+    padding-bottom: 1px;
+    transition: color 0.2s ease;
+}
+
+.login-register-link a:hover {
+    color: #C18422;
+}
+
+
+/* ---------------------------------------------------------
+   12. DJANGO ERRORLIST
+   --------------------------------------------------------- */
+
+.errorlist {
+    color: #b91c1c;
+    font-size: 12.5px;
+    list-style: none;
+    margin-top: 4px;
+    padding: 0;
+}
+
+.errorlist li::before {
+    content: "⚠ ";
+}
+
+.error-message {
+    color: #b91c1c;
+    font-size: 12.5px;
+    margin-top: 4px;
+}
+
+.success-message {
+    background: rgba(23, 69, 47, 0.08);
+    border-left: 4px solid #17452F;
+    color: #17452F;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+
+/* ---------------------------------------------------------
+   13. DARK THEME OVERRIDES
+   --------------------------------------------------------- */
+
+html[data-theme="dark"] .login-card {
+    background: #1C5139;
+    border-color: #C18422;
+    color: #FFF9EF;
+}
+
+html[data-theme="dark"] .login-back-btn {
+    background: #103522;
+    color: #FFF9EF;
+    border: 1px solid #C18422;
+}
+
+html[data-theme="dark"] .login-back-btn:hover {
+    background: #C18422;
+    color: #17452F;
+}
+
+html[data-theme="dark"] .login-home-link {
+    color: #E0AD4D;
+    border-color: #E0AD4D;
+}
+
+html[data-theme="dark"] .login-home-link:hover {
+    background: #E0AD4D;
+    color: #17452F;
+}
+
+html[data-theme="dark"] .login-card-title {
+    color: #FFF9EF;
+}
+
+html[data-theme="dark"] .login-card-subtitle {
+    color: #E8E0CF;
+}
+
+html[data-theme="dark"] .form-group label {
+    color: #E0AD4D;
+}
+
+html[data-theme="dark"] .input-wrap input {
+    background: #103522;
+    color: #FFF9EF;
+    border-color: rgba(193, 132, 34, 0.45);
+}
+
+html[data-theme="dark"] .input-wrap input::placeholder {
+    color: #7a9e88;
+}
+
+html[data-theme="dark"] .input-wrap input:focus {
+    border-color: #E0AD4D;
+    box-shadow: 0 0 0 3px rgba(224, 173, 77, 0.18);
+}
+
+html[data-theme="dark"] .field-icon {
+    stroke: #E0AD4D;
+    opacity: 0.80;
+}
+
+html[data-theme="dark"] .remember-me-label {
+    color: #E0AD4D;
+}
+
+html[data-theme="dark"] .remember-checkmark {
+    background: #103522;
+    border-color: #E0AD4D;
+}
+
+html[data-theme="dark"] .remember-me-label input[type="checkbox"]:checked ~ .remember-checkmark {
+    background: #C18422;
+    border-color: #C18422;
+}
+
+html[data-theme="dark"] .forgot-password-link {
+    color: #E0AD4D;
+}
+
+html[data-theme="dark"] .forgot-password-link:hover {
+    color: #C18422;
+}
+
+html[data-theme="dark"] .login-alert-msg {
+    background: rgba(185, 28, 28, 0.15);
+    color: #fca5a5;
+    border-left-color: #ef4444;
+}
+
+html[data-theme="dark"] .success-message,
+html[data-theme="dark"] .login-alert-msg.success {
+    background: rgba(224, 173, 77, 0.10);
+    border-left-color: #E0AD4D;
+    color: #FFF9EF;
+}
+
+html[data-theme="dark"] .login-register-link {
+    color: #E8E0CF;
+}
+
+html[data-theme="dark"] .login-register-link a {
+    color: #E0AD4D;
+    border-bottom-color: #C18422;
+}
+
+html[data-theme="dark"] .login-register-link a:hover {
+    color: #C18422;
+}
+
+
+/* ---------------------------------------------------------
+   14. RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 540px) {
+
+    .login-page-section {
+        padding: 32px 12px 48px;
+        min-height: calc(100vh - 60px);
+    }
+
+    .login-card {
+        padding: 28px 20px 32px;
+        border-radius: 16px;
+    }
+
+    .login-card-title {
+        font-size: 22px;
+    }
+
+    .login-card-subtitle {
+        font-size: 13px;
+    }
+
+    .login-header-icon {
+        width: 52px;
+        height: 52px;
+    }
+
+    .login-header-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .input-wrap input {
+        height: 46px;
+    }
+
+    .login-submit-btn {
+        height: 50px;
+        font-size: 15px;
+    }
+
+    .login-extras-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .login-card {
+        padding: 22px 14px 26px;
+    }
+
+    .login-card-topbar {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+}

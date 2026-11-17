@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+
+    <title>Update Item Status</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+    <script src="{% static 'lostfound/theme.js' %}" defer></script>
+
+</head>
+
+<body>
+
+    <h1>Update Item Status</h1>
+
+    <hr>
+
+    <h3>Item Name: {{ item.item_name }}</h3>
+
+    <p>Category: {{ item.category }}</p>
+
+    <p>Description: {{ item.description }}</p>
+
+    <p>Location: {{ item.location }}</p>
+
+    <p>Current Status: {{ item.status }}</p>
+
+    <hr>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label>Select New Status:</label>
+
+        <select name="status" required>
+
+            <option value="Active">Active</option>
+
+            <option value="Returned">Returned</option>
+
+            <option value="Closed">Closed</option>
+
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+            Update Status
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="{% url 'view_all_items' %}">
+        Back to All Items
+    </a>
+
+</body>
+
+</html>

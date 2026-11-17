@@ -1,0 +1,287 @@
+{% extends 'lostfound/base.html' %}
+{% load static %}
+
+{% block title %}Student Registration | Campus Lost &amp; Found{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'lostfound/register.css' %}?v=2">
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================
+     STUDENT REGISTRATION PAGE
+========================================== -->
+<section class="reg-page-section"
+         style="background-image: url('{% static 'lostfound/image/college.jpg' %}');">
+
+    <!-- Blurred overlay -->
+    <div class="reg-bg-overlay"></div>
+
+    <!-- Centered card wrapper -->
+    <div class="reg-card-wrapper">
+
+        <div class="reg-card">
+
+            <!-- ── CARD TOP BAR: Back button + title ── -->
+            <div class="reg-card-topbar">
+
+                <!-- Back button (left arrow) -->
+                <button
+                    type="button"
+                    class="reg-back-btn"
+                    onclick="window.history.back()"
+                    title="Go back"
+                    aria-label="Go back to previous page">
+
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.4"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back</span>
+
+                </button>
+
+                <!-- Home fallback link -->
+                <a href="/" class="reg-home-link" aria-label="Go to Home">
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
+                    </svg>
+                    <span>Home</span>
+                </a>
+
+            </div><!-- /reg-card-topbar -->
+
+
+            <!-- ── CARD HEADER: Icon + Title ── -->
+            <div class="reg-card-header">
+
+                <div class="reg-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.2"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="8.5" cy="7" r="4"/>
+                        <line x1="20" y1="8" x2="20" y2="14"/>
+                        <line x1="23" y1="11" x2="17" y2="11"/>
+                    </svg>
+                </div>
+
+                <h1 class="reg-card-title">Student Registration</h1>
+                <p class="reg-card-subtitle">Create your Campus Lost &amp; Found account</p>
+
+            </div><!-- /reg-card-header -->
+
+
+            <!-- ── FLASH MESSAGES ── -->
+            {% if messages %}
+                <div class="reg-messages">
+                    {% for message in messages %}
+                        <p class="reg-success-msg">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+            <!-- ── REGISTRATION FORM ── -->
+            <form method="POST" class="reg-form" novalidate>
+                {% csrf_token %}
+
+                <!-- Row 1: Student Name + Email -->
+                <div class="reg-form-row two-col">
+
+                    <div class="form-group">
+                        <label for="id_student_name">Student Name</label>
+                        <div class="input-wrap">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            <input
+                                type="text"
+                                id="id_student_name"
+                                name="student_name"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_email">Email Address</label>
+                        <div class="input-wrap">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <input
+                                type="email"
+                                id="id_email"
+                                name="email"
+                                placeholder="yourname@college.edu"
+                                autocomplete="email"
+                                required>
+                        </div>
+                    </div>
+
+                </div><!-- /Row 1 -->
+
+
+                <!-- Row 2: Mobile + Department -->
+                <div class="reg-form-row two-col">
+
+                    <div class="form-group">
+                        <label for="id_mobile_number">Mobile Number</label>
+                        <div class="input-wrap">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                                <line x1="12" y1="18" x2="12.01" y2="18"/>
+                            </svg>
+                            <input
+                                type="text"
+                                id="id_mobile_number"
+                                name="mobile_number"
+                                placeholder="10-digit mobile number"
+                                autocomplete="tel"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_department">Department</label>
+                        <div class="input-wrap">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                            </svg>
+                            <input
+                                type="text"
+                                id="id_department"
+                                name="department"
+                                placeholder="e.g. Computer Science"
+                                required>
+                        </div>
+                    </div>
+
+                </div><!-- /Row 2 -->
+
+
+                <!-- Row 3: Roll Number (full width) -->
+                <div class="reg-form-row one-col">
+
+                    <div class="form-group">
+                        <label for="id_roll_number">College Roll Number</label>
+                        <div class="input-wrap">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                <path d="M6 12v5c0 1.1 2.69 2 6 2s6-.9 6-2v-5"/>
+                            </svg>
+                            <input
+                                type="text"
+                                id="id_roll_number"
+                                name="roll_number"
+                                placeholder="e.g. CS2023001"
+                                required>
+                        </div>
+                    </div>
+
+                </div><!-- /Row 3 -->
+
+
+                <!-- Row 4: Password + Confirm Password -->
+                <div class="reg-form-row two-col">
+
+                    <div class="form-group">
+                        <label for="id_password">Password</label>
+                        <div class="input-wrap">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <input
+                                type="password"
+                                id="id_password"
+                                name="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_confirm_password">Confirm Password</label>
+                        <div class="input-wrap">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <path d="M9 12l2 2 4-4"/>
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <input
+                                type="password"
+                                id="id_confirm_password"
+                                name="confirm_password"
+                                placeholder="Repeat your password"
+                                autocomplete="new-password"
+                                required>
+                        </div>
+                    </div>
+
+                </div><!-- /Row 4 -->
+
+
+                <!-- Register Button -->
+                <button type="submit" class="reg-submit-btn">
+                    <span>Register</span>
+                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.4"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+
+            </form><!-- /reg-form -->
+
+
+            <!-- ── LOGIN LINK ── -->
+            <p class="reg-login-link">
+                Already have an account?
+                <a href="{% url 'student_login' %}">Sign in here</a>
+            </p>
+
+        </div><!-- /reg-card -->
+
+    </div><!-- /reg-card-wrapper -->
+
+</section>
+
+{% endblock %}

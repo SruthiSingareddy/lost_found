@@ -1,0 +1,503 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+
+    <!-- BASIC SETTINGS -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- PAGE TITLE -->
+
+    <title>Campus Lost and Found Dashboard</title>
+
+
+    <!-- DASHBOARD CSS -->
+
+    {% load static %}
+    
+    <link rel="stylesheet"
+          href="{% static 'lostfound/student_dashboard.css' %}">
+
+
+    <!-- THEME JAVASCRIPT -->
+
+    <script src="{% static 'lostfound/theme.js' %}" defer></script>
+
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         DASHBOARD CONTAINER
+    ================================== -->
+
+    <div class="dashboard-container">
+
+
+        <!-- =================================
+             HEADER
+        ================================== -->
+
+        <header class="dashboard-header">
+            
+            <div class="dashboard-header-content">
+                
+                <span class="dashboard-badge">
+                    
+                    🎓 CAMPUS MANAGEMENT
+                
+                </span>
+                
+                <h1>
+                    
+                    Campus Lost & Found
+                    
+                    <span>Dashboard</span>
+                
+                </h1>
+                
+                <p>
+                    
+                    Welcome to your dashboard. Monitor reported items,
+                    manage claims, and help students recover their belongings.
+                </p>
+            
+            </div>
+            
+            <div class="dashboard-header-icon">
+                
+                📦
+            
+            </div>
+        
+        </header>
+
+
+
+        <!-- =================================
+             DASHBOARD OVERVIEW
+        ================================== -->
+
+        <section>
+
+            <h2 class="dashboard-section-title">
+
+                Dashboard Overview
+
+            </h2>
+
+
+            <div class="dashboard-stats">
+
+
+                <!-- TOTAL STUDENTS -->
+
+                <div class="dashboard-stat-card students">
+
+                    <div class="dashboard-stat-top">
+
+                        <div class="dashboard-stat-icon">
+
+                            👨‍🎓
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="dashboard-stat-label">
+
+                        Total Students
+
+                    </p>
+
+
+                    <h3 class="dashboard-stat-number">
+
+                        {{ total_students }}
+
+                    </h3>
+
+                </div>
+
+
+
+                <!-- TOTAL LOST ITEMS -->
+
+                <div class="dashboard-stat-card lost">
+
+                    <div class="dashboard-stat-top">
+
+                        <div class="dashboard-stat-icon">
+
+                            🔍
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="dashboard-stat-label">
+
+                        Total Lost Items
+
+                    </p>
+
+
+                    <h3 class="dashboard-stat-number">
+
+                        {{ total_lost }}
+
+                    </h3>
+
+                </div>
+
+
+
+                <!-- TOTAL FOUND ITEMS -->
+
+                <div class="dashboard-stat-card found">
+
+                    <div class="dashboard-stat-top">
+
+                        <div class="dashboard-stat-icon">
+
+                            📦
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="dashboard-stat-label">
+
+                        Total Found Items
+
+                    </p>
+
+
+                    <h3 class="dashboard-stat-number">
+
+                        {{ total_found }}
+
+                    </h3>
+
+                </div>
+
+
+
+                <!-- PENDING CLAIMS -->
+
+                <div class="dashboard-stat-card pending">
+
+                    <div class="dashboard-stat-top">
+
+                        <div class="dashboard-stat-icon">
+
+                            ⏳
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="dashboard-stat-label">
+
+                        Pending Claims
+
+                    </p>
+
+
+                    <h3 class="dashboard-stat-number">
+
+                        {{ pending_claims }}
+
+                    </h3>
+
+                </div>
+
+
+
+                <!-- APPROVED CLAIMS -->
+
+                <div class="dashboard-stat-card approved">
+
+                    <div class="dashboard-stat-top">
+
+                        <div class="dashboard-stat-icon">
+
+                            ✅
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="dashboard-stat-label">
+
+                        Approved Claims
+
+                    </p>
+
+
+                    <h3 class="dashboard-stat-number">
+
+                        {{ approved_claims }}
+
+                    </h3>
+
+                </div>
+
+
+
+                <!-- REJECTED CLAIMS -->
+
+                <div class="dashboard-stat-card rejected">
+
+                    <div class="dashboard-stat-top">
+
+                        <div class="dashboard-stat-icon">
+
+                            ❌
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="dashboard-stat-label">
+
+                        Rejected Claims
+
+                    </p>
+
+
+                    <h3 class="dashboard-stat-number">
+
+                        {{ rejected_claims }}
+
+                    </h3>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             LOST VS FOUND
+        ================================== -->
+
+        <section class="dashboard-comparison-section">
+
+
+            <h2 class="dashboard-section-title">
+
+                Lost vs Found Items
+
+            </h2>
+
+
+            <div class="dashboard-comparison-grid">
+
+
+                <!-- LOST ITEMS -->
+
+                <div class="dashboard-comparison-card lost">
+
+
+                    <div class="dashboard-comparison-header">
+
+                        <h3>
+
+                            🔍 Lost Items
+
+                        </h3>
+
+
+                        <div class="dashboard-comparison-icon">
+
+                            📍
+
+                        </div>
+
+                    </div>
+
+
+                    <h2 class="dashboard-comparison-number">
+
+                        {{ total_lost }}
+
+                    </h2>
+
+
+                    <div class="dashboard-progress-background">
+
+                        <div class="dashboard-progress-bar"
+                             style="width: 100%;">
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="dashboard-comparison-description">
+
+                        Items reported missing
+                        by students.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- FOUND ITEMS -->
+
+                <div class="dashboard-comparison-card found">
+
+
+                    <div class="dashboard-comparison-header">
+
+                        <h3>
+
+                            📦 Found Items
+
+                        </h3>
+
+
+                        <div class="dashboard-comparison-icon">
+
+                            🎁
+
+                        </div>
+
+                    </div>
+
+
+                    <h2 class="dashboard-comparison-number">
+
+                        {{ total_found }}
+
+                    </h2>
+
+
+                    <div class="dashboard-progress-background">
+
+                        <div class="dashboard-progress-bar"
+                             style="width: 100%;">
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="dashboard-comparison-description">
+
+                        Items reported found
+                        on campus.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             DASHBOARD BUTTONS
+        ================================== -->
+
+        <section class="dashboard-actions">
+
+
+            <!-- MANAGE CLAIMS -->
+
+            <a href="{% url 'manage_claims' %}"
+               class="dashboard-action-button manage">
+
+                📋 Manage Claims
+
+            </a>
+
+
+
+            <!-- BACK TO HOME -->
+
+            <a href="{% url 'home' %}"
+               class="dashboard-action-button home">
+
+                🏠 Back to Home
+
+            </a>
+
+
+
+            <!-- LOGOUT -->
+
+            <a href="/logout/"
+               class="dashboard-action-button logout">
+
+                🚪 Logout
+
+            </a>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             FOOTER
+        ================================== -->
+
+        <footer class="dashboard-footer">
+
+
+            <p>
+
+                🎓 Campus Lost and Found Management System
+
+            </p>
+
+
+            <p>
+
+                Helping students recover
+                their lost belongings.
+
+            </p>
+
+
+        </footer>
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>

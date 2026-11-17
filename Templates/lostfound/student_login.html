@@ -1,0 +1,174 @@
+{% extends 'lostfound/base.html' %}
+{% load static %}
+
+{% block title %}Student Login | Campus Lost &amp; Found{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'lostfound/login.css' %}?v=2">
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================
+     STUDENT LOGIN PAGE
+========================================== -->
+<section class="login-page-section"
+         style="background-image: url('{% static 'lostfound/image/college.webp' %}');">
+
+    <!-- Soft blurred cream-green overlay -->
+    <div class="login-bg-overlay"></div>
+
+    <!-- Centered card wrapper -->
+    <div class="login-card-wrapper">
+
+        <div class="login-card">
+
+            <!-- ── TOP-BAR: Back button + Home link ── -->
+            <div class="login-card-topbar">
+
+                <button
+                    type="button"
+                    class="login-back-btn"
+                    onclick="window.history.back()"
+                    title="Go back"
+                    aria-label="Go back to previous page">
+
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.4"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back</span>
+
+                </button>
+
+                <a href="{% url 'home' %}" class="login-home-link" aria-label="Go to Home">
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
+                    </svg>
+                    <span>Home</span>
+                </a>
+
+            </div><!-- /login-card-topbar -->
+
+
+            <!-- ── CARD HEADER: Icon + Title ── -->
+            <div class="login-card-header">
+
+                <div class="login-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.2"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/>
+                        <line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                </div>
+
+                <h1 class="login-card-title">Student Login</h1>
+                <p class="login-card-subtitle">Enter your credentials to access your account.</p>
+
+            </div><!-- /login-card-header -->
+
+
+            <!-- ── FLASH / VALIDATION MESSAGES ── -->
+            {% if messages %}
+                <div class="login-messages">
+                    {% for message in messages %}
+                        <p class="login-alert-msg">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+            <!-- ── LOGIN FORM ── -->
+            <form method="POST" class="login-form" novalidate>
+                {% csrf_token %}
+
+                <!-- Email Address -->
+                <div class="form-group">
+                    <label for="id_login_email">Email Address</label>
+                    <div class="input-wrap">
+                        <svg class="field-icon" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round"
+                             aria-hidden="true">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <input
+                            type="email"
+                            id="id_login_email"
+                            name="email"
+                            placeholder="yourname@college.edu"
+                            autocomplete="email"
+                            required>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="id_login_password">Password</label>
+                    <div class="input-wrap">
+                        <svg class="field-icon" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round"
+                             aria-hidden="true">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <input
+                            type="password"
+                            id="id_login_password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required>
+                    </div>
+                </div>
+
+                <!-- Remember Me + Forgot Password row -->
+                <div class="login-extras-row">
+                    <label class="remember-me-label">
+                        <input type="checkbox" name="remember_me" id="id_remember_me">
+                        <span class="remember-checkmark"></span>
+                        <span>Remember Me</span>
+                    </label>
+
+                    <a href="#" class="forgot-password-link">Forgot Password?</a>
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="login-submit-btn">
+                    <span>Login</span>
+                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.4"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+
+            </form><!-- /login-form -->
+
+
+            <!-- ── REGISTER LINK ── -->
+            <p class="login-register-link">
+                Don't have an account?
+                <a href="{% url 'register' %}">Register</a>
+            </p>
+
+        </div><!-- /login-card -->
+
+    </div><!-- /login-card-wrapper -->
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,288 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Report Lost or Found Item | Campus Portal</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{% static 'lostfound/report.css' %}?v=3">
+
+    <!-- Theme JavaScript -->
+    <script src="{% static 'lostfound/theme.js' %}" defer></script>
+
+</head>
+
+<body>
+
+<div class="report-container">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="report-header">
+
+        <span class="report-badge">
+            CAMPUS PORTAL
+        </span>
+
+        <h1>Report Lost or Found Item</h1>
+
+        <p>
+            Help your campus community recover
+            lost belongings.
+        </p>
+
+    </header>
+
+
+    <!-- ================= THEME BUTTON ================= -->
+
+    <div class="theme-control">
+
+        <button type="button"
+                id="themeToggle"
+                onclick="changeTheme()">
+
+            ☀️ / 🌙 Change Theme
+
+        </button>
+
+    </div>
+
+
+    <!-- ================= SUCCESS MESSAGES ================= -->
+
+    {% if messages %}
+
+        <div class="messages">
+
+            {% for message in messages %}
+
+                <div class="message {{ message.tags }}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- ================= REPORT FORM ================= -->
+
+    <form method="POST"
+          action="{% url 'report_item' %}"
+          enctype="multipart/form-data"
+          class="report-form">
+
+        {% csrf_token %}
+
+
+        <!-- ITEM NAME -->
+
+        <div class="form-group">
+
+            <label for="item_name">
+                Item Name
+            </label>
+
+            <input type="text"
+                   id="item_name"
+                   name="item_name"
+                   placeholder="Enter item name"
+                   required>
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div class="form-group">
+
+            <label for="category">
+                Category
+            </label>
+
+            <input type="text"
+                   id="category"
+                   name="category"
+                   placeholder="Example: Personal Items"
+                   required>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+            <label for="description">
+                Description
+            </label>
+
+            <textarea id="description"
+                      name="description"
+                      rows="5"
+                      placeholder="Describe the item, color, size, and other details"
+                      required></textarea>
+
+        </div>
+
+
+        <!-- IMAGE UPLOAD -->
+
+        <div class="form-group">
+
+            <label for="image">
+                Upload Item Image
+            </label>
+
+            <input type="file"
+                   id="image"
+                   name="image"
+                   accept="image/*">
+
+            <small>
+                Select a photo of the lost or found item.
+            </small>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="form-group">
+
+            <label for="location">
+                Location
+            </label>
+
+            <input type="text"
+                   id="location"
+                   name="location"
+                   placeholder="Where was the item lost or found?"
+                   required>
+
+        </div>
+
+
+        <!-- DATE -->
+
+        <div class="form-group">
+
+            <label for="date">
+                Date
+            </label>
+
+            <input type="date"
+                   id="date"
+                   name="date"
+                   required>
+
+        </div>
+
+
+        <!-- ITEM TYPE -->
+
+        <div class="form-group">
+
+            <label for="item_type">
+                Item Type
+            </label>
+
+            <select id="item_type"
+                    name="item_type"
+                    required>
+
+                <option value="">
+                    Select Item Type
+                </option>
+
+                <option value="Lost">
+                    Lost
+                </option>
+
+                <option value="Found">
+                    Found
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- STUDENT -->
+
+        <div class="form-group">
+
+            <label for="student">
+                Student
+            </label>
+
+            <select id="student"
+                    name="student"
+                    required>
+
+                <option value="">
+                    Select Student
+                </option>
+
+                {% for student in students %}
+
+                    <option value="{{ student.id }}">
+
+                        {{ student.student_name }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- SUBMIT BUTTON -->
+
+        <button type="submit"
+                class="report-submit">
+
+            Report Item
+
+        </button>
+
+
+    </form>
+
+
+    <!-- ================= BACK HOME ================= -->
+
+    <div class="report-footer">
+
+        <a href="{% url 'home' %}"
+           class="report-home">
+
+            ← Back to Home
+
+        </a>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

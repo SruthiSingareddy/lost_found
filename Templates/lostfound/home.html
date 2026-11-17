@@ -1,0 +1,245 @@
+{% extends 'lostfound/base.html' %}
+{% load static %}
+
+{% block title %}Campus Lost & Found | Official University Portal{% endblock %}
+
+{% block content %}
+<!-- =========================================
+     CAMPUS LOST & FOUND  –  HOMEPAGE HERO
+========================================== -->
+<section class="hero-section"
+         style="background-image: url('{% static 'lostfound/image/college.jpg' %}');">
+
+    <div class="hero-main-container">
+
+        <!-- =====================================
+             TWO-COLUMN HERO GRID
+        ====================================== -->
+        <div class="hero-columns-grid">
+
+            <!-- ===== LEFT COLUMN – HERO CONTENT ===== -->
+            <div class="hero-left-column">
+
+                <div class="campus-welcome-tag">
+                    Welcome to Our Campus
+                </div>
+
+                <h1 class="hero-main-title">
+                    <span class="title-campus">Campus</span>
+                    <span class="title-lostfound">Lost &amp; Found</span>
+                </h1>
+
+                <div class="hero-tagline-row">
+                    <span>Find</span>
+                    <span class="tagline-bullet">•</span>
+                    <span>Claim</span>
+                    <span class="tagline-bullet">•</span>
+                    <span>Reunite</span>
+                </div>
+
+                <h2 class="hero-reassurance-heading">
+                    Lost something on campus? Don't worry!
+                </h2>
+
+                <p class="hero-mission-description">
+                    We help you find your belongings and reunite lost items with their rightful owners.
+                </p>
+
+                <div class="hero-action-buttons">
+                    <a href="{% url 'items' %}" class="btn-browse-items">
+                        <span>Browse Items</span>
+                        <svg class="btn-arrow-icon" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2.2"
+                             stroke-linecap="round" stroke-linejoin="round"
+                             aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+
+            </div><!-- /hero-left-column -->
+
+
+            <!-- ===== RIGHT COLUMN – SEARCH CARD ===== -->
+            <div class="hero-right-column">
+                <div class="search-card-container">
+
+                    <!-- Card header: icon + title -->
+                    <div class="search-card-header">
+                        <div class="search-card-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2.2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <h3 class="search-card-title">Find Your Lost Item</h3>
+                    </div>
+
+                    <p class="search-card-description">
+                        Search for missing items reported on campus.
+                    </p>
+
+                    <!-- SEARCH FORM -->
+                    <form action="{% url 'search_items' %}" method="get" class="search-card-form">
+
+                        <!-- Category dropdown -->
+                        <div class="search-category-row">
+                            <select name="category" class="search-category-select"
+                                    aria-label="Filter by category">
+                                <option value="">All Categories</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="bags">Bags &amp; Backpacks</option>
+                                <option value="clothing">Clothing</option>
+                                <option value="books">Books &amp; Stationery</option>
+                                <option value="accessories">Accessories</option>
+                                <option value="keys">Keys &amp; Cards</option>
+                                <option value="sports">Sports &amp; Gym</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Search input + button in one row -->
+                        <div class="search-form-row">
+                            <div class="search-input-field-wrapper">
+                                <svg class="search-field-icon" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2"
+                                     stroke-linecap="round" stroke-linejoin="round"
+                                     aria-hidden="true">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input
+                                    type="text"
+                                    name="q"
+                                    class="search-text-input"
+                                    placeholder="Search for items..."
+                                    aria-label="Search for items">
+                            </div>
+
+                            <button type="submit" class="search-action-btn">
+                                <span>Search</span>
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div><!-- /search-card-container -->
+            </div><!-- /hero-right-column -->
+
+        </div><!-- /hero-columns-grid -->
+
+
+        <!-- =====================================
+             FOUR QUICK-ACTION CARDS (bottom strip)
+        ====================================== -->
+        <div class="quick-cards-bottom-wrapper">
+            <div class="quick-action-cards-grid">
+
+                <!-- CARD 1: Report Lost Item -->
+                <a href="{% url 'report_item' %}" class="quick-action-card">
+                    <div class="quick-card-left-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2.2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <div class="quick-card-text-content">
+                        <h4 class="quick-card-heading">Report Lost Item</h4>
+                        <p class="quick-card-description">Tell us about your lost item.</p>
+                    </div>
+                    <div class="quick-card-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2.5" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- CARD 2: View Items -->
+                <a href="{% url 'items' %}" class="quick-action-card">
+                    <div class="quick-card-left-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2.2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <div class="quick-card-text-content">
+                        <h4 class="quick-card-heading">View Items</h4>
+                        <p class="quick-card-description">Browse all found items.</p>
+                    </div>
+                    <div class="quick-card-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2.5" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- CARD 3: Submit Claim -->
+                <a href="{% url 'submit_claim' %}" class="quick-action-card">
+                    <div class="quick-card-left-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2.2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                    </div>
+                    <div class="quick-card-text-content">
+                        <h4 class="quick-card-heading">Submit Claim</h4>
+                        <p class="quick-card-description">Claim your lost item.</p>
+                    </div>
+                    <div class="quick-card-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2.5" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- CARD 4: Manage Claims -->
+                <a href="{% url 'manage_claims' %}" class="quick-action-card">
+                    <div class="quick-card-left-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2.2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                    </div>
+                    <div class="quick-card-text-content">
+                        <h4 class="quick-card-heading">Manage Claims</h4>
+                        <p class="quick-card-description">Track your claim status.</p>
+                    </div>
+                    <div class="quick-card-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2.5" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </a>
+
+            </div><!-- /quick-action-cards-grid -->
+        </div><!-- /quick-cards-bottom-wrapper -->
+
+    </div><!-- /hero-main-container -->
+
+</section>
+{% endblock %}

@@ -1,0 +1,132 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>All Reported Items | Campus Portal</title>
+
+    <link rel="stylesheet"
+          href="{% static 'lostfound/view_items.css' %}?v=1">
+
+    <script src="{% static 'lostfound/theme.js' %}" defer></script>
+</head>
+
+<body>
+
+    <div class="page-container">
+
+        <!-- Header -->
+        <header class="page-header">
+
+            <div>
+                <a href="/" class="back-link">← Back to Home</a>
+
+                <h1>All Reported Items</h1>
+
+                <p>Manage and monitor all reported lost and found items.</p>
+            </div>
+
+            <button type="button" class="theme-btn" id="themeToggle">
+                ☀ / ☾ Theme
+            </button>
+
+        </header>
+
+        <!-- Items Section -->
+        <section class="items-section">
+
+            <div class="section-heading">
+                <h2>Reported Items</h2>
+                <span class="item-count">
+                    {{ items|length }} Items
+                </span>
+            </div>
+
+            <div class="items-grid">
+
+                {% for item in items %}
+
+                    <div class="item-card">
+
+                        <div class="item-card-header">
+                            <h3>{{ item.item_name }}</h3>
+
+                            <span class="item-type
+                                {% if item.item_type == 'Lost' %}
+                                    lost
+                                {% else %}
+                                    found
+                                {% endif %}">
+                                {{ item.item_type }}
+                            </span>
+                        </div>
+
+                        <div class="item-details">
+
+                            <p>
+                                <strong>Category</strong>
+                                <span>{{ item.category }}</span>
+                            </p>
+
+                            <p>
+                                <strong>Description</strong>
+                                <span>{{ item.description }}</span>
+                            </p>
+
+                            <p>
+                                <strong>Location</strong>
+                                <span>{{ item.location }}</span>
+                            </p>
+
+                            <p>
+                                <strong>Reported Date</strong>
+                                <span>{{ item.date }}</span>
+                            </p>
+
+                            <p>
+                                <strong>Reported By</strong>
+                                <span>{{ item.student.student_name }}</span>
+                            </p>
+
+                            <p>
+                                <strong>Status</strong>
+                                <span class="status-text">
+                                    {{ item.status }}
+                                </span>
+                            </p>
+
+                        </div>
+
+                        <a href="{% url 'update_item_status' item.id %}"
+                           class="update-btn">
+                            Update Status →
+                        </a>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="empty-state">
+                        <div class="empty-icon">📦</div>
+                        <h3>No Items Reported Yet</h3>
+                        <p>Reported items will appear here.</p>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+        <footer class="page-footer">
+            Campus Lost & Found Management System
+        </footer>
+
+    </div>
+
+</body>
+</html>

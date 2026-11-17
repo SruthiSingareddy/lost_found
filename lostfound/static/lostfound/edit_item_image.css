@@ -1,0 +1,140 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1120;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+.edit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+.edit-card {
+    width: 100%;
+    max-width: 520px;
+    background: #121c30;
+    padding: 35px;
+    border-radius: 18px;
+    border: 1px solid #263750;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.edit-card h1 {
+    text-align: center;
+    color: #38bdf8;
+    margin-bottom: 12px;
+    font-size: 27px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #a8b6ca;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.edit-card h3 {
+    text-align: center;
+    margin-bottom: 22px;
+    font-size: 21px;
+}
+
+.current-image {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.current-image h4 {
+    margin-bottom: 15px;
+    color: #cbd5e1;
+}
+
+.item-preview {
+    width: 100%;
+    max-width: 280px;
+    height: 220px;
+    object-fit: contain;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.no-image {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 12px;
+    color: #94a3b8;
+    font-size: 35px;
+}
+
+.no-image p {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 13px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 22px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #0284c7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0369a1;
+    transform: translateY(-2px);
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 22px;
+    color: #38bdf8;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+    .edit-card {
+        padding: 22px;
+    }
+
+    .edit-card h1 {
+        font-size: 22px;
+    }
+}
