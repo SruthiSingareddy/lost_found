@@ -1265,3 +1265,290 @@ body {
     }
 
 }
+
+/* =====================================
+   CAMPUS LOST & FOUND - ORANGE THEME
+===================================== */
+
+/* Light theme */
+html[data-theme="light"] {
+    --bg: #FFF7EF;
+    --background: #FFF7EF;
+    --card: #FFFFFF;
+    --surface: #FFFFFF;
+    --primary: #C65D19;
+    --accent: #E9822B;
+    --border: #F0D5BD;
+    --text: #392719;
+    --muted: #806B58;
+}
+
+/* Dark theme */
+html[data-theme="dark"] {
+    --bg: #24170F;
+    --background: #24170F;
+    --card: #382317;
+    --surface: #382317;
+    --primary: #E9822B;
+    --accent: #F39A38;
+    --border: #704323;
+    --text: #FFF4E8;
+    --muted: #D6B99D;
+}
+
+/* Main page background */
+body {
+    background: var(--bg) !important;
+    color: var(--text) !important;
+}
+
+/* Main headings */
+h1, h2, h3,
+.items-title,
+.section-title {
+    color: var(--primary) !important;
+}
+
+/* Search and filter container */
+.search-section,
+.search-container,
+.filter-container,
+.search-card {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+}
+
+/* Search fields */
+input, select, textarea {
+    background: var(--card) !important;
+    color: var(--text) !important;
+    border-color: var(--border) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--accent) !important;
+    outline-color: var(--accent) !important;
+}
+
+/* Search button */
+button,
+.search-btn,
+.search-button {
+    background: var(--primary) !important;
+    color: #FFFFFF !important;
+    border-color: var(--primary) !important;
+}
+
+button:hover,
+.search-btn:hover,
+.search-button:hover {
+    background: var(--accent) !important;
+}
+
+/* Reset button */
+.reset-btn,
+.reset-button {
+    background: var(--card) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+}
+
+/* Item cards */
+.item-card,
+.item-box,
+.items-card {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text) !important;
+}
+
+.item-card:hover,
+.item-box:hover,
+.items-card:hover {
+    border-color: var(--accent) !important;
+}
+
+/* Back to Home */
+.back-link,
+.back-home,
+.back-button {
+    color: var(--primary) !important;
+    border-color: var(--border) !important;
+}
+
+/* Item count */
+.item-count,
+.count-badge {
+    background: #FCE5D0 !important;
+    color: #9A4814 !important;
+}
+
+/* General text */
+p, label, span {
+    color: inherit;
+}
+/* Date Dropdown - Orange Theme */
+
+.items-date-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.items-date-group select {
+    width: 100%;
+    height: 62px;
+    padding: 0 16px;
+    border: 1px solid #F0D5BD;
+    border-radius: 12px;
+    background: #FFFFFF;
+    color: #392719;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* ==========================================
+   LOST & FOUND - SEARCH FILTER DESIGN
+========================================== */
+
+.items-filter-section {
+    width: 100%;
+    padding: 30px;
+    margin: 30px 0;
+    background: #FFFFFF;
+    border: 1px solid #F0D5BD;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(120, 65, 20, 0.07);
+}
+
+/* Main filter layout */
+.items-filter-form {
+    display: grid;
+    grid-template-columns: minmax(250px, 2fr)
+                           minmax(160px, 1fr)
+                           minmax(160px, 1fr)
+                           minmax(250px, auto);
+    gap: 20px;
+    align-items: end;
+    width: 100%;
+}
+
+/* Individual fields */
+.items-search-group,
+.items-type-group,
+.items-date-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.items-filter-form label {
+    color: #392719;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* Search input and dropdowns */
+.items-search-group input,
+.items-type-group select,
+.items-date-group select {
+    width: 100%;
+    height: 58px;
+    padding: 0 16px;
+    background: #FFFCF9;
+    color: #392719;
+    border: 1px solid #EBD2BD;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.items-search-group input:focus,
+.items-type-group select:focus,
+.items-date-group select:focus {
+    border-color: #D46118;
+    box-shadow: 0 0 0 3px rgba(212, 97, 24, 0.12);
+}
+
+/* Search and Reset buttons */
+.items-filter-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.items-search-button,
+.items-reset-button {
+    flex: 1;
+    min-width: 0;
+    height: 58px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.items-search-button {
+    background: #D46118;
+    color: #FFFFFF;
+    border: 1px solid #D46118;
+}
+
+.items-search-button:hover {
+    background: #B94F10;
+    transform: translateY(-2px);
+}
+
+.items-reset-button {
+    background: #FFF7EF;
+    color: #A94F18;
+    border: 1px solid #EBD2BD;
+}
+
+.items-reset-button:hover {
+    background: #FCE7D5;
+    border-color: #D46118;
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+    .items-filter-form {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .items-filter-actions {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .items-filter-section {
+        padding: 18px;
+    }
+
+    .items-filter-form {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .items-filter-actions {
+        grid-column: auto;
+    }
+
+    .items-search-button,
+    .items-reset-button {
+        height: 52px;
+    }
+}

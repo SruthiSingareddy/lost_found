@@ -1,521 +1,513 @@
+
 {% extends 'lostfound/base.html' %}
 {% load static %}
 
 {% block title %}Student Dashboard | Campus Lost &amp; Found{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'lostfound/student_dashboard.css' %}?v=2">
+<link rel="stylesheet" href="{% static 'lostfound/student_dashboard1.css' %}?v=11">
 {% endblock %}
 
 {% block content %}
+<!-- BACK NAVIGATION -->
+<div class="sd-back-navigation">
+    <a href="{% url 'home' %}">
+        ← Back to Home
+    </a>
+</div>
 
-<!-- =========================================
-     STUDENT DASHBOARD – HERO BANNER
-========================================== -->
-<section class="sd-hero-section"
-         style="background-image: url('{% static 'lostfound/image/college.webp' %}');">
-    <div class="sd-hero-overlay"></div>
+<!-- STUDENT DASHBOARD HERO -->
+<section class="sd-hero-section">
+
     <div class="sd-hero-content">
+
         <span class="sd-hero-badge">Student Portal</span>
+
         <h1 class="sd-hero-title">Student Dashboard</h1>
+
         <p class="sd-hero-subtitle">
-            Welcome back, <strong>{{ student.student_name }}</strong>! Here's your activity overview.
+            Welcome back,
+            <strong>{{ student.student_name }}</strong>!
+            Here's your activity overview.
         </p>
+
         <div class="sd-hero-actions">
+
             <a href="{% url 'report_item' %}" class="sd-hero-btn-primary">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/>
-                    <line x1="8" y1="12" x2="16" y2="12"/>
-                </svg>
+                <span>＋</span>
                 Report an Item
             </a>
-            <a href="{% url 'submit_claim' %}" class="sd-hero-btn-outline">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                    <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-                </svg>
-                Submit a Claim
-            </a>
-        </div>
-    </div>
-</section>
 
-<!-- =========================================
-     MAIN CONTENT AREA
-========================================== -->
+            <a href="{% url 'submit_claim' %}" class="sd-hero-btn-outline">
+                Submit a Claim →
+            </a>
+
+        </div>
+
+    </div>
+
+
+<!-- MAIN DASHBOARD CONTENT -->
 <div class="sd-main-content">
 
-    <!-- ── STATS GRID ── -->
+    <!-- STATISTICS -->
     <div class="sd-stats-grid">
 
         <div class="sd-stat-card sd-stat-gold">
-            <div class="sd-stat-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    <line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
-                </svg>
-            </div>
+            <div class="sd-stat-icon">🔍</div>
             <div class="sd-stat-number">{{ total_lost_items }}</div>
             <div class="sd-stat-label">My Lost Items</div>
         </div>
 
         <div class="sd-stat-card sd-stat-green">
-            <div class="sd-stat-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="20 6 9 17 4 12"/>
-                </svg>
-            </div>
+            <div class="sd-stat-icon">✓</div>
             <div class="sd-stat-number">{{ total_found_items }}</div>
             <div class="sd-stat-label">My Found Items</div>
         </div>
 
         <div class="sd-stat-card sd-stat-blue">
-            <div class="sd-stat-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                </svg>
-            </div>
+            <div class="sd-stat-icon">📄</div>
             <div class="sd-stat-number">{{ total_claims }}</div>
             <div class="sd-stat-label">Total Claims</div>
         </div>
 
         <div class="sd-stat-card sd-stat-orange">
-            <div class="sd-stat-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                </svg>
-            </div>
+            <div class="sd-stat-icon">◷</div>
             <div class="sd-stat-number">{{ pending_claims }}</div>
             <div class="sd-stat-label">Pending Claims</div>
         </div>
 
-    </div><!-- /sd-stats-grid -->
+    </div>
 
 
-    <!-- ── TWO-COLUMN: PROFILE  +  QUICK ACTIONS ── -->
+    <!-- PROFILE AND QUICK ACTIONS -->
     <div class="sd-two-col">
 
-        <!-- PROFILE CARD -->
+        <!-- STUDENT PROFILE -->
         <div class="sd-profile-card">
 
-            <div class="sd-avatar-circle" aria-hidden="true">
+            <div class="sd-avatar-circle">
                 {{ student.student_name|slice:":1"|upper }}
             </div>
 
-            <h2 class="sd-profile-name">{{ student.student_name }}</h2>
+            <h2 class="sd-profile-name">
+                {{ student.student_name }}
+            </h2>
+
             <span class="sd-profile-badge">Active Student</span>
 
             <ul class="sd-profile-details">
 
                 <li>
-                    <div class="sd-detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#17452F" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                            <polyline points="22,6 12,13 2,6"/>
-                        </svg>
-                    </div>
+                    <span class="sd-detail-icon">✉</span>
                     <span class="sd-detail-text">{{ student.email }}</span>
                 </li>
 
                 <li>
-                    <div class="sd-detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#17452F" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                            <line x1="12" y1="18" x2="12.01" y2="18"/>
-                        </svg>
-                    </div>
+                    <span class="sd-detail-icon">☎</span>
                     <span class="sd-detail-text">{{ student.mobile_number }}</span>
                 </li>
 
                 <li>
-                    <div class="sd-detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#17452F" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
-                        </svg>
-                    </div>
+                    <span class="sd-detail-icon">▣</span>
                     <span class="sd-detail-text">{{ student.department }}</span>
                 </li>
 
                 <li>
-                    <div class="sd-detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#17452F" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                            <path d="M6 12v5c0 1.1 2.69 2 6 2s6-.9 6-2v-5"/>
-                        </svg>
-                    </div>
+                    <span class="sd-detail-icon">🎓</span>
                     <span class="sd-detail-text">{{ student.roll_number }}</span>
                 </li>
 
             </ul>
-        </div><!-- /sd-profile-card -->
+
+        </div>
 
 
-        <!-- QUICK ACTIONS CARD -->
+        <!-- QUICK ACTIONS -->
         <div class="sd-quick-actions-card">
 
             <h3 class="sd-card-title">
-                <span class="sd-card-title-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#C18422" stroke-width="2.2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                    </svg>
-                </span>
+                <span class="sd-card-title-icon">⚡</span>
                 Quick Actions
             </h3>
 
             <a href="{% url 'report_item' %}" class="sd-action-row">
-                <span class="sd-action-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFF9EF" stroke-width="2.2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="8" x2="12" y2="16"/>
-                        <line x1="8" y1="12" x2="16" y2="12"/>
-                    </svg>
-                </span>
+
+                <span class="sd-action-icon">＋</span>
+
                 <div class="sd-action-text">
                     <strong>Report an Item</strong>
                     <span>Lost or found something? Report it here.</span>
                 </div>
-                <svg class="sd-action-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="9 18 15 12 9 6"/>
-                </svg>
+
+                <span class="sd-action-arrow">›</span>
+
             </a>
 
+
             <a href="{% url 'search_items' %}" class="sd-action-row">
-                <span class="sd-action-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFF9EF" stroke-width="2.2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="11" cy="11" r="8"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                </span>
+
+                <span class="sd-action-icon">⌕</span>
+
                 <div class="sd-action-text">
                     <strong>Search Lost Items</strong>
                     <span>Browse all reported items on campus.</span>
                 </div>
-                <svg class="sd-action-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="9 18 15 12 9 6"/>
-                </svg>
+
+                <span class="sd-action-arrow">›</span>
+
             </a>
 
+
             <a href="{% url 'submit_claim' %}" class="sd-action-row">
-                <span class="sd-action-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFF9EF" stroke-width="2.2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                    </svg>
-                </span>
+
+                <span class="sd-action-icon">▤</span>
+
                 <div class="sd-action-text">
                     <strong>Submit a Claim</strong>
                     <span>Claim an item that belongs to you.</span>
                 </div>
-                <svg class="sd-action-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="9 18 15 12 9 6"/>
-                </svg>
+
+                <span class="sd-action-arrow">›</span>
+
             </a>
+
 
             <div class="sd-divider"></div>
 
-            <!-- Logout form -->
-            <form method="post" action="{% url 'logout' %}" style="margin:0">
+            <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
+
                 <button type="submit" class="sd-btn-logout">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                        <polyline points="16 17 21 12 16 7"/>
-                        <line x1="21" y1="12" x2="9" y2="12"/>
-                    </svg>
                     Logout
                 </button>
+
             </form>
 
             <a href="{% url 'home' %}" class="sd-btn-home">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
-                </svg>
-                Back to Home
+                ← Back to Home
             </a>
 
-        </div><!-- /sd-quick-actions-card -->
+        </div>
 
-    </div><!-- /sd-two-col -->
+    </div>
 
 
-    <!-- ── MY LOST ITEMS ── -->
+    <!-- MY LOST ITEMS -->
     <div class="sd-section">
+
         <div class="sd-section-header">
+
             <h2 class="sd-section-title">
-                <span class="sd-section-title-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFF9EF" stroke-width="2.2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="11" cy="11" r="8"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                        <line x1="11" y1="8" x2="11" y2="14"/>
-                        <line x1="8" y1="11" x2="14" y2="11"/>
-                    </svg>
-                </span>
                 My Lost Items
             </h2>
-            <span class="sd-count-badge">{{ total_lost_items }}</span>
+
+            <span class="sd-count-badge">
+                {{ total_lost_items }}
+            </span>
+
         </div>
+
 
         {% if my_lost_items %}
-            <div class="sd-items-grid">
-                {% for item in my_lost_items %}
-                <div class="sd-item-card">
-                    {% if item.image %}
-                        <img src="{{ item.image.url }}" alt="{{ item.item_name }}" class="sd-item-img" loading="lazy">
-                    {% else %}
-                        <div class="sd-no-image">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                 width="40" height="40" aria-hidden="true">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                            </svg>
-                            <span>No photo uploaded</span>
-                        </div>
-                    {% endif %}
-                    <div class="sd-item-body">
-                        <h3 class="sd-item-name">{{ item.item_name }}</h3>
-                        <p class="sd-item-meta">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            {{ item.location }}
-                        </p>
-                        <p class="sd-item-meta">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                <line x1="16" y1="2" x2="16" y2="6"/>
-                                <line x1="8" y1="2" x2="8" y2="6"/>
-                                <line x1="3" y1="10" x2="21" y2="10"/>
-                            </svg>
-                            {{ item.date|date:"M d, Y" }}
-                        </p>
-                        <div class="sd-item-footer">
-                            {% if item.status == "Active" %}
-                                <span class="sd-status-badge sd-status-active">{{ item.status }}</span>
-                            {% else %}
-                                <span class="sd-status-badge sd-status-returned">{{ item.status }}</span>
-                            {% endif %}
-                            <a href="{% url 'edit_item_image' item.id %}" class="sd-edit-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                                    <circle cx="12" cy="13" r="4"/>
-                                </svg>
-                                Edit Photo
-                            </a>
-                        </div>
+
+        <div class="sd-items-grid">
+
+            {% for item in my_lost_items %}
+
+            <div class="sd-item-card">
+
+                {% if item.image %}
+                    <img
+                        src="{{ item.image.url }}"
+                        alt="{{ item.item_name }}"
+                        class="sd-item-img"
+                        loading="lazy">
+                {% else %}
+                    <div class="sd-no-image">
+                        <span>📦</span>
+                        <span>No photo uploaded</span>
                     </div>
+                {% endif %}
+
+
+                <div class="sd-item-body">
+
+                    <h3 class="sd-item-name">
+                        {{ item.item_name }}
+                    </h3>
+
+                    <p class="sd-item-meta">
+                        📍 {{ item.location }}
+                    </p>
+
+                    <p class="sd-item-meta">
+                        📅 {{ item.date|date:"M d, Y" }}
+                    </p>
+
+
+                    <div class="sd-item-footer">
+
+                        {% if item.status == "Active" %}
+                            <span class="sd-status-badge sd-status-active">
+                                {{ item.status }}
+                            </span>
+                        {% else %}
+                            <span class="sd-status-badge sd-status-returned">
+                                {{ item.status }}
+                            </span>
+                        {% endif %}
+
+                        <a href="{% url 'edit_item_image' item.id %}"
+                           class="sd-edit-btn">
+                            Edit Photo
+                        </a>
+
+                    </div>
+
                 </div>
-                {% endfor %}
+
             </div>
+
+            {% endfor %}
+
+        </div>
+
         {% else %}
-            <div class="sd-empty-state">
-                <div class="sd-empty-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#17452F" stroke-width="1.5"
-                         width="30" height="30" aria-hidden="true">
-                        <circle cx="11" cy="11" r="8"/>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                </div>
-                <p class="sd-empty-title">No Lost Items Reported</p>
-                <p class="sd-empty-desc">You haven't reported any lost items yet.</p>
-                <a href="{% url 'report_item' %}" class="sd-empty-action">Report an Item</a>
-            </div>
+
+        <div class="sd-empty-state">
+
+            <div class="sd-empty-icon">📦</div>
+
+            <p class="sd-empty-title">
+                No Lost Items Reported
+            </p>
+
+            <p class="sd-empty-desc">
+                You haven't reported any lost items yet.
+            </p>
+
+            <a href="{% url 'report_item' %}" class="sd-empty-action">
+                Report an Item
+            </a>
+
+        </div>
+
         {% endif %}
-    </div><!-- /My Lost Items -->
+
+    </div>
 
 
-    <!-- ── MY FOUND ITEMS ── -->
+    <!-- MY FOUND ITEMS -->
     <div class="sd-section">
+
         <div class="sd-section-header">
+
             <h2 class="sd-section-title">
-                <span class="sd-section-title-icon sd-icon-green">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFF9EF" stroke-width="2.2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                </span>
                 My Found Items
             </h2>
-            <span class="sd-count-badge sd-badge-green">{{ total_found_items }}</span>
+
+            <span class="sd-count-badge sd-badge-green">
+                {{ total_found_items }}
+            </span>
+
         </div>
+
 
         {% if my_found_items %}
-            <div class="sd-items-grid">
-                {% for item in my_found_items %}
-                <div class="sd-item-card">
-                    {% if item.image %}
-                        <img src="{{ item.image.url }}" alt="{{ item.item_name }}" class="sd-item-img" loading="lazy">
-                    {% else %}
-                        <div class="sd-no-image">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                 width="40" height="40" aria-hidden="true">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                            </svg>
-                            <span>No photo uploaded</span>
-                        </div>
-                    {% endif %}
-                    <div class="sd-item-body">
-                        <h3 class="sd-item-name">{{ item.item_name }}</h3>
-                        <p class="sd-item-meta">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            {{ item.location }}
-                        </p>
-                        <p class="sd-item-meta">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                <line x1="16" y1="2" x2="16" y2="6"/>
-                                <line x1="8" y1="2" x2="8" y2="6"/>
-                                <line x1="3" y1="10" x2="21" y2="10"/>
-                            </svg>
-                            {{ item.date|date:"M d, Y" }}
-                        </p>
-                        <div class="sd-item-footer">
-                            {% if item.status == "Active" %}
-                                <span class="sd-status-badge sd-status-active">{{ item.status }}</span>
-                            {% else %}
-                                <span class="sd-status-badge sd-status-returned">{{ item.status }}</span>
-                            {% endif %}
-                            <a href="{% url 'edit_item_image' item.id %}" class="sd-edit-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                                    <circle cx="12" cy="13" r="4"/>
-                                </svg>
-                                Edit Photo
-                            </a>
-                        </div>
+
+        <div class="sd-items-grid">
+
+            {% for item in my_found_items %}
+
+            <div class="sd-item-card">
+
+                {% if item.image %}
+                    <img
+                        src="{{ item.image.url }}"
+                        alt="{{ item.item_name }}"
+                        class="sd-item-img"
+                        loading="lazy">
+                {% else %}
+                    <div class="sd-no-image">
+                        <span>📦</span>
+                        <span>No photo uploaded</span>
                     </div>
-                </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="sd-empty-state">
-                <div class="sd-empty-icon sd-empty-icon-green">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#17452F" stroke-width="1.5"
-                         width="30" height="30" aria-hidden="true">
-                        <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                </div>
-                <p class="sd-empty-title">No Found Items Reported</p>
-                <p class="sd-empty-desc">You haven't reported any found items yet.</p>
-                <a href="{% url 'report_item' %}" class="sd-empty-action">Report an Item</a>
-            </div>
-        {% endif %}
-    </div><!-- /My Found Items -->
+                {% endif %}
 
 
-    <!-- ── MY CLAIMS ── -->
-    <div class="sd-section">
-        <div class="sd-section-header">
-            <h2 class="sd-section-title">
-                <span class="sd-section-title-icon sd-icon-blue">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFF9EF" stroke-width="2.2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                    </svg>
-                </span>
-                My Claims
-            </h2>
-            <span class="sd-count-badge sd-badge-blue">{{ total_claims }}</span>
+                <div class="sd-item-body">
+
+                    <h3 class="sd-item-name">
+                        {{ item.item_name }}
+                    </h3>
+
+                    <p class="sd-item-meta">
+                        📍 {{ item.location }}
+                    </p>
+
+                    <p class="sd-item-meta">
+                        📅 {{ item.date|date:"M d, Y" }}
+                    </p>
+
+
+                    <div class="sd-item-footer">
+
+                        {% if item.status == "Active" %}
+                            <span class="sd-status-badge sd-status-active">
+                                {{ item.status }}
+                            </span>
+                        {% else %}
+                            <span class="sd-status-badge sd-status-returned">
+                                {{ item.status }}
+                            </span>
+                        {% endif %}
+
+                        <a href="{% url 'edit_item_image' item.id %}"
+                           class="sd-edit-btn">
+                            Edit Photo
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
         </div>
 
-        {% if my_claims %}
-            <div class="sd-claims-list">
-                {% for claim in my_claims %}
-                <div class="sd-claim-row">
-                    <!-- Claim item thumbnail -->
-                    {% if claim.item.image %}
-                        <img src="{{ claim.item.image.url }}"
-                             alt="{{ claim.item.item_name }}"
-                             class="sd-claim-thumb"
-                             loading="lazy">
-                    {% else %}
-                        <div class="sd-claim-thumb-placeholder">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#17452F" stroke-width="1.8"
-                                 width="22" height="22" aria-hidden="true">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                            </svg>
-                        </div>
-                    {% endif %}
+        {% else %}
 
-                    <div class="sd-claim-info">
-                        <p class="sd-claim-item-name">{{ claim.item.item_name }}</p>
-                        <p class="sd-claim-date">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" width="12" height="12" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                            </svg>
-                            Submitted: {{ claim.created_at|date:"M d, Y" }}
-                        </p>
+        <div class="sd-empty-state">
+
+            <div class="sd-empty-icon">✓</div>
+
+            <p class="sd-empty-title">
+                No Found Items Reported
+            </p>
+
+            <p class="sd-empty-desc">
+                You haven't reported any found items yet.
+            </p>
+
+            <a href="{% url 'report_item' %}" class="sd-empty-action">
+                Report an Item
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- MY CLAIMS -->
+    <div class="sd-section">
+
+        <div class="sd-section-header">
+
+            <h2 class="sd-section-title">
+                My Claims
+            </h2>
+
+            <span class="sd-count-badge sd-badge-blue">
+                {{ total_claims }}
+            </span>
+
+        </div>
+
+
+        {% if my_claims %}
+
+        <div class="sd-claims-list">
+
+            {% for claim in my_claims %}
+
+            <div class="sd-claim-row">
+
+                {% if claim.item.image %}
+
+                    <img
+                        src="{{ claim.item.image.url }}"
+                        alt="{{ claim.item.item_name }}"
+                        class="sd-claim-thumb"
+                        loading="lazy">
+
+                {% else %}
+
+                    <div class="sd-claim-thumb-placeholder">
+                        📦
                     </div>
 
-                    {% if claim.claim_status == "Pending" %}
-                        <span class="sd-claim-status sd-status-pending">Pending</span>
-                    {% elif claim.claim_status == "Approved" %}
-                        <span class="sd-claim-status sd-status-approved">Approved</span>
-                    {% else %}
-                        <span class="sd-claim-status sd-status-rejected">Rejected</span>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="sd-empty-state">
-                <div class="sd-empty-icon sd-empty-icon-blue">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="1.5"
-                         width="30" height="30" aria-hidden="true">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                    </svg>
-                </div>
-                <p class="sd-empty-title">No Claims Submitted</p>
-                <p class="sd-empty-desc">You haven't submitted any claims yet.</p>
-                <a href="{% url 'submit_claim' %}" class="sd-empty-action">Submit a Claim</a>
-            </div>
-        {% endif %}
-    </div><!-- /My Claims -->
+                {% endif %}
 
-</div><!-- /sd-main-content -->
+
+                <div class="sd-claim-info">
+
+                    <p class="sd-claim-item-name">
+                        {{ claim.item.item_name }}
+                    </p>
+
+                    <p class="sd-claim-date">
+                        Submitted:
+                        {{ claim.created_at|date:"M d, Y" }}
+                    </p>
+
+                </div>
+
+
+                {% if claim.claim_status == "Pending" %}
+
+                    <span class="sd-claim-status sd-status-pending">
+                        Pending
+                    </span>
+
+                {% elif claim.claim_status == "Approved" %}
+
+                    <span class="sd-claim-status sd-status-approved">
+                        Approved
+                    </span>
+
+                {% else %}
+
+                    <span class="sd-claim-status sd-status-rejected">
+                        Rejected
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="sd-empty-state">
+
+            <div class="sd-empty-icon">📄</div>
+
+            <p class="sd-empty-title">
+                No Claims Submitted
+            </p>
+
+            <p class="sd-empty-desc">
+                You haven't submitted any claims yet.
+            </p>
+
+            <a href="{% url 'submit_claim' %}" class="sd-empty-action">
+                Submit a Claim
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
 
 {% endblock %}

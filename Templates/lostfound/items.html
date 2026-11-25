@@ -15,7 +15,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet"
-          href="{% static 'lostfound/item.css' %}">
+          href="{% static 'lostfound/items.css' %}?v=5">
 
     <!-- Theme -->
     <script src="{% static 'lostfound/theme.js' %}" defer></script>
@@ -123,8 +123,56 @@
                 </select>
 
             </div>
+            <!-- DATE FILTER -->
+             <div class="items-date-group">
+                
+                <label for="date-filter">Date</label>
+                
+                <select id="date-filter" name="date">
+                    
+                    <option value="all"
+                    
+                    {% if selected_date == 'all' %}selected{% endif %}>
+                    
+                    All Dates
+                
+                </option>
+                
+                <option value="today"
+                
+                {% if selected_date == 'today' %}selected{% endif %}>
+                
+                Today
+            </option>
+            
+            <option value="yesterday"
+            
+            {% if selected_date == 'yesterday' %}selected{% endif %}>
+            
+            Yesterday
+        
+        </option>
+        
+        <option value="7days"
+        
+        {% if selected_date == '7days' %}selected{% endif %}>
+        
+        Last 7 Days
+    
+    </option>
+    
+    <option value="30days"
+    
+    {% if selected_date == '30days' %}selected{% endif %}>
+    
+    Last 30 Days
 
+</option>
 
+</select>
+
+</div>
+    
             <!-- SEARCH BUTTON -->
 
             <button type="submit"

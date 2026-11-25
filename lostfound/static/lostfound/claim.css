@@ -1,1322 +1,1180 @@
 /* ==========================================================================
-   CAMPUS LOST & FOUND - SUBMIT CLAIM STYLESHEET
-   Professional Portal Design with Real Computer Vision Matching
+   CAMPUS LOST & FOUND — CLAIM PAGE STYLESHEET
+   Design: dark-green #124B35 / orange #FFA51E / cream #FFF7E9
+   Fully theme-aware (data-theme="light" / "dark")
    ========================================================================== */
 
-/* =========================================
-   1. COLOR VARIABLES & THEMES
-========================================= */
+/* =========================================================
+   0. CSS CUSTOM PROPERTIES (THEME TOKENS)
+   ========================================================= */
 :root {
-    --claim-bg: #06132b;
-    --claim-card: #0d2244;
-    --claim-card-hover: #122b54;
-    --claim-card-inner: #081a36;
-    --claim-border: #183b68;
-    --claim-border-accent: rgba(0, 217, 245, 0.4);
+    /* Brand palette */
+    --cl-green-dark  : #124B35;
+    --cl-green-mid   : #1A6647;
+    --cl-green-light : #2D8A5F;
+    --cl-orange      : #FFA51E;
+    --cl-orange-dark : #E8920D;
+    --cl-orange-lite : rgba(255, 165, 30, 0.15);
 
-    --cyan-primary: #00d9f5;
-    --cyan-glow: rgba(0, 217, 245, 0.25);
-    --blue-primary: #008cff;
-    --blue-hover: #0077e6;
-    --blue-glow: rgba(0, 140, 255, 0.35);
+    /* Page surface */
+    --cl-page-bg     : #FFF7E9;
+    --cl-card-bg     : #FFFFFF;
+    --cl-card-inner  : #FFF9F1;
+    --cl-border      : #E8DEC8;
+    --cl-border-soft : rgba(18, 75, 53, 0.12);
 
-    --text-primary: #f5f8ff;
-    --text-secondary: #c2d2ea;
-    --text-muted: #869cb8;
+    /* Text */
+    --cl-text-h      : #0D2E1F;
+    --cl-text-body   : #2E4A3A;
+    --cl-text-muted  : #7A9282;
+    --cl-text-label  : #5A7A6A;
 
-    --input-bg: #07162e;
-    --input-border: #1c4578;
-    --input-focus: #00d9f5;
+    /* Inputs */
+    --cl-input-bg    : #FFFFFF;
+    --cl-input-border: #CDDDD5;
+    --cl-input-focus : #124B35;
 
-    --success: #10b981;
-    --warning: #f59e0b;
-    --danger: #ef4444;
+    /* Shadows */
+    --cl-shadow-card : 0 4px 24px rgba(18, 75, 53, 0.09);
+    --cl-shadow-hover: 0 8px 32px rgba(18, 75, 53, 0.14);
+    --cl-shadow-btn  : 0 4px 16px rgba(18, 75, 53, 0.30);
 
-    --shadow-main: 0 20px 60px rgba(0, 0, 0, 0.40);
-    --shadow-subtle: 0 8px 24px rgba(0, 0, 0, 0.25);
+    /* Status */
+    --cl-success     : #16a34a;
+    --cl-warning     : #d97706;
+    --cl-danger      : #dc2626;
+
+    /* Transition */
+    --cl-ease        : 0.22s ease;
 }
 
-html[data-theme="light"] {
-    --claim-bg: #eef4fc;
-    --claim-card: #ffffff;
-    --claim-card-hover: #f7faff;
-    --claim-card-inner: #f1f6fc;
-    --claim-border: #cbdff7;
-    --claim-border-accent: rgba(0, 110, 230, 0.4);
+/* Dark theme overrides */
+html[data-theme="dark"] {
+    --cl-page-bg     : #0D2016;
+    --cl-card-bg     : #132B1E;
+    --cl-card-inner  : #0D2016;
+    --cl-border      : #2A4A35;
+    --cl-border-soft : rgba(255,255,255,0.08);
 
-    --cyan-primary: #008fbf;
-    --cyan-glow: rgba(0, 143, 191, 0.20);
-    --blue-primary: #006ee6;
-    --blue-hover: #005bbd;
-    --blue-glow: rgba(0, 110, 230, 0.25);
+    --cl-text-h      : #E8F5EE;
+    --cl-text-body   : #B0CDB9;
+    --cl-text-muted  : #6A937A;
+    --cl-text-label  : #8AB39A;
 
-    --text-primary: #0f1f38;
-    --text-secondary: #3b5273;
-    --text-muted: #6b82a0;
+    --cl-input-bg    : #0D2016;
+    --cl-input-border: #2A4A35;
+    --cl-input-focus : #2D8A5F;
 
-    --input-bg: #ffffff;
-    --input-border: #cbdff7;
-    --input-focus: #006ee6;
+    --cl-shadow-card : 0 4px 24px rgba(0,0,0,0.35);
+    --cl-shadow-hover: 0 8px 32px rgba(0,0,0,0.45);
+    --cl-shadow-btn  : 0 4px 18px rgba(18,75,53,0.60);
 
-    --shadow-main: 0 16px 45px rgba(20, 50, 90, 0.12);
-    --shadow-subtle: 0 6px 18px rgba(20, 50, 90, 0.08);
+    --cl-card-inner  : #102218;
+    --cl-orange-lite : rgba(255, 165, 30, 0.10);
 }
 
-/* =========================================
-   2. PAGE WRAPPER & HEADER
-========================================= */
-.claim-page-wrapper {
-    width: 100%;
-    min-height: calc(100vh - 140px);
-    background: var(--claim-bg);
-    padding: 40px clamp(16px, 4vw, 48px) 70px;
-    display: flex;
-    justify-content: center;
+/* =========================================================
+   1. HERO BANNER
+   ========================================================= */
+.cl-hero {
+    position     : relative;
+    display      : flex;
+    align-items  : center;
+    gap          : 24px;
+    min-height   : 170px;
+    margin       : 0 0 0 0;
+    padding      : 28px clamp(20px, 4vw, 56px);
+    background   : linear-gradient(130deg, #124B35 0%, #1C6B47 55%, #145E39 100%);
+    border-radius: 0 0 28px 28px;
+    overflow     : hidden;
 }
 
-.claim-container {
-    width: 100%;
-    max-width: 1280px;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
+/* decorative blobs */
+.cl-hero__blob {
+    position     : absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.cl-hero__blob--tl {
+    top     : -40px;
+    left    : -40px;
+    width   : 180px;
+    height  : 180px;
+    background: radial-gradient(circle, rgba(255,165,30,0.22) 0%, transparent 70%);
+}
+.cl-hero__blob--br {
+    bottom  : -50px;
+    right   : -50px;
+    width   : 220px;
+    height  : 220px;
+    background: radial-gradient(circle, rgba(255,165,30,0.14) 0%, transparent 70%);
 }
 
-/* Breadcrumb & Heading */
-.claim-page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 16px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--claim-border);
-}
-
-.claim-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-}
-
-.claim-breadcrumb a {
-    color: var(--cyan-primary);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.claim-page-title {
-    font-size: clamp(26px, 3vw, 34px);
-    font-weight: 800;
-    color: var(--text-primary);
-    line-height: 1.2;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.claim-page-title svg {
-    width: 32px;
-    height: 32px;
-    stroke: var(--cyan-primary);
+/* backpack */
+.cl-hero__bag-wrap {
+    position : relative;
     flex-shrink: 0;
+    width    : 110px;
+    z-index  : 1;
 }
-
-.claim-page-subtitle {
-    font-size: 15px;
-    color: var(--text-secondary);
-    margin-top: 6px;
+.cl-hero__bag-glow {
+    position     : absolute;
+    inset        : -18px;
+    border-radius: 50%;
+    background   : radial-gradient(circle, rgba(255,165,30,0.35) 0%, transparent 70%);
+    animation    : heroBagPulse 3s ease-in-out infinite;
 }
-
-.claim-portal-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    background: rgba(0, 217, 245, 0.12);
-    border: 1px solid var(--claim-border-accent);
-    color: var(--cyan-primary);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
+@keyframes heroBagPulse {
+    0%, 100% { transform: scale(1);    opacity: 1; }
+    50%       { transform: scale(1.08); opacity: 0.75; }
 }
-
-/* =========================================
-   3. MAIN TWO-COLUMN CLAIM LAYOUT
-========================================= */
-.claim-layout-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 28px;
-    align-items: start;
-}
-
-/* Base Card Styling */
-.claim-card {
-    background: var(--claim-card);
-    border: 1px solid var(--claim-border);
-    border-radius: 20px;
-    padding: 28px;
-    box-shadow: var(--shadow-main);
-    transition: background-color 0.25s ease, border-color 0.25s ease;
-}
-
-.claim-card-title {
-    font-size: 18px;
-    font-weight: 750;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.claim-card-title svg {
-    width: 20px;
-    height: 20px;
-    stroke: var(--cyan-primary);
-    flex-shrink: 0;
-}
-
-.claim-card-desc {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-}
-
-/* =========================================
-   4. STUDENT INFORMATION SECTION
-========================================= */
-.student-profile-verified {
-    background: var(--claim-card-inner);
-    border: 1px solid var(--claim-border);
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 24px;
+.cl-hero__bag-svg {
+    width   : 110px;
+    height  : auto;
+    filter  : drop-shadow(0 8px 24px rgba(0,0,0,0.35));
     position: relative;
+    z-index : 1;
 }
 
-.student-verified-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 10px;
-    border-radius: 12px;
-    background: rgba(16, 185, 129, 0.14);
-    color: var(--success);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    font-size: 11px;
-    font-weight: 750;
-    margin-bottom: 12px;
+/* hero text */
+.cl-hero__text {
+    flex : 1;
+    z-index: 1;
 }
-
-.student-info-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px 18px;
+.cl-hero__heading {
+    font-size  : clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    color      : #FFFFFF;
+    line-height: 1.15;
+    margin     : 0 0 8px;
+    letter-spacing: -0.5px;
 }
-
-.student-field-item {
-    display: flex;
-    flex-direction: column;
+.cl-hero__heading--accent {
+    color: var(--cl-orange);
 }
-
-.student-field-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: var(--text-muted);
-}
-
-.student-field-value {
-    font-size: 14.5px;
-    font-weight: 650;
-    color: var(--text-primary);
-    margin-top: 2px;
-}
-
-/* Fallback: Student Selector for Unauthenticated Users */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    font-size: 14px;
-    font-weight: 650;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.form-group label .required {
-    color: var(--cyan-primary);
-    font-weight: 700;
-}
-
-.form-control {
-    width: 100%;
-    height: 46px;
-    padding: 0 14px;
-    background: var(--input-bg);
-    color: var(--text-primary);
-    border: 1px solid var(--input-border);
-    border-radius: 10px;
-    font-size: 14.5px;
-    outline: none;
-    transition: all 0.2s ease;
-}
-
-.form-control:focus {
-    border-color: var(--input-focus);
-    box-shadow: 0 0 0 3px var(--cyan-glow);
-}
-
-.form-control::placeholder {
-    color: var(--text-muted);
-}
-
-textarea.form-control {
-    height: auto;
-    padding: 12px 14px;
-    resize: vertical;
-    min-height: 110px;
+.cl-hero__sub {
+    font-size  : clamp(13px, 1.5vw, 16px);
+    color      : rgba(255,255,255,0.80);
+    max-width  : 480px;
     line-height: 1.6;
+    margin     : 0;
+}
+.cl-hero__bar {
+    width        : 80px;
+    height       : 4px;
+    border-radius: 4px;
+    background   : linear-gradient(90deg, var(--cl-orange), #FFD080);
+    margin-top   : 14px;
 }
 
-/* Two-column subgrid for inputs */
-.form-row-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-/* Form Helper Notice */
-.form-helper {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 4px;
-}
-
-/* =========================================
-   5. FOUND ITEM PREVIEW CARD (RIGHT)
-========================================= */
-.found-item-preview-card {
-    background: var(--claim-card-inner);
-    border: 1px solid var(--claim-border);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 24px;
-    position: relative;
-    overflow: hidden;
-}
-
-.found-image-display-box {
-    width: 100%;
-    height: 220px;
-    border-radius: 12px;
-    background: rgba(5, 15, 35, 0.45);
-    border: 1px dashed var(--claim-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-bottom: 16px;
-    position: relative;
-}
-
-.found-image-display-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
-    transition: transform 0.3s ease;
-}
-
-.found-image-display-box img:hover {
-    transform: scale(1.03);
-}
-
-/* Professional Placeholder */
-.found-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-    color: var(--text-muted);
-    padding: 20px;
-}
-
-.placeholder-icon-circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(0, 140, 255, 0.10);
-    border: 1px solid var(--claim-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--cyan-primary);
-}
-
-.placeholder-icon-circle svg {
-    width: 24px;
-    height: 24px;
-}
-
-.found-placeholder h5 {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text-secondary);
-}
-
-.found-placeholder p {
-    font-size: 12.5px;
-    max-width: 240px;
-}
-
-/* Found Item Details Pills */
-.found-details-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.found-detail-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13.5px;
-    padding: 7px 10px;
-    border-radius: 8px;
-    background: rgba(13, 34, 68, 0.45);
-}
-
-html[data-theme="light"] .found-detail-row {
-    background: #ffffff;
-}
-
-.found-detail-label {
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-.found-detail-val {
-    color: var(--text-primary);
-    font-weight: 700;
-}
-
-/* =========================================
-   6. LOST ITEM IMAGE UPLOAD (DRAG & DROP)
-========================================= */
-.upload-dropzone {
-    border: 2px dashed var(--input-border);
-    border-radius: 14px;
-    padding: 26px 18px;
-    text-align: center;
-    cursor: pointer;
-    background: var(--claim-card-inner);
-    transition: all 0.25s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-}
-
-.upload-dropzone:hover,
-.upload-dropzone.drag-active {
-    border-color: var(--cyan-primary);
-    background: rgba(0, 217, 245, 0.05);
-    box-shadow: 0 0 16px var(--cyan-glow);
-}
-
-.upload-icon-container {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: rgba(0, 140, 255, 0.12);
-    border: 1px solid var(--claim-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--cyan-primary);
-    transition: transform 0.2s ease;
-}
-
-.upload-dropzone:hover .upload-icon-container {
-    transform: translateY(-2px);
-    border-color: var(--cyan-primary);
-}
-
-.upload-icon-container svg {
-    width: 24px;
-    height: 24px;
-}
-
-.upload-prompt-title {
-    font-size: 14.5px;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-.upload-prompt-title span {
-    color: var(--cyan-primary);
-    text-decoration: underline;
-}
-
-.upload-prompt-desc {
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-.hidden-file-input {
-    display: none;
-}
-
-/* Upload Preview Box */
-.upload-preview-card {
-    display: none;
-    margin-top: 14px;
-    background: var(--claim-card-inner);
-    border: 1px solid var(--claim-border);
-    border-radius: 12px;
-    padding: 12px 14px;
-    align-items: center;
-    gap: 14px;
-}
-
-.preview-thumbnail {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 1px solid var(--claim-border);
+/* college illustration */
+.cl-hero__college-wrap {
+    position : relative;
     flex-shrink: 0;
-}
-
-.preview-meta {
-    flex: 1;
-    min-width: 0;
-}
-
-.preview-filename {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.preview-filesize {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 2px;
-}
-
-.btn-remove-preview {
-    background: rgba(239, 68, 68, 0.12);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    color: var(--danger);
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-remove-preview:hover {
-    background: var(--danger);
-    color: #ffffff;
-}
-
-/* Upload Error Message */
-.upload-error-msg {
-    display: none;
-    margin-top: 10px;
-    padding: 9px 12px;
-    border-radius: 8px;
-    background: rgba(239, 68, 68, 0.14);
-    border: 1px solid rgba(239, 68, 68, 0.35);
-    color: #fca5a5;
-    font-size: 12.5px;
-    font-weight: 600;
-}
-
-/* =========================================
-   7. IMAGE MATCHING RESULT CARD
-========================================= */
-.matching-card {
-    background: var(--claim-card-inner);
-    border: 1.5px solid var(--claim-border);
-    border-radius: 18px;
-    padding: 22px;
-    margin-top: 24px;
-    transition: all 0.3s ease;
-    display: none; /* Shown dynamically when lost image & found item are both ready */
-}
-
-.matching-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.matching-card-title {
-    font-size: 16px;
-    font-weight: 750;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.matching-card-title svg {
-    width: 18px;
-    height: 18px;
-    stroke: var(--cyan-primary);
-}
-
-/* Matching Status Badges */
-.match-badge {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-.match-high {
-    background: rgba(16, 185, 129, 0.18);
-    color: #10b981;
-    border: 1px solid #10b981;
-}
-
-.match-moderate {
-    background: rgba(245, 158, 11, 0.18);
-    color: #f59e0b;
-    border: 1px solid #f59e0b;
-}
-
-.match-low {
-    background: rgba(239, 68, 68, 0.18);
-    color: #ef4444;
-    border: 1px solid #ef4444;
-}
-
-.match-na {
-    background: rgba(134, 156, 184, 0.18);
-    color: var(--text-muted);
-    border: 1px solid var(--text-muted);
-}
-
-/* Side-by-side comparison images */
-.comparison-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 20px;
-}
-
-.compare-col {
-    display: flex;
+    display  : flex;
     flex-direction: column;
-    gap: 6px;
+    align-items: flex-end;
+    gap      : 8px;
+    z-index  : 1;
+}
+.cl-hero__campus-art {
+    width : clamp(160px, 22vw, 280px);
+}
+.cl-hero__campus-svg {
+    width        : 100%;
+    height       : auto;
+    border-radius: 16px;
+    box-shadow   : 0 4px 20px rgba(0,0,0,0.25);
+}
+.cl-hero__slogan {
+    font-family   : Georgia, serif;
+    font-style    : italic;
+    font-size     : clamp(13px, 1.6vw, 17px);
+    color         : rgba(255,255,255,0.88);
+    text-align    : right;
+    line-height   : 1.4;
+    text-shadow   : 0 1px 4px rgba(0,0,0,0.3);
+}
+.cl-hero__slogan em { color: var(--cl-orange); }
+
+/* floating dots */
+.cl-hero__dot {
+    position     : absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.cl-hero__dot--1 {
+    width : 10px; height: 10px;
+    background: var(--cl-orange);
+    bottom: 24px; left: 42%;
+    opacity: 0.7;
+    animation: floatDot 4s ease-in-out infinite;
+}
+.cl-hero__dot--2 {
+    width : 6px; height: 6px;
+    background: #FFFFFF;
+    top: 20px; right: 36%;
+    opacity: 0.5;
+    animation: floatDot 5s ease-in-out 1s infinite;
+}
+@keyframes floatDot {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
 }
 
-.compare-tag {
-    font-size: 11px;
-    font-weight: 750;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    color: var(--text-muted);
+/* =========================================================
+   2. DJANGO MESSAGES
+   ========================================================= */
+.cl-messages {
+    max-width   : 1200px;
+    margin      : 16px auto 0;
+    padding     : 0 clamp(16px, 3vw, 40px);
 }
-
-.compare-img-box {
-    width: 100%;
-    height: 150px;
-    border-radius: 10px;
-    border: 1px solid var(--claim-border);
-    overflow: hidden;
-    background: #000000;
-}
-
-.compare-img-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Similarity Meter Bar */
-.similarity-meter-container {
-    background: rgba(5, 15, 35, 0.45);
-    border: 1px solid var(--claim-border);
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 16px;
-}
-
-.meter-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.cl-alert {
+    display     : flex;
+    align-items : center;
+    gap         : 12px;
+    padding     : 13px 18px;
+    border-radius: 12px;
+    font-size   : 14px;
+    font-weight : 600;
     margin-bottom: 10px;
 }
+.cl-alert svg { width: 20px; height: 20px; flex-shrink: 0; }
+.cl-alert--success {
+    background: rgba(22,163,74,0.12);
+    border    : 1px solid rgba(22,163,74,0.35);
+    color     : #15803d;
+}
+.cl-alert--error {
+    background: rgba(220,38,38,0.12);
+    border    : 1px solid rgba(220,38,38,0.35);
+    color     : #b91c1c;
+}
+html[data-theme="dark"] .cl-alert--success { color: #4ade80; }
+html[data-theme="dark"] .cl-alert--error   { color: #f87171; }
 
-.meter-label {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--text-primary);
+/* =========================================================
+   3. PAGE WRAPPER + LEAF DECORATIONS
+   ========================================================= */
+.cl-page {
+    position    : relative;
+    max-width   : 1200px;
+    margin      : 0 auto;
+    padding     : 32px clamp(16px, 3vw, 40px) 80px;
+    background  : var(--cl-page-bg);
+    min-height  : calc(100vh - 350px);
+    transition  : background var(--cl-ease);
 }
 
-.meter-percentage {
-    font-size: 22px;
-    font-weight: 850;
-    color: var(--cyan-primary);
+/* SVG leaf decorations (pure CSS shapes) */
+.cl-leaf {
+    position     : absolute;
+    width        : 32px;
+    height       : 50px;
+    border-radius: 50% 0;
+    pointer-events: none;
+    opacity      : 0.55;
+}
+.cl-leaf--tl {
+    top : 20px; left: 10px;
+    background: var(--cl-green-mid);
+    transform : rotate(-30deg);
+}
+.cl-leaf--tr {
+    top : 60px; right: 15px;
+    background: var(--cl-orange);
+    transform : rotate(40deg);
+    width: 22px; height: 36px;
+}
+.cl-leaf--bl {
+    bottom: 100px; left: 20px;
+    background: var(--cl-orange);
+    transform: rotate(20deg);
+    width: 20px; height: 32px;
+    opacity: 0.4;
+}
+.cl-leaf--br {
+    bottom: 60px; right: 20px;
+    background: var(--cl-green-mid);
+    transform: rotate(-50deg);
+    width: 26px; height: 42px;
 }
 
-.meter-bar-track {
-    width: 100%;
-    height: 10px;
-    background: var(--claim-border);
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
+/* =========================================================
+   4. FORM + TWO-COLUMN GRID
+   ========================================================= */
+.cl-form { margin: 0; }
+
+.cl-grid {
+    display              : grid;
+    grid-template-columns: 1fr 380px;
+    gap                  : 28px;
+    align-items          : start;
 }
 
-.meter-bar-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--blue-primary), var(--cyan-primary));
-    border-radius: 6px;
-    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 0 10px var(--cyan-glow);
+/* =========================================================
+   5. CARDS
+   ========================================================= */
+.cl-card {
+    background   : var(--cl-card-bg);
+    border       : 1px solid var(--cl-border);
+    border-radius: 20px;
+    padding      : 28px 30px;
+    box-shadow   : var(--cl-shadow-card);
+    transition   : background var(--cl-ease), border-color var(--cl-ease), box-shadow var(--cl-ease);
+}
+.cl-card:hover {
+    box-shadow: var(--cl-shadow-hover);
 }
 
-/* Feature Breakdown Chips */
-.breakdown-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 12px;
+/* card header row */
+.cl-card__head {
+    display    : flex;
+    align-items: center;
+    gap        : 12px;
+    margin-bottom: 0;
 }
 
-.breakdown-chip {
-    padding: 6px 8px;
-    border-radius: 8px;
-    background: rgba(13, 34, 68, 0.65);
-    border: 1px solid var(--claim-border);
-    text-align: center;
-}
-
-html[data-theme="light"] .breakdown-chip {
-    background: #ffffff;
-}
-
-.breakdown-chip .chip-name {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    display: block;
-}
-
-.breakdown-chip .chip-val {
-    font-size: 12.5px;
-    font-weight: 800;
-    color: var(--cyan-primary);
-}
-
-/* Matching Explanation */
-.matching-explanation {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    padding: 12px;
+.cl-card__icon-wrap {
+    width        : 38px;
+    height       : 38px;
     border-radius: 10px;
-    background: rgba(0, 140, 255, 0.08);
-    border-left: 3px solid var(--cyan-primary);
-    margin-bottom: 14px;
+    background   : var(--cl-green-dark);
+    display      : flex;
+    align-items  : center;
+    justify-content: center;
+    flex-shrink  : 0;
+}
+.cl-card__icon-wrap svg {
+    width : 18px;
+    height: 18px;
+    stroke: var(--cl-orange);
 }
 
-/* Loading State for Matching Engine */
-.matching-loading {
-    display: none;
-    padding: 24px;
-    text-align: center;
+.cl-card__icon-wrap--orange {
+    background: var(--cl-orange);
+}
+.cl-card__icon-wrap--orange svg {
+    stroke: var(--cl-green-dark);
+}
+
+.cl-card__title {
+    font-size  : 20px;
+    font-weight: 750;
+    color      : var(--cl-text-h);
+    flex       : 1;
+    margin     : 0;
+}
+
+.cl-card__doc-icon {
+    width : 36px; height: 36px;
+    background: rgba(18,75,53,0.08);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+}
+.cl-card__doc-icon svg {
+    width: 18px; height: 18px;
+    stroke: var(--cl-green-mid);
+}
+
+.cl-card__arrow {
+    color: var(--cl-text-muted);
+}
+.cl-card__arrow svg { width: 18px; height: 18px; stroke: currentColor; }
+
+.cl-card__divider {
+    height       : 2px;
+    margin       : 16px 0 20px;
+    background   : linear-gradient(90deg, var(--cl-orange) 0%, var(--cl-green-mid) 60%, transparent 100%);
+    border-radius: 2px;
+    opacity      : 0.5;
+}
+
+/* sidebar card */
+.cl-card--side {
+    padding: 24px 24px;
+}
+
+/* =========================================================
+   6. SECTIONS WITHIN LEFT CARD
+   ========================================================= */
+.cl-section {
+    padding      : 20px 0;
+    border-bottom: 1px solid var(--cl-border-soft);
+}
+.cl-section--last {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.cl-section__title {
+    display    : flex;
+    align-items: center;
+    gap        : 8px;
+    font-size  : 15px;
+    font-weight: 700;
+    color      : var(--cl-text-h);
+    margin     : 0 0 16px;
+}
+.cl-section__title svg {
+    width : 17px; height: 17px;
+    stroke: var(--cl-green-mid);
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   7. STUDENT VERIFIED BLOCK
+   ========================================================= */
+.cl-student {
+    background   : var(--cl-card-inner);
+    border       : 1px solid var(--cl-border-soft);
     border-radius: 14px;
-    background: var(--claim-card-inner);
-    border: 1px solid var(--claim-border);
-    margin-top: 20px;
+    padding      : 18px 20px;
 }
 
-.loading-spinner {
-    width: 36px;
-    height: 36px;
-    border: 3px solid rgba(0, 217, 245, 0.2);
-    border-top-color: var(--cyan-primary);
-    border-radius: 50%;
-    animation: spinSpinner 0.8s linear infinite;
-    margin: 0 auto 12px;
+.cl-student__badge {
+    display      : inline-flex;
+    align-items  : center;
+    gap          : 6px;
+    padding      : 4px 12px;
+    border-radius: 20px;
+    background   : rgba(22,163,74,0.12);
+    border       : 1px solid rgba(22,163,74,0.30);
+    color        : #15803d;
+    font-size    : 12px;
+    font-weight  : 700;
+    margin-bottom: 16px;
+}
+html[data-theme="dark"] .cl-student__badge { color: #4ade80; }
+.cl-student__badge svg { width: 13px; height: 13px; }
+
+.cl-student__grid {
+    display              : grid;
+    grid-template-columns: 1fr 1fr;
+    gap                  : 14px 20px;
 }
 
-@keyframes spinSpinner {
-    to { transform: rotate(360deg); }
+.cl-student__field {
+    display       : flex;
+    flex-direction: column;
+    gap           : 4px;
 }
 
-.loading-text {
-    font-size: 13.5px;
+.cl-student__label {
+    display    : flex;
+    align-items: center;
+    gap        : 5px;
+    font-size  : 11.5px;
+    font-weight: 600;
+    color      : var(--cl-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.cl-student__label svg {
+    width: 12px; height: 12px;
+    stroke: var(--cl-text-muted);
+    flex-shrink: 0;
+}
+
+.cl-student__value {
+    font-size  : 15px;
     font-weight: 700;
-    color: var(--text-primary);
+    color      : var(--cl-text-h);
 }
 
-.loading-subtext {
+/* =========================================================
+   8. FORM CONTROLS
+   ========================================================= */
+.cl-form-group {
+    display       : flex;
+    flex-direction: column;
+    gap           : 7px;
+    margin-bottom : 16px;
+}
+.cl-form-group:last-child { margin-bottom: 0; }
+
+.cl-label {
+    font-size  : 13.5px;
+    font-weight: 650;
+    color      : var(--cl-text-label);
+}
+.cl-required { color: var(--cl-orange); font-weight: 700; }
+
+.cl-input {
+    width         : 100%;
+    height        : 46px;
+    padding       : 0 14px;
+    background    : var(--cl-input-bg);
+    color         : var(--cl-text-h);
+    border        : 1.5px solid var(--cl-input-border);
+    border-radius : 10px;
+    font-size     : 14px;
+    font-family   : inherit;
+    outline       : none;
+    transition    : border-color var(--cl-ease), box-shadow var(--cl-ease);
+    box-sizing    : border-box;
+}
+.cl-input:focus {
+    border-color: var(--cl-input-focus);
+    box-shadow  : 0 0 0 3px rgba(18,75,53,0.14);
+}
+.cl-input::placeholder { color: var(--cl-text-muted); }
+
+.cl-textarea {
+    height    : auto;
+    min-height: 100px;
+    padding   : 12px 14px;
+    resize    : vertical;
+    line-height: 1.6;
+}
+
+.cl-row-2 {
+    display              : grid;
+    grid-template-columns: 1fr 1fr;
+    gap                  : 16px;
+}
+
+.cl-helper {
     font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 4px;
+    color    : var(--cl-text-muted);
 }
+.cl-helper__link {
+    color          : var(--cl-green-mid);
+    font-weight    : 700;
+    text-decoration: none;
+}
+.cl-helper__link:hover { text-decoration: underline; }
 
-/* Important Matching Notice */
-.claim-notice-banner {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 12px 14px;
-    border-radius: 10px;
-    background: rgba(245, 158, 11, 0.10);
-    border: 1px solid rgba(245, 158, 11, 0.35);
-    color: #fbbf24;
+/* =========================================================
+   9. UPLOAD DROPZONE
+   ========================================================= */
+.cl-dropzone {
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+    gap           : 10px;
+    padding       : 28px 20px;
+    border        : 2px dashed var(--cl-input-border);
+    border-radius : 14px;
+    background    : var(--cl-card-inner);
+    cursor        : pointer;
+    text-align    : center;
+    transition    : all var(--cl-ease);
+    position      : relative;
+}
+.cl-dropzone:hover,
+.cl-dropzone.drag-active {
+    border-color: var(--cl-green-mid);
+    background  : rgba(18,75,53,0.05);
+    box-shadow  : 0 0 16px rgba(18,75,53,0.12);
+}
+.cl-dropzone__icon {
+    width        : 52px;
+    height       : 52px;
+    border-radius: 50%;
+    background   : rgba(18,75,53,0.08);
+    border       : 1.5px solid var(--cl-border);
+    display      : flex;
+    align-items  : center;
+    justify-content: center;
+    color        : var(--cl-green-mid);
+    transition   : transform var(--cl-ease);
+}
+.cl-dropzone:hover .cl-dropzone__icon { transform: translateY(-3px); }
+.cl-dropzone__icon svg { width: 22px; height: 22px; stroke: currentColor; }
+.cl-dropzone__title {
+    font-size  : 14px;
+    font-weight: 700;
+    color      : var(--cl-text-h);
+}
+.cl-dropzone__hint {
     font-size: 12px;
-    line-height: 1.5;
-    margin-top: 14px;
+    color    : var(--cl-text-muted);
+}
+.cl-dropzone__input { display: none; }
+
+/* upload preview */
+.cl-upload-preview {
+    display      : none;
+    margin-top   : 14px;
+    background   : var(--cl-card-inner);
+    border       : 1px solid var(--cl-border);
+    border-radius: 12px;
+    padding      : 12px 14px;
+    align-items  : center;
+    gap          : 14px;
+}
+.cl-upload-preview__thumb {
+    width        : 58px;
+    height       : 58px;
+    border-radius: 8px;
+    object-fit   : cover;
+    border       : 1px solid var(--cl-border);
+    flex-shrink  : 0;
+}
+.cl-upload-preview__meta { flex: 1; min-width: 0; }
+.cl-upload-preview__name {
+    font-size     : 13.5px;
+    font-weight   : 700;
+    color         : var(--cl-text-h);
+    white-space   : nowrap;
+    overflow      : hidden;
+    text-overflow : ellipsis;
+}
+.cl-upload-preview__size {
+    font-size : 12px;
+    color     : var(--cl-text-muted);
+    margin-top: 2px;
+}
+.cl-upload-preview__remove {
+    background   : rgba(220,38,38,0.10);
+    border       : 1px solid rgba(220,38,38,0.28);
+    color        : var(--cl-danger);
+    padding      : 6px 12px;
+    border-radius: 8px;
+    font-size    : 12px;
+    font-weight  : 700;
+    cursor       : pointer;
+    transition   : all var(--cl-ease);
+    flex-shrink  : 0;
+}
+.cl-upload-preview__remove:hover {
+    background: var(--cl-danger);
+    color     : #fff;
 }
 
-.claim-notice-banner svg {
-    width: 18px;
+.cl-upload-error {
+    display      : none;
+    margin-top   : 10px;
+    padding      : 9px 14px;
+    border-radius: 8px;
+    background   : rgba(220,38,38,0.10);
+    border       : 1px solid rgba(220,38,38,0.28);
+    color        : #b91c1c;
+    font-size    : 13px;
+    font-weight  : 600;
+}
+html[data-theme="dark"] .cl-upload-error { color: #f87171; }
+
+/* =========================================================
+   10. CLAIM STATUS BOX + SUBMIT BUTTONS
+   ========================================================= */
+.cl-status-box {
+    display      : flex;
+    align-items  : center;
+    justify-content: space-between;
+    gap          : 12px;
+    padding      : 14px 18px;
+    border-radius: 12px;
+    background   : var(--cl-card-inner);
+    border       : 1px solid var(--cl-border-soft);
+    margin-bottom: 20px;
+    flex-wrap    : wrap;
+}
+.cl-status-box__left {
+    display       : flex;
+    flex-direction: column;
+    gap           : 2px;
+}
+.cl-status-box__title {
+    font-size  : 14px;
+    font-weight: 700;
+    color      : var(--cl-text-h);
+}
+.cl-status-box__note {
+    font-size: 12px;
+    color    : var(--cl-text-muted);
+}
+.cl-status-pill {
+    padding      : 5px 14px;
+    border-radius: 20px;
+    background   : rgba(217,119,6,0.12);
+    border       : 1px solid rgba(217,119,6,0.32);
+    color        : var(--cl-warning);
+    font-size    : 12px;
+    font-weight  : 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space  : nowrap;
+}
+
+.cl-submit-group {
+    display    : flex;
+    gap        : 14px;
+    align-items: center;
+}
+
+/* Primary submit button */
+.cl-btn-submit {
+    display      : inline-flex;
+    align-items  : center;
+    justify-content: center;
+    gap          : 10px;
+    flex         : 1;
+    height       : 52px;
+    padding      : 0 28px;
+    background   : linear-gradient(135deg, var(--cl-green-dark) 0%, var(--cl-green-mid) 100%);
+    color        : #FFFFFF;
+    border       : none;
+    border-radius: 26px;
+    font-size    : 16px;
+    font-weight  : 750;
+    cursor       : pointer;
+    text-decoration: none;
+    transition   : all var(--cl-ease);
+    box-shadow   : var(--cl-shadow-btn);
+    letter-spacing: 0.3px;
+    white-space  : nowrap;
+}
+.cl-btn-submit svg {
+    width : 18px;
     height: 18px;
     stroke: currentColor;
     flex-shrink: 0;
-    margin-top: 1px;
+}
+.cl-btn-submit:hover:not(:disabled) {
+    transform  : translateY(-2px);
+    box-shadow : 0 8px 28px rgba(18,75,53,0.40);
+    background : linear-gradient(135deg, #0D3B28 0%, var(--cl-green-dark) 100%);
+}
+.cl-btn-submit:disabled,
+.cl-btn-submit--loading {
+    opacity   : 0.70;
+    cursor    : not-allowed;
+    transform : none !important;
 }
 
-/* =========================================
-   8. CLAIM STATUS & SUBMISSION BUTTONS
-========================================= */
-.status-preview-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 18px;
-    border-radius: 12px;
-    background: var(--claim-card-inner);
-    border: 1px solid var(--claim-border);
-    margin-bottom: 24px;
-}
-
-.status-preview-left {
-    display: flex;
-    flex-direction: column;
-}
-
-.status-preview-title {
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-.status-preview-note {
-    font-size: 11.5px;
-    color: var(--text-muted);
-}
-
-.status-pill-pending {
-    padding: 5px 14px;
-    border-radius: 20px;
-    background: rgba(245, 158, 11, 0.15);
-    color: var(--warning);
-    border: 1px solid rgba(245, 158, 11, 0.4);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-/* Submit Actions */
-.claim-submit-group {
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.btn-submit-claim {
-    flex: 1;
-    height: 52px;
-    padding: 0 28px;
-    background: var(--blue-primary);
-    color: #ffffff;
-    border: 1px solid var(--blue-primary);
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 750;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: all 0.25s ease;
-    box-shadow: 0 4px 18px var(--blue-glow);
-}
-
-.btn-submit-claim:hover:not(:disabled) {
-    background: var(--blue-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px var(--blue-glow);
-}
-
-.btn-submit-claim:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-}
-
-.btn-submit-claim svg {
-    width: 18px;
-    height: 18px;
-}
-
-.btn-back-home {
-    height: 52px;
-    padding: 0 20px;
-    border-radius: 12px;
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--claim-border);
+/* Back button */
+.cl-btn-back {
+    display      : inline-flex;
+    align-items  : center;
+    gap          : 7px;
+    height       : 52px;
+    padding      : 0 20px;
+    border-radius: 26px;
+    border       : 1.5px solid var(--cl-border);
+    color        : var(--cl-text-muted);
+    background   : transparent;
+    font-size    : 14px;
+    font-weight  : 650;
     text-decoration: none;
-    font-size: 14.5px;
-    font-weight: 650;
-    display: inline-flex;
-    align-items: center;
+    transition   : all var(--cl-ease);
+    white-space  : nowrap;
+}
+.cl-btn-back svg { width: 15px; height: 15px; stroke: currentColor; }
+.cl-btn-back:hover {
+    color       : var(--cl-green-mid);
+    border-color: var(--cl-green-mid);
+    background  : rgba(18,75,53,0.06);
+}
+
+/* floating bottom submit (mobile) */
+.cl-float-submit {
+    display: none; /* shown via media query on mobile */
+    position  : fixed;
+    bottom    : 24px;
+    left      : 50%;
+    transform : translateX(-50%);
+    z-index   : 100;
+}
+.cl-btn-submit--float {
+    flex      : none;
+    min-width : 220px;
+    box-shadow: 0 8px 32px rgba(18,75,53,0.45);
+}
+
+/* =========================================================
+   11. RIGHT SIDEBAR — SELECTED ITEM PREVIEW
+   ========================================================= */
+.cl-sidebar {
+    display       : flex;
+    flex-direction: column;
+    gap           : 20px;
+}
+
+.cl-item-preview {
+    margin-top: 16px;
+}
+
+.cl-item-preview__imgbox {
+    width        : 100%;
+    height       : 220px;
+    border-radius: 14px;
+    background   : var(--cl-card-inner);
+    border       : 1.5px dashed var(--cl-border);
+    display      : flex;
+    align-items  : center;
     justify-content: center;
-    transition: all 0.2s ease;
+    overflow     : hidden;
+    margin-bottom: 16px;
+    position     : relative;
+}
+.cl-item-preview__imgbox img {
+    width     : 100%;
+    height    : 100%;
+    object-fit: contain;
+    display   : none;
+    transition: transform 0.3s ease;
+}
+.cl-item-preview__imgbox img:hover { transform: scale(1.04); }
+
+/* placeholder */
+.cl-item-preview__placeholder {
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+    text-align    : center;
+    gap           : 10px;
+    padding       : 20px;
+    color         : var(--cl-text-muted);
+}
+.cl-item-preview__ph-ring {
+    width        : 72px;
+    height       : 72px;
+    border-radius: 50%;
+    background   : linear-gradient(135deg, #FFF3D6, #FFE0A0);
+    border       : 2px solid var(--cl-border);
+    display      : flex;
+    align-items  : center;
+    justify-content: center;
+    position     : relative;
+}
+.cl-item-preview__ph-ring svg {
+    width : 30px; height: 30px;
+    stroke: var(--cl-green-mid);
 }
 
-.btn-back-home:hover {
-    color: var(--cyan-primary);
-    border-color: var(--cyan-primary);
-    background: rgba(0, 217, 245, 0.08);
+/* sparkle lines around placeholder icon */
+.cl-item-preview__spark {
+    position     : absolute;
+    background   : var(--cl-orange);
+    border-radius: 2px;
+}
+.cl-item-preview__spark--1 {
+    width: 12px; height: 2.5px;
+    top: 10px; right: -6px;
+    transform: rotate(30deg);
+}
+.cl-item-preview__spark--2 {
+    width: 2.5px; height: 12px;
+    bottom: 8px; right: -4px;
+    transform: rotate(10deg);
+}
+.cl-item-preview__spark--3 {
+    width: 10px; height: 2.5px;
+    top: 50%; left: -8px;
+    transform: rotate(-20deg);
 }
 
-/* Success & Error Django Messages */
-.django-messages-container {
-    margin-bottom: 20px;
+.cl-item-preview__placeholder h4 {
+    font-size  : 16px;
+    font-weight: 700;
+    color      : var(--cl-text-h);
+    margin     : 0;
+}
+.cl-item-preview__placeholder p {
+    font-size: 13px;
+    color    : var(--cl-text-muted);
+    margin   : 0;
 }
 
-.alert-box {
-    padding: 14px 18px;
-    border-radius: 12px;
-    font-size: 14px;
+/* detail rows */
+.cl-item-preview__details {
+    display       : flex;
+    flex-direction: column;
+    gap           : 8px;
+    margin-bottom : 16px;
+}
+.cl-detail-row {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    padding        : 9px 12px;
+    border-radius  : 8px;
+    background     : var(--cl-card-inner);
+    border         : 1px solid var(--cl-border-soft);
+    font-size      : 13px;
+    gap            : 8px;
+}
+.cl-detail-row__label {
+    color      : var(--cl-text-muted);
     font-weight: 600;
-    margin-bottom: 12px;
-    display: flex;
+    white-space: nowrap;
+}
+.cl-detail-row__val {
+    color      : var(--cl-text-h);
+    font-weight: 700;
+    text-align : right;
+    word-break : break-word;
+}
+
+/* notice banner */
+.cl-notice {
+    display      : flex;
+    align-items  : flex-start;
+    gap          : 10px;
+    padding      : 11px 14px;
+    border-radius: 10px;
+    background   : rgba(255,165,30,0.10);
+    border       : 1px solid rgba(255,165,30,0.30);
+    color        : #92610A;
+    font-size    : 12.5px;
+    line-height  : 1.5;
+    margin-top   : 14px;
+}
+html[data-theme="dark"] .cl-notice { color: #FFC860; }
+.cl-notice svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 1px; stroke: currentColor; }
+
+/* =========================================================
+   12. IMAGE MATCHING CARDS
+   ========================================================= */
+.cl-matching-loading {
+    display      : none;
+    padding      : 24px;
+    text-align   : center;
+    border-radius: 16px;
+    background   : var(--cl-card-bg);
+    border       : 1px solid var(--cl-border);
+    box-shadow   : var(--cl-shadow-card);
+}
+.cl-matching-loading__spinner {
+    width      : 36px;
+    height     : 36px;
+    border     : 3px solid rgba(18,75,53,0.15);
+    border-top-color: var(--cl-green-mid);
+    border-radius: 50%;
+    animation  : clSpin 0.8s linear infinite;
+    margin     : 0 auto 12px;
+}
+@keyframes clSpin { to { transform: rotate(360deg); } }
+.cl-matching-loading__title {
+    font-size  : 14px;
+    font-weight: 700;
+    color      : var(--cl-text-h);
+}
+.cl-matching-loading__sub {
+    font-size : 12px;
+    color     : var(--cl-text-muted);
+    margin-top: 4px;
+}
+
+.cl-matching-card {
+    display      : none;
+    background   : var(--cl-card-bg);
+    border       : 1px solid var(--cl-border);
+    border-radius: 16px;
+    padding      : 20px;
+    box-shadow   : var(--cl-shadow-card);
+}
+
+.cl-matching-card__head {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    margin-bottom  : 16px;
+    gap            : 8px;
+    flex-wrap      : wrap;
+}
+.cl-matching-card__title {
+    display    : flex;
     align-items: center;
-    gap: 12px;
+    gap        : 8px;
+    font-size  : 15px;
+    font-weight: 750;
+    color      : var(--cl-text-h);
+}
+.cl-matching-card__title svg {
+    width: 16px; height: 16px;
+    stroke: var(--cl-green-mid);
 }
 
-.alert-success {
-    background: rgba(16, 185, 129, 0.15);
-    border: 1px solid rgba(16, 185, 129, 0.4);
-    color: #34d399;
+.cl-match-badge {
+    padding      : 3px 12px;
+    border-radius: 20px;
+    font-size    : 11px;
+    font-weight  : 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    background   : rgba(100,100,100,0.12);
+    border       : 1px solid rgba(100,100,100,0.3);
+    color        : var(--cl-text-muted);
+}
+.cl-match-badge--high {
+    background: rgba(22,163,74,0.14);
+    border-color: rgba(22,163,74,0.4);
+    color: #15803d;
+}
+.cl-match-badge--moderate {
+    background: rgba(217,119,6,0.14);
+    border-color: rgba(217,119,6,0.4);
+    color: var(--cl-warning);
+}
+.cl-match-badge--low {
+    background: rgba(220,38,38,0.14);
+    border-color: rgba(220,38,38,0.4);
+    color: var(--cl-danger);
+}
+html[data-theme="dark"] .cl-match-badge--high     { color: #4ade80; }
+html[data-theme="dark"] .cl-match-badge--moderate { color: #fbbf24; }
+html[data-theme="dark"] .cl-match-badge--low      { color: #f87171; }
+
+/* compare images */
+.cl-compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap    : 12px;
+    margin-bottom: 16px;
+}
+.cl-compare-col { display: flex; flex-direction: column; gap: 6px; }
+.cl-compare-tag {
+    font-size     : 10.5px;
+    font-weight   : 750;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color         : var(--cl-text-muted);
+}
+.cl-compare-imgbox {
+    width       : 100%;
+    height      : 140px;
+    border-radius: 10px;
+    border      : 1px solid var(--cl-border);
+    overflow    : hidden;
+    background  : var(--cl-card-inner);
+}
+.cl-compare-imgbox img {
+    width: 100%; height: 100%; object-fit: cover;
 }
 
-.alert-error {
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.4);
-    color: #f87171;
+/* similarity meter */
+.cl-meter {
+    background   : var(--cl-card-inner);
+    border       : 1px solid var(--cl-border-soft);
+    border-radius: 12px;
+    padding      : 14px;
+    margin-bottom: 14px;
+}
+.cl-meter__head {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    margin-bottom  : 10px;
+}
+.cl-meter__label {
+    font-size  : 13px;
+    font-weight: 700;
+    color      : var(--cl-text-h);
+}
+.cl-meter__pct {
+    font-size  : 22px;
+    font-weight: 850;
+    color      : var(--cl-green-mid);
+}
+.cl-meter__track {
+    width       : 100%;
+    height      : 10px;
+    border-radius: 6px;
+    background  : var(--cl-border);
+    overflow    : hidden;
+}
+.cl-meter__fill {
+    height     : 100%;
+    width      : 0%;
+    background : linear-gradient(90deg, var(--cl-green-dark), var(--cl-orange));
+    border-radius: 6px;
+    transition : width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* =========================================
-   9. RESPONSIVE BREAKPOINTS
-========================================= */
-@media (max-width: 1024px) {
-    .claim-layout-grid {
+/* breakdown chips */
+.cl-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap    : 8px;
+    margin-top: 12px;
+}
+.cl-breakdown__chip {
+    padding      : 7px 8px;
+    border-radius: 8px;
+    background   : var(--cl-card-bg);
+    border       : 1px solid var(--cl-border-soft);
+    text-align   : center;
+}
+.cl-breakdown__name {
+    display       : block;
+    font-size     : 10px;
+    font-weight   : 700;
+    text-transform: uppercase;
+    color         : var(--cl-text-muted);
+}
+.cl-breakdown__val {
+    font-size  : 13px;
+    font-weight: 800;
+    color      : var(--cl-green-mid);
+}
+
+/* explanation */
+.cl-matching-explain {
+    font-size    : 13px;
+    color        : var(--cl-text-body);
+    line-height  : 1.6;
+    padding      : 11px 13px;
+    border-radius: 9px;
+    background   : rgba(18,75,53,0.07);
+    border-left  : 3px solid var(--cl-green-mid);
+    margin-bottom: 12px;
+}
+
+/* =========================================================
+   13. RESPONSIVE
+   ========================================================= */
+@media (max-width: 1050px) {
+    .cl-grid {
         grid-template-columns: 1fr;
         gap: 24px;
     }
-}
-
-@media (max-width: 640px) {
-    .claim-page-wrapper {
-        padding: 24px 14px 50px;
+    .cl-sidebar {
+        /* on tablet sidebar goes below main card */
     }
-
-    .claim-card {
-        padding: 20px 16px;
-        border-radius: 16px;
+    .cl-float-submit {
+        display: flex;
     }
-
-    .form-row-2 {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .student-info-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
-    .comparison-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .compare-img-box {
-        height: 140px;
-    }
-
-    .claim-submit-group {
-        flex-direction: column;
-    }
-
-    .btn-submit-claim,
-    .btn-back-home {
-        width: 100%;
+    /* hide the in-card submit group on mobile – use float button */
+    .cl-submit-group {
+        display: none;
     }
 }
 
-/* =========================================
-   CLAIM PAGE - CLEAN PROFESSIONAL DESIGN
-   Add at the bottom of claim.css
-========================================= */
-
-/* Page background */
-.claim-page-wrapper {
-    background:
-        radial-gradient(ellipse at top right,
-        rgba(0, 140, 255, 0.12), transparent 45%),
-        var(--claim-bg);
-    padding: 35px 20px 60px;
-}
-
-.claim-container {
-    max-width: 1200px;
-    gap: 24px;
-}
-
-/* Header */
-.claim-page-header {
-    display: block;
-    padding-bottom: 22px;
-}
-
-.claim-page-title {
-    margin-top: 16px;
-    font-size: clamp(27px, 3vw, 35px);
-    letter-spacing: -0.7px;
-}
-
-.claim-page-subtitle {
-    max-width: 650px;
-    line-height: 1.7;
-}
-
-/* Main layout */
-.claim-layout-grid {
-    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
-    gap: 24px;
-}
-
-/* Main form card */
-.claim-card {
-    border-radius: 18px;
-    padding: 26px;
-    box-shadow: var(--shadow-main);
-}
-
-.claim-card-title {
-    font-size: 21px;
-    margin-bottom: 18px;
-}
-
-/* Remove unnecessary descriptions */
-.claim-section > .claim-card-desc {
-    display: none;
-}
-
-/* Simple section headings - no step numbers */
-.claim-section {
-    padding: 21px 0;
-    border-bottom: 1px solid var(--claim-border);
-}
-
-.claim-section h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-}
-
-.claim-section h3::before {
-    content: "";
-    display: inline-block;
-    width: 4px;
-    height: 17px;
-    margin-right: 10px;
-    vertical-align: -3px;
-    border-radius: 5px;
-    background: var(--cyan-primary);
-}
-
-/* Form fields */
-.form-group {
-    gap: 7px;
-    margin-bottom: 17px;
-}
-
-.form-group label {
-    font-size: 13px;
-}
-
-.form-control {
-    height: 47px;
-    border-radius: 9px;
-    font-size: 14px;
-}
-
-textarea.form-control {
-    min-height: 100px;
-}
-
-/* Student profile */
-.student-profile-verified {
-    border-radius: 12px;
-    padding: 20px;
-}
-
-.student-info-grid {
-    gap: 17px;
-}
-
-.student-field-value {
-    margin-top: 5px;
-}
-
-/* Found item preview */
-.claim-sidebar .claim-card {
-    padding: 23px;
-}
-
-.found-item-preview-card {
-    padding: 15px;
-    border-radius: 13px;
-}
-
-.found-image-display-box {
-    height: 220px;
-    background: var(--claim-card);
-}
-
-.found-image-display-box img {
-    object-fit: contain;
-}
-
-.found-detail-row {
-    padding: 10px;
-    gap: 10px;
-}
-
-/* Upload section */
-.upload-dropzone {
-    padding: 30px 18px;
-    border-radius: 12px;
-}
-
-.upload-prompt-title {
-    font-size: 14px;
-}
-
-/* Status box */
-.status-preview-box {
-    border-radius: 12px;
-    padding: 16px;
-}
-
-/* Buttons */
-.claim-submit-group {
-    margin-top: 20px;
-    gap: 12px;
-}
-
-.btn-submit-claim {
-    height: 49px;
-    border-radius: 9px;
-    font-size: 14px;
-}
-
-.btn-back-home {
-    height: 49px;
-    border-radius: 9px;
-    font-size: 13px;
-}
-
-/* Matching result */
-.matching-card {
-    border-radius: 15px;
-}
-
-/* Mobile responsive */
-@media (max-width: 850px) {
-    .claim-layout-grid {
-        grid-template-columns: 1fr;
+@media (max-width: 680px) {
+    .cl-hero {
+        flex-wrap : wrap;
+        padding   : 24px 20px 28px;
+        min-height: auto;
+        gap       : 16px;
     }
+    .cl-hero__college-wrap { display: none; }
+    .cl-hero__heading { font-size: 26px; }
+
+    .cl-card { padding: 20px 18px; border-radius: 16px; }
+    .cl-card--side { padding: 18px; }
+
+    .cl-row-2 { grid-template-columns: 1fr; gap: 12px; }
+    .cl-student__grid { grid-template-columns: 1fr 1fr; }
+
+    .cl-compare-grid { grid-template-columns: 1fr; gap: 10px; }
+    .cl-compare-imgbox { height: 130px; }
+
+    .cl-status-box { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+    .cl-btn-submit--float { min-width: 180px; font-size: 15px; }
 }
 
-@media (max-width: 640px) {
-    .claim-page-wrapper {
-        padding: 22px 12px 40px;
-    }
-
-    .claim-card {
-        padding: 19px 15px;
-    }
-
-    .claim-page-title {
-        font-size: 26px;
-    }
-
-    .form-row-2 {
-        grid-template-columns: 1fr;
-    }
-
-    .student-info-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .claim-submit-group {
-        flex-direction: column;
-    }
-
-    .btn-submit-claim,
-    .btn-back-home {
-        width: 100%;
-    }
-}
-/* Back Navigation */
-.claim-back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    width: fit-content;
-    padding: 10px 18px;
-    margin-bottom: 15px;
-    border: 1px solid var(--claim-border);
-    border-radius: 8px;
-    color: var(--claim-text);
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s ease;
+@media (max-width: 420px) {
+    .cl-student__grid { grid-template-columns: 1fr; }
+    .cl-breakdown { grid-template-columns: 1fr 1fr; }
 }
 
-.claim-back-link:hover {
-    background: var(--claim-card-hover);
-    color: var(--claim-accent);
-    transform: translateX(-3px);
+/* Bring back the submit group on desktop (override the 1050px hide) */
+@media (min-width: 1051px) {
+    .cl-float-submit { display: none !important; }
+    .cl-submit-group { display: flex !important; }
 }
-/* =====================================
-   CLAIM PAGE - GREEN & GOLD THEME
-===================================== */
-
-:root {
-    --claim-bg: #103522;
-    --claim-card: #1C5139;
-    --claim-card-hover: #286447;
-    --claim-card-inner: #17452F;
-
-    --claim-border: #3D7655;
-    --claim-accent: #D6B45C;
-    --claim-primary: #24613F;
-
-    --claim-text: #F5F5E8;
-    --claim-text-muted: #C5D6C8;
-
-    --claim-input-bg: #103522;
-    --claim-input-border: #477858;
-}
-
-/* Page background */
-.claim-page-wrapper {
-    background: var(--claim-bg) !important;
-}
-
-/* Main cards */
-.claim-card,
-.claim-preview-card,
-.claim-help-card,
-.matching-card {
-    background: var(--claim-card) !important;
-    border-color: var(--claim-border) !important;
-}
-
-/* Headings and highlights */
-.claim-page-header h1,
-.claim-section h3,
-.claim-card h3 {
-    color: var(--claim-accent) !important;
-}
-
-/* Input fields */
-.claim-page-wrapper input,
-.claim-page-wrapper select,
-.claim-page-wrapper textarea {
-    background: var(--claim-input-bg) !important;
-    border-color: var(--claim-input-border) !important;
-    color: var(--claim-text) !important;
-}
-
-/* Buttons */
-.claim-page-wrapper button,
-.claim-submit-btn {
-    background: var(--claim-accent) !important;
-    color: #173A28 !important;
-    border-color: var(--claim-accent) !important;
-}
-
-.claim-page-wrapper button:hover,
-.claim-submit-btn:hover {
-    background: #E6C978 !important;
-}
-
-/* Back navigation */
-.claim-back-link {
-    color: var(--claim-accent) !important;
-    border-color: var(--claim-border) !important;
-}
-
-.claim-back-link:hover {
-    background: var(--claim-card-hover) !important;
-}
-
-/* Remove blue/cyan accents */
-.claim-section h3::before {
-    background: var(--claim-accent) !important;
-}
-
-.claim-page-wrapper a {
-    color: var(--claim-accent);
-}
-
-/* Responsive layout remains unchanged */

@@ -11,6 +11,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from datetime import timedelta
+from django.utils import timezone
 # Create your views here.
 
 def home(request):
@@ -686,8 +688,47 @@ def view_all_items(request):
 
     items = Item.objects.all()
 
+    # Search filter
+    search_query = request.GET.get('q', '').strip()
+
+    if search_query:
+        items = items.filter(
+            Q(item_name__icontains=search_query) |
+            Q(category__icontains=search_query) |
+            Q(location__icontains=search_query)
+        )
+
+    # Item type filter
+    filter_type = request.GET.get('type', 'all')
+
+    if filter_type in ['Lost', 'Found']:
+        items = items.filter(item_type=filter_type)
+
+    # Date filter
+    selected_date = request.GET.get('date', 'all')
+
+    today = timezone.localdate()
+
+    if selected_date == 'today':
+        items = items.filter(date__date=today)
+
+    elif selected_date == 'yesterday':
+        yesterday = today - timedelta(days=1)
+        items = items.filter(date__date=yesterday)
+
+    elif selected_date == '7days':
+        start_date = today - timedelta(days=6)
+        items = items.filter(date__date__gte=start_date)
+
+    elif selected_date == '30days':
+        start_date = today - timedelta(days=29)
+        items = items.filter(date__date__gte=start_date)
+
     context = {
-        'items': items
+        'items': items,
+        'search_query': search_query,
+        'filter_type': filter_type,
+        'selected_date': selected_date,
     }
 
     return render(
@@ -695,7 +736,6 @@ def view_all_items(request):
         'lostfound/view_all_items.html',
         context
     )
-# Admin Update Item Status
 @login_required
 def update_item_status(request, pk):
 
