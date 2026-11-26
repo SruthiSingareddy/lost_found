@@ -290,7 +290,8 @@
                         <img src="{{ item.image.url }}"
                              alt="{{ item.item_name }}"
                              class="sd-item-img"
-                             loading="lazy">
+                             loading="lazy"
+                             onerror="this.onerror=null;this.src='{% static 'lostfound/image/placeholder.svg' %}';">
                     {% else %}
                         <div class="sd-no-image">
                             <svg width="34" height="34" viewBox="0 0 24 24" fill="none"
@@ -395,7 +396,8 @@
                         <img src="{{ item.image.url }}"
                              alt="{{ item.item_name }}"
                              class="sd-item-img"
-                             loading="lazy">
+                             loading="lazy"
+                             onerror="this.onerror=null;this.src='{% static 'lostfound/image/placeholder.svg' %}';">
                     {% else %}
                         <div class="sd-no-image">
                             <svg width="34" height="34" viewBox="0 0 24 24" fill="none"
@@ -501,7 +503,8 @@
                         <img src="{{ claim.item.image.url }}"
                              alt="{{ claim.item.item_name }}"
                              class="sd-claim-thumb"
-                             loading="lazy">
+                             loading="lazy"
+                             onerror="this.onerror=null;this.src='{% static 'lostfound/image/placeholder.svg' %}';">
                     {% else %}
                         <div class="sd-claim-thumb-placeholder">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"

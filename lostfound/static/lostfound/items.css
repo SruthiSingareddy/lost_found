@@ -10,29 +10,17 @@
 ========================================= */
 
 html[data-theme="dark"] {
-
-    --page-bg: #081426;
-
-    --card-bg: #142a43;
-
-    --card-hover: #1b3654;
-
-    --input-bg: #0c1d32;
-
-    --text-color: #f1f5f9;
-
-    --heading-color: #38bdf8;
-
-    --muted-color: #a8b8cc;
-
-    --border-color: #29445f;
-
-    --primary-color: #38bdf8;
-
-    --primary-hover: #0284c7;
-
-    --shadow-color: rgba(0, 0, 0, 0.25);
-
+    --page-bg: #103522;
+    --card-bg: #1C5139;
+    --card-hover: #235F43;
+    --input-bg: #0D2B1C;
+    --text-color: #FFF9EF;
+    --heading-color: #E0AD4D;
+    --muted-color: #B2C7B8;
+    --border-color: rgba(224, 173, 77, 0.35);
+    --primary-color: #C18422;
+    --primary-hover: #E0AD4D;
+    --shadow-color: rgba(0, 0, 0, 0.35);
 }
 
 
@@ -41,29 +29,17 @@ html[data-theme="dark"] {
 ========================================= */
 
 html[data-theme="light"] {
-
-    --page-bg: #f1f5f9;
-
-    --card-bg: #ffffff;
-
-    --card-hover: #f8fafc;
-
-    --input-bg: #ffffff;
-
-    --text-color: #1e293b;
-
-    --heading-color: #0369a1;
-
-    --muted-color: #64748b;
-
-    --border-color: #dbe3ed;
-
-    --primary-color: #0284c7;
-
-    --primary-hover: #0369a1;
-
-    --shadow-color: rgba(15, 23, 42, 0.08);
-
+    --page-bg: #FFF9EF;
+    --card-bg: #FFFCF6;
+    --card-hover: #F8EFE0;
+    --input-bg: #FFFFFF;
+    --text-color: #263D30;
+    --heading-color: #17452F;
+    --muted-color: #536653;
+    --border-color: #DCC9A8;
+    --primary-color: #17452F;
+    --primary-hover: #103522;
+    --shadow-color: rgba(23, 69, 47, 0.10);
 }
 
 

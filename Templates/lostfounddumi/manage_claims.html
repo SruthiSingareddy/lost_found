@@ -494,7 +494,8 @@ html[data-theme="light"] .claim-verification-block {
                                 <span class="thumb-label">Lost Photo</span>
                                 <div class="thumb-img-wrapper" onclick="window.open('{% if claim.lost_item_image %}{{ claim.lost_item_image.url }}{% endif %}', '_blank')">
                                     {% if claim.lost_item_image %}
-                                    <img src="{{ claim.lost_item_image.url }}" alt="Lost item photo">
+                                    <img src="{{ claim.lost_item_image.url }}" alt="Lost item photo"
+                                         onerror="this.onerror=null;this.src='{% static 'lostfound/image/placeholder.svg' %}';">
                                     {% else %}
                                     <div class="no-thumb-placeholder">No Photo Uploaded</div>
                                     {% endif %}
@@ -507,7 +508,8 @@ html[data-theme="light"] .claim-verification-block {
                                 onclick="window.open('{% if claim.item.image %}{{ claim.item.image.url }}{% endif %}', '_blank')">
                                  {% if claim.item.image %}
                                  <img src="{{ claim.item.image.url }}"
-                                 alt="Found item photo">
+                                 alt="Found item photo"
+                                 onerror="this.onerror=null;this.src='{% static 'lostfound/image/placeholder.svg' %}';">
                                  {% else %}
                                  <div class="no-thumb-placeholder">
                                     No Reference Image

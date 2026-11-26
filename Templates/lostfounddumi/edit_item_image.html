@@ -36,7 +36,8 @@
 
                 <img src="{{ item.image.url }}"
                      alt="{{ item.item_name }}"
-                     class="item-preview">
+                     class="item-preview"
+                     onerror="this.onerror=null;this.src='{% static 'lostfound/image/placeholder.svg' %}';">
 
             {% else %}
 

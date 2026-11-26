@@ -806,3 +806,31 @@ def student_logout(request):
     messages.success(request, "You have logged out successfully!")
 
     return redirect('/product/products/')
+
+
+def serve_media(request, path):
+    """
+    Serve user-uploaded media files in development and production.
+    If the requested media file exists on disk, serve it.
+    If the file is missing (e.g. wiped after a Render ephemeral container restart),
+    serve a clean SVG placeholder image with HTTP 200 instead of a broken 404!
+    """
+    from django.views.static import serve
+    from django.http import FileResponse, Http404
+    from django.conf import settings
+
+    full_path = os.path.join(str(settings.MEDIA_ROOT), path)
+    if os.path.exists(full_path) and os.path.isfile(full_path):
+        return serve(request, path, document_root=str(settings.MEDIA_ROOT))
+
+    # Graceful fallback: return clean placeholder SVG
+    placeholder_candidates = [
+        os.path.join(str(settings.BASE_DIR), 'lostfound', 'static', 'lostfound', 'image', 'placeholder.svg'),
+        os.path.join(str(settings.BASE_DIR), 'lostfound', 'static', 'image', 'placeholder.svg'),
+        os.path.join(str(settings.MEDIA_ROOT), 'placeholder.svg'),
+    ]
+    for p in placeholder_candidates:
+        if os.path.exists(p):
+            return FileResponse(open(p, 'rb'), content_type='image/svg+xml')
+
+    raise Http404("Media file not found")

@@ -1183,3 +1183,64 @@ textarea:focus {
         letter-spacing: 1px;
     }
 }
+
+
+/* ---------------------------------------------------------
+   12. FLASH MESSAGES & ALERTS
+   --------------------------------------------------------- */
+
+.site-messages-container {
+    width: 92%;
+    max-width: 1200px;
+    margin: 20px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.site-alert {
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
+
+.site-alert-success {
+    background: #1B4D35;
+    color: #FFF9EF;
+    border: 1.5px solid #28734E;
+}
+
+.site-alert-error {
+    background: #4A1A1A;
+    color: #FFE6E6;
+    border: 1.5px solid #8A3333;
+}
+
+.site-alert-info {
+    background: #1A364A;
+    color: #E6F3FF;
+    border: 1.5px solid #2B597B;
+}
+
+.site-alert-warning {
+    background: #4A3A1A;
+    color: #FFF2D6;
+    border: 1.5px solid #8A682B;
+}
+
+html[data-theme="light"] .site-alert-success {
+    background: #E8F5EE;
+    color: #17452F;
+    border-color: #A3D8BC;
+}
+
+html[data-theme="light"] .site-alert-error {
+    background: #FDF0F0;
+    color: #8A2525;
+    border-color: #F3B5B5;
+}

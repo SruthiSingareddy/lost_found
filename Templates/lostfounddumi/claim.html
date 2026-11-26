@@ -434,7 +434,8 @@
                     <!-- image display area -->
                     <div class="cl-item-preview">
                         <div class="cl-item-preview__imgbox" id="foundImageBox">
-                            <img id="foundItemImg" src="" alt="Selected found item">
+                            <img id="foundItemImg" src="" alt="Selected found item"
+                                 onerror="this.onerror=null;this.src='{% static 'lostfound/image/placeholder.svg' %}';">
 
                             <!-- placeholder shown when no item selected -->
                             <div class="cl-item-preview__placeholder" id="foundPlaceholder">

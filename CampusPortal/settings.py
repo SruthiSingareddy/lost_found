@@ -170,4 +170,15 @@ LOGIN_URL = '/admin/login/'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = BASE_DIR / 'media'
+# Render persistent disk support:
+RENDER_MEDIA_DIR = os.environ.get("MEDIA_DIR")
+if RENDER_MEDIA_DIR and os.path.exists(RENDER_MEDIA_DIR):
+    MEDIA_ROOT = Path(RENDER_MEDIA_DIR)
+elif os.path.exists("/var/data/media"):
+    MEDIA_ROOT = Path("/var/data/media")
+else:
+    MEDIA_ROOT = BASE_DIR / "media"
+
+# Ensure media upload subdirectories exist
+(MEDIA_ROOT / "items").mkdir(parents=True, exist_ok=True)
+(MEDIA_ROOT / "claims").mkdir(parents=True, exist_ok=True)

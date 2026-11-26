@@ -1,450 +1,161 @@
-
+{% extends 'lostfound/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+{% block title %}View All Items | Campus Lost &amp; Found{% endblock %}
 
-<head>
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'lostfound/items.css' %}?v=6">
+{% endblock %}
 
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Campus Lost and Found Items</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet"
-          href="{% static 'lostfound/items.css' %}?v=5">
-
-    <!-- Theme -->
-    <script src="{% static 'lostfound/theme.js' %}" defer></script>
-
-</head>
-
-<body>
+{% block content %}
 
 <div class="items-container">
 
-    <!-- HEADER -->
-
+    <!-- PAGE HEADER -->
     <header class="items-header">
-
         <div class="items-heading">
-
-            <span class="items-badge">
-                CAMPUS PORTAL
-            </span>
-
-            <h1>Lost & Found Items</h1>
-
-            <p>
-                Find your lost belongings or help someone
-                recover their missing items.
-            </p>
-
+            <span class="items-badge">CAMPUS PORTAL</span>
+            <h1>Lost &amp; Found Items</h1>
+            <p>Find your lost belongings or help someone recover their missing items.</p>
         </div>
 
-        <a href="{% url 'home' %}"
-           class="items-home">
-
-            ← Back to Home
-
+        <a href="{% url 'home' %}" class="items-home">
+            &larr; Back to Home
         </a>
-
     </header>
 
-
     <!-- SEARCH AND FILTER -->
-
     <section class="items-filter-section">
+        <form method="GET" action="{% url 'items' %}" class="items-filter-form">
 
-        <form method="GET"
-              action="{% url 'items' %}"
-              class="items-filter-form">
-
-            <!-- SEARCH -->
-
+            <!-- SEARCH TEXT -->
             <div class="items-search-group">
-
-                <label for="item-search">
-                    Search Items
-                </label>
-
+                <label for="item-search">Search Items</label>
                 <input
                     type="search"
                     id="item-search"
                     name="q"
                     placeholder="Search name, category or location..."
                     value="{{ search_query }}">
-
             </div>
 
-
-            <!-- FILTER -->
-
+            <!-- FILTER TYPE -->
             <div class="items-type-group">
-
-                <label for="item-type">
-                    Item Type
-                </label>
-
-                <select
-                    id="item-type"
-                    name="type">
-
-                    <option value="all"
-                        {% if filter_type == "all" %}
-                            selected
-                        {% endif %}>
-
-                        All Items
-
-                    </option>
-
-                    <option value="Lost"
-                        {% if filter_type == "Lost" %}
-                            selected
-                        {% endif %}>
-
-                        Lost Items
-
-                    </option>
-
-                    <option value="Found"
-                        {% if filter_type == "Found" %}
-                            selected
-                        {% endif %}>
-
-                        Found Items
-
-                    </option>
-
+                <label for="item-type">Item Type</label>
+                <select id="item-type" name="type">
+                    <option value="all" {% if filter_type == "all" %}selected{% endif %}>All Items</option>
+                    <option value="Lost" {% if filter_type == "Lost" %}selected{% endif %}>Lost Items</option>
+                    <option value="Found" {% if filter_type == "Found" %}selected{% endif %}>Found Items</option>
                 </select>
-
             </div>
+
             <!-- DATE FILTER -->
-             <div class="items-date-group">
-                
+            <div class="items-date-group">
                 <label for="date-filter">Date</label>
-                
                 <select id="date-filter" name="date">
-                    
-                    <option value="all"
-                    
-                    {% if selected_date == 'all' %}selected{% endif %}>
-                    
-                    All Dates
-                
-                </option>
-                
-                <option value="today"
-                
-                {% if selected_date == 'today' %}selected{% endif %}>
-                
-                Today
-            </option>
-            
-            <option value="yesterday"
-            
-            {% if selected_date == 'yesterday' %}selected{% endif %}>
-            
-            Yesterday
-        
-        </option>
-        
-        <option value="7days"
-        
-        {% if selected_date == '7days' %}selected{% endif %}>
-        
-        Last 7 Days
-    
-    </option>
-    
-    <option value="30days"
-    
-    {% if selected_date == '30days' %}selected{% endif %}>
-    
-    Last 30 Days
+                    <option value="all" {% if selected_date == 'all' %}selected{% endif %}>All Dates</option>
+                    <option value="today" {% if selected_date == 'today' %}selected{% endif %}>Today</option>
+                    <option value="yesterday" {% if selected_date == 'yesterday' %}selected{% endif %}>Yesterday</option>
+                    <option value="7days" {% if selected_date == '7days' %}selected{% endif %}>Last 7 Days</option>
+                    <option value="30days" {% if selected_date == '30days' %}selected{% endif %}>Last 30 Days</option>
+                </select>
+            </div>
 
-</option>
-
-</select>
-
-</div>
-    
             <!-- SEARCH BUTTON -->
-
-            <button type="submit"
-                    class="items-search-button">
-
+            <button type="submit" class="items-search-button">
                 Search Items
-
             </button>
 
-
             <!-- RESET -->
-
-            <a href="{% url 'items' %}"
-               class="items-reset-button">
-
+            <a href="{% url 'items' %}" class="items-reset-button">
                 Reset
-
             </a>
 
         </form>
-
     </section>
 
-
     <!-- ITEM COUNT -->
-
     <div class="items-results-header">
-
         <h2>Available Items</h2>
-
-        <span class="items-count">
-
-            {{ items|length }} Items
-
-        </span>
-
+        <span class="items-count">{{ items|length }} Items</span>
     </div>
 
-
-    <!-- ITEM CARDS -->
-
+    <!-- ITEM CARDS GRID -->
     <section class="items-grid">
-
         {% for item in items %}
-
         <article class="item-card">
 
-
             <!-- IMAGE -->
-
             <div class="item-image-container">
-
-
                 {% if item.image and item.image.name %}
-
-                    <!-- DISPLAY UPLOADED IMAGE -->
-
                     <img
                         src="{{ item.image.url }}"
                         alt="{{ item.item_name }}"
                         class="item-image"
-                        loading="lazy">
-
+                        loading="lazy"
+                        onerror="this.onerror=null;this.src='{% static 'lostfound/image/placeholder.svg' %}';">
                 {% else %}
-
-                    <!-- NO IMAGE -->
-
                     <div class="item-no-image">
-
-                        <span>📦</span>
-
-                        <p>No Image Available</p>
-
+                        <img src="{% static 'lostfound/image/placeholder.svg' %}" alt="No Photo" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-
                 {% endif %}
 
-
-                <!-- LOST OR FOUND BADGE -->
-
-                <span class="item-type-badge
-                    {% if item.item_type == 'Lost' %}
-                        lost-badge
-                    {% else %}
-                        found-badge
-                    {% endif %}">
-
+                <!-- BADGE -->
+                <span class="item-type-badge {% if item.item_type == 'Lost' %}lost-badge{% else %}found-badge{% endif %}">
                     {{ item.item_type }}
-
                 </span>
-
-
             </div>
 
-
             <!-- DETAILS -->
-
             <div class="item-card-content">
+                <h3>{{ item.item_name }}</h3>
 
-
-                <!-- ITEM NAME -->
-
-                <h3>
-
-                    {{ item.item_name }}
-
-                </h3>
-
-
-                <!-- CATEGORY -->
-
-                <p class="item-category">
-
-                    {{ item.category }}
-
-                </p>
-
-
-                <!-- DESCRIPTION -->
-
-                <p class="item-description">
-
-                    {{ item.description }}
-
-                </p>
-
-
-                <!-- INFORMATION -->
+                <p class="item-category">{{ item.category }}</p>
+                <p class="item-description">{{ item.description }}</p>
 
                 <div class="item-information">
-
-
-                    <!-- LOCATION -->
-
                     <div class="item-info-row">
-
                         <span>📍 Location</span>
-
-                        <strong>
-
-                            {{ item.location }}
-
-                        </strong>
-
+                        <strong>{{ item.location }}</strong>
                     </div>
 
-
-                    <!-- DATE -->
-
                     <div class="item-info-row">
-
                         <span>📅 Date</span>
-
-                        <strong>
-
-                            {{ item.date|date:"d M Y" }}
-
-                        </strong>
-
+                        <strong>{{ item.date|date:"d M Y" }}</strong>
                     </div>
-
-
-                    <!-- STUDENT -->
 
                     <div class="item-info-row">
-
                         <span>👤 Reported By</span>
-
-                        <strong>
-
-                            {{ item.student.student_name }}
-
-                        </strong>
-
+                        <strong>{{ item.student.student_name }}</strong>
                     </div>
-
-
                 </div>
 
-
-                <!-- STATUS -->
-
-                <div class="item-card-footer" style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-
-                    <span class="item-status
-                        {% if item.status == 'Active' %}
-                            active-status
-                        {% else %}
-                            other-status
-                        {% endif %}">
-
+                <div class="item-card-footer" style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 14px;">
+                    <span class="item-status {% if item.status == 'Active' %}active-status{% else %}other-status{% endif %}">
                         {{ item.status }}
-
                     </span>
 
                     {% if item.item_type == 'Found' and item.status == 'Active' %}
-                    <a href="{% url 'submit_claim' %}?item_id={{ item.id }}" style="padding: 6px 14px; border-radius: 8px; background: #008cff; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(0, 140, 255, 0.35);">
+                    <a href="{% url 'submit_claim' %}?item_id={{ item.id }}"
+                       style="padding: 6px 14px; border-radius: 8px; background: #C18422; color: #FFF9EF; text-decoration: none; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(193, 132, 34, 0.35); transition: background 0.2s ease;">
                         <span>Claim</span> &rarr;
                     </a>
                     {% endif %}
-
                 </div>
 
-
             </div>
-
 
         </article>
-
-
         {% empty %}
-
-
-        <!-- NO ITEMS -->
-
         <div class="items-empty">
-
-            <div class="empty-icon">
-
-                📦
-
-            </div>
-
+            <div class="empty-icon">📦</div>
             <h2>No Items Found</h2>
-
-            <p>
-
-                No items match your search.
-
-                Try changing the search text
-                or selecting another item type.
-
-            </p>
-
-            <a href="{% url 'items' %}"
-               class="items-reset-button">
-
-                View All Items
-
-            </a>
-
+            <p>No items match your search. Try changing your search query or selecting another item type.</p>
+            <a href="{% url 'items' %}" class="items-reset-button">View All Items</a>
         </div>
-
-
         {% endfor %}
-
-
     </section>
-
-
-    <!-- FOOTER -->
-
-    <footer class="items-footer">
-
-        <p>
-
-            Campus Lost & Found Management System
-
-        </p>
-
-        <a href="{% url 'home' %}">
-
-            Back to Home
-
-        </a>
-
-    </footer>
-
 
 </div>
 
-
-</body>
-
-</html>
+{% endblock %}
