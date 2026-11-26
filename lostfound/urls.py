@@ -31,5 +31,5 @@ urlpatterns = [
     views.edit_item_image,
     name='edit_item_image'
 ),
-path('logout/', views.student_logout, name='logout'),
+path('student-logout/', views.student_logout, name='logout'),
 ]

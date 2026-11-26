@@ -17,7 +17,7 @@ from django.utils import timezone
 
 def home(request):
 
-    return render(request, 'lostfound/home.html')
+    return render(request, 'lostfounddumi/home.html')
 
 
 def register(request):
@@ -64,7 +64,7 @@ def register(request):
 
         return redirect('register')
 
-    return render(request, 'lostfound/register.html')
+    return render(request, 'lostfounddumi/register.html')
 def report_item(request):
 
     students = Student.objects.all()
@@ -98,7 +98,7 @@ def report_item(request):
         return redirect('report_item')
     
 
-    return render(request, 'lostfound/report.html', {'students': students})
+    return render(request, 'lostfounddumi/report.html', {'students': students})
 def items(request):
 
     # Get all items
@@ -149,7 +149,7 @@ def items(request):
 
     return render(
         request,
-        'lostfound/items.html',
+        'lostfounddumi/items.html',
         context
     )
 
@@ -229,7 +229,7 @@ def search_items(request):
         'to_date': to_date,
     }
 
-    return render(request, 'lostfound/search_item.html', context)
+    return render(request, 'lostfounddumi/search_item.html', context)
 
 
 def submit_claim(request):
@@ -340,7 +340,7 @@ def submit_claim(request):
 
     return render(
         request,
-        'lostfound/claim.html',
+        'lostfounddumi/claim.html',
         {
             'students': students,
             'items': items,
@@ -416,7 +416,7 @@ def manage_claims(request):
 
     return render(
         request,
-        'lostfound/manage_claims.html',
+        'lostfounddumi/manage_claims.html',
         {
             'claims': claims,
             'status_filter': status_filter,
@@ -508,7 +508,7 @@ def dashboard(request):
 
     return render(
         request,
-        'lostfound/dashboard.html',
+        'lostfounddumi/dashboard.html',
         context
     )
 def admin_logout(request):
@@ -519,35 +519,36 @@ def admin_logout(request):
 
 # Student Login
 
+
 def student_login(request):
-
     if request.method == 'POST':
-
-        email = request.POST.get('email')
-
-        password = request.POST.get('password')
+        email = request.POST.get('email', '').strip()
+        password = request.POST.get('password', '')
 
         try:
-
-            student = Student.objects.get(email=email)
+            student = Student.objects.get(email__iexact=email)
 
             if check_password(password, student.password):
-
                 request.session['student_id'] = student.id
 
-                messages.success(request, "Login successful!")
+                if not request.POST.get('remember_me'):
+                    request.session.set_expiry(0)
+                else:
+                    request.session.set_expiry(1209600)
 
+                messages.success(request, "Login successful!")
                 return redirect('student_dashboard')
 
-            else:
-
-                messages.error(request, "Invalid password!")
+            messages.error(request, "Invalid password!")
 
         except Student.DoesNotExist:
-
             messages.error(request, "Email not registered!")
 
-    return render(request, 'lostfound/student_login.html')
+        except Student.MultipleObjectsReturned:
+            messages.error(request, "Duplicate student email found!")
+
+    return render(request, 'lostfounddumi/student_login.html')
+
 # Student Dashboard
 
 
@@ -621,7 +622,7 @@ def student_dashboard(request):
 
     }
 
-    return render(request,'lostfound/student_dashboard.html',context)
+    return render(request,'lostfounddumi/student_dashboard.html',context)
 
 # Admin Dashboard
 
@@ -664,7 +665,7 @@ def admin_dashboard(request):
 
     return render(
         request,
-        'lostfound/admin_dashboard.html',
+        'lostfounddumi/admin_dashboard.html',
         context
     )
 # View All Students
@@ -679,7 +680,7 @@ def view_students(request):
 
     return render(
         request,
-        'lostfound/view_students.html',
+        'lostfounddumi/view_students.html',
         context
     )
 # Admin View All Items
@@ -733,7 +734,7 @@ def view_all_items(request):
 
     return render(
         request,
-        'lostfound/view_all_items.html',
+        'lostfounddumi/view_all_items.html',
         context
     )
 @login_required
@@ -758,7 +759,7 @@ def update_item_status(request, pk):
 
     return render(
         request,
-        'lostfound/update_item_status.html',
+        'lostfounddumi/update_item_status.html',
         {'item': item}
     )
 
@@ -796,7 +797,7 @@ def edit_item_image(request, item_id):
 
     return render(
         request,
-        'lostfound/edit_item_image.html',
+        'lostfounddumi/edit_item_image.html',
         {'item': item}
     )
 def student_logout(request):
