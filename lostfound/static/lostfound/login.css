@@ -10,20 +10,20 @@
    --------------------------------------------------------- */
 
 .login-page-section {
-    position: relative;
-    min-height: calc(100vh - 70px);   /* subtract header height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 48px 16px 60px;
-
+    min-height: 100vh;
+    background-image: url("image/college.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
-    overflow-x: hidden;
+    position: relative;
 }
-
+.login-page-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(245, 242, 220, 0.55);
+    backdrop-filter: blur(3px);
+}
 /* Soft cream-green blurred overlay */
 .login-bg-overlay {
     position: absolute;
